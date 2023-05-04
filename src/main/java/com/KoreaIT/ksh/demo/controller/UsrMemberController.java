@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.KoreaIT.ksh.demo.service.MemberService;
 import com.KoreaIT.ksh.demo.util.Ut;
 import com.KoreaIT.ksh.demo.vo.Member;
+import com.KoreaIT.ksh.demo.vo.ResultData;
 
 @Controller
 public class UsrMemberController {
@@ -38,15 +39,13 @@ public class UsrMemberController {
 			return "이메일을 입력해주세요";
 		}
 		
-		int id = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
-		if(id == -1) {
-			return "이미 사용중인 아이디입니다";
+		ResultData joinRd = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+		if (joinRd.isFail()) {
+			return joinRd;
 		}
-		if(id == -2) {
-			return "이미 사용중인 이름과 이메일입니다";
-		}
-		Member member = memberService.getMemberById(id);
-		
-		return member;
+
+		Member member = memberService.getMemberById((int) joinRd.getData1());
+
+		return ResultData.newData(joinRd, member);
 	}
 }

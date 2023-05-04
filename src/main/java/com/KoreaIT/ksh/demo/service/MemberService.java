@@ -3,7 +3,9 @@ package com.KoreaIT.ksh.demo.service;
 import org.springframework.stereotype.Service;
 
 import com.KoreaIT.ksh.demo.repository.MemberRepository;
+import com.KoreaIT.ksh.demo.util.Ut;
 import com.KoreaIT.ksh.demo.vo.Member;
+import com.KoreaIT.ksh.demo.vo.ResultData;
 
 @Service
 public class MemberService {
@@ -13,20 +15,27 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 
-	public int doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
+	public ResultData doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email) {
 		Member existsMember = getMemberByLoginId(loginId);
 		
-		if(existsMember != null) {
-			return -1;
+
+		if (existsMember != null) {
+			return ResultData.from("F-7", Ut.f("이미 사용중인 아이디(%s)입니다", loginId));
 		}
-		
+
+		// 이름 + 이메일 중복체크
 		existsMember = getMemberByNameAndEmail(name, email);
-		if(existsMember != null) {
-			return -2;
+
+		if (existsMember != null) {
+			return ResultData.from("F-8", Ut.f("이미 사용중인 이름(%s)과 이메일(%s)입니다", name, email));
 		}
+
 		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
-		return memberRepository.getLastInsertId();
+
+		int id = memberRepository.getLastInsertId();
+
+		return ResultData.from("S-1", "회원가입이 완료되었습니다", id);
 	}
 
 	private Member getMemberByNameAndEmail(String name, String email) {
