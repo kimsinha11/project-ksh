@@ -1,57 +1,24 @@
 package com.KoreaIT.ksh.demo.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.apache.ibatis.annotations.Mapper;
 
 import com.KoreaIT.ksh.demo.vo.Article;
 
-@Service
-public class ArticleRepository {
-
-	private int lastArticleId;
-	private List<Article> articles;
-	
-	public ArticleRepository() {
-		lastArticleId = 0;
-		articles = new ArrayList<>();
-	}
-
+@Mapper
+public interface ArticleRepository {
 
 	// 서비스 메서드
-	public Article writeArticle(String title, String body) {
-		int id = lastArticleId + 1;
+	public Article writeArticle(String title, String body);
 
-		Article article = new Article(id, title, body);
-		articles.add(article);
-		lastArticleId++;
+	public void deleteArticle(int id);
+	
+	public void modifyArticle(int id, String title, String body);
 
-		return article;
-	}
+	public Article getArticle(int id);
 
-	public void deleteArticle(int id) {
-		Article article = getArticle(id);
-		articles.remove(article);
-	}
+	public List<Article> getArticles();
 
-	public void modifyArticle(int id, String title, String body) {
-		Article article = getArticle(id);
-
-		article.setTitle(title);
-		article.setBody(body);
-	}
-
-	public Article getArticle(int id) {
-		for (Article article : articles) {
-			if (article.getId() == id) {
-				return article;
-			}
-		}
-		return null;
-	}
-
-	public List<Article> getArticles() {
-		return articles;
-	}
+	public int getLastInsertId();
 }
