@@ -26,7 +26,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
 	public List<Article> showList() {
-		return articleService.articles();
+		return articleService.getArticles();
 	}
 	
 	@RequestMapping("/usr/article/detail")
