@@ -14,15 +14,20 @@
 		memberId = #{memberId}
 	</insert>
 
-	<select id="getArticles" resultType="Article">
-		SELECT article.id,
-		article.regDate, article.updateDate, article.title, article.body,
-		article.memberId, member.name AS 'name'
+		<select id="getArticles" resultType="Article">
+		SELECT article.*,
+		member.name AS 'name'
 		FROM article
-		INNER JOIN `member`
-		ON article.memberId = member.id
-		ORDER BY
-		article.id DESC
+		INNER JOIN
+		`member`
+		ON article.memberId =
+		member.id
+		WHERE article.boardId = #{boardId}
+		GROUP BY article.id
+		ORDER BY article.id DESC
+		<if test="i >= 0">
+			LIMIT #{i}, #{itemsPerPage}
+		</if>
 	</select>
 
 	<select id="getArticle" resultType="Article">

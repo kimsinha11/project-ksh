@@ -9,15 +9,15 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.KoreaIT.ksh.demo.vo.Rq;
 
+
 @Component
 public class BeforeActionInterceptor implements HandlerInterceptor {
 	@Autowired
 	private Rq rq;
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
-
-		req.setAttribute("rq", rq);
-
+		rq.initOnBeforeActionInterceptor();
+	
 		return HandlerInterceptor.super.preHandle(req, resp, handler);
 	}
 }

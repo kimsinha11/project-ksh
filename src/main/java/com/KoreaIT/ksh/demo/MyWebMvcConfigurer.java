@@ -9,13 +9,14 @@ import com.KoreaIT.ksh.demo.interceptor.BeforeActionInterceptor;
 import com.KoreaIT.ksh.demo.interceptor.NeedLoginInterceptor;
 
 @Configuration
-public class MyWebMvcConfigurer implements WebMvcConfigurer{
-	//BeforeActionInterceptor 불러오기
+public class MyWebMvcConfigurer implements WebMvcConfigurer {
+	// BeforeActionInterceptor 불러오기
 	@Autowired
 	BeforeActionInterceptor beforeActionInterceptor;
-	//NeedLoginInterceptor 불러오기
+	// NeedLoginInterceptor 불러오기
 	@Autowired
 	NeedLoginInterceptor needLoginInterceptor;
+
 	// /resource/common.css
 	// 인터셉터 적용
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -27,4 +28,5 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer{
 				.excludePathPatterns("/resource/**").excludePathPatterns("/error");
 
 	}
+
 }

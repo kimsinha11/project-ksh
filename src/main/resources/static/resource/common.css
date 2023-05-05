@@ -17,14 +17,23 @@ html > body {
 
 html {
 	width: 1200px;
-	margin : 0 auto;
+	margin: 0 auto; 
 }
+
 table {
 	border: 2px solid black;
 	border-collapse: collapse;
 	width: 700px;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+body > div> div > ul > li > a{
+	display: none;
+}
+
+body > div > .list:hover >  ul > li > a {
+	display: block;
 }
 
 th {
@@ -40,6 +49,17 @@ th {
 	padding: 20px 500px;
 }
 
-input {
-	border: 1px solid black;
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  margin: 0 4px;
 }

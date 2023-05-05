@@ -9,17 +9,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.ksh.demo.service.ArticleService;
+import com.KoreaIT.ksh.demo.service.BoardService;
 import com.KoreaIT.ksh.demo.util.Ut;
 import com.KoreaIT.ksh.demo.vo.Article;
+import com.KoreaIT.ksh.demo.vo.Board;
+import com.KoreaIT.ksh.demo.vo.ResultData;
 import com.KoreaIT.ksh.demo.vo.Rq;
 
 @Controller
 public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private BoardService boardService;
+	@Autowired
+	private Rq rq;
 	//F-A 로그인 오류 F-B 로그아웃 오류 F-N 빈 값 오류 F-F 없거나 불일치 오류 F-C 권한오류
 	
 	
@@ -31,10 +39,7 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(HttpServletRequest req, HttpSession httpSession, String title, String body) {
-	
-		Rq rq = (Rq) req.getAttribute("rq");
-	
+	public String doWrite(HttpSession httpSession, String title, String body, int boardId) {
 		
 		if (Ut.empty(title)) {
 			return Ut.jsHistoryBack("F-A", "제목을 입력해주세요.");
@@ -42,18 +47,18 @@ public class UsrArticleController {
 		if (Ut.empty(body)) {
 			return Ut.jsHistoryBack("F-A", "내용을 입력해주세요");
 		}
-		articleService.writeArticle(title, body, rq.getLoginedMemberId());
 		
+		Board board = BoardService.getBoardById(boardId);
+		ResultData writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
+		int id = (int) writeArticleRd.getData1();
 		
-		return Ut.jsReplace("S-1", "작성완료", "list");
+		return Ut.jsReplace("S-1", "작성완료", Ut.f("../article/detail?id=%d",id));
 		
 	}
 	
 	@RequestMapping("/usr/article/modify")
-	public String modify(Model model, HttpServletRequest req, int id, String title, String body) {
-		Rq rq = (Rq) req.getAttribute("rq");
-				
-
+	public String modify(Model model, int id, String title, String body) {
+	
 		Article article = articleService.getArticle(id);
 		
 		if(article == null) {
@@ -73,10 +78,8 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(HttpServletRequest req, int id, String title, String body) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doModify( int id, String title, String body) {
 		
-
 		Article article = articleService.getArticle(id);
 		
 		if(article == null) {
@@ -90,9 +93,8 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
-	public String doDelete(Model model, HttpServletRequest req, int id) {
+	public String doDelete(Model model, int id) {
 
-		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getArticle(id);
 		if (article == null) {
@@ -107,23 +109,41 @@ public class UsrArticleController {
 			return Ut.jsHistoryBack("F-C", "권한이 없습니다.");
 		}
 	}
-	
-
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model) {
-		List<Article> articles = articleService.getArticles();
+	public String showList(Model model, Integer boardId, @RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
+
+		if (boardId == null) {
+			boardId = 1;
+		}
+		Board board = BoardService.getBoardById(boardId);
+
+		if (board == null) {
+			return rq.jsHistoryBackOnView("그런 게시판은 없어");
+		}
+
+		int totalCount = articleService.getArticlesCount(boardId);
+		int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage);
+		int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
+		int itemsInAPage = (pageNum - 1) * itemsPerPage;
+		List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage);
+			
+		model.addAttribute("board", board);
 
 		model.addAttribute("articles", articles);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("itemsPerPage", itemsPerPage);
+		model.addAttribute("lastPageInGroup", lastPageInGroup);
 
 		return "usr/article/list";
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String getArticle(Model model, HttpServletRequest req, int id) {
-		
-		Rq rq = (Rq) req.getAttribute("rq");
-		
+	public String getArticle(Model model, int id) {
+	
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {

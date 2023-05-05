@@ -22,9 +22,9 @@ public class ArticleService {
 
 
 	// 서비스 메서드
-	public ResultData<Integer> writeArticle(String title, String body, int memberId) {
+	public ResultData<Integer> writeArticle(String title, String body, int memberId, int boardId) {
 
-		articleRepository.writeArticle(title, body, memberId);
+		articleRepository.writeArticle(title, body, memberId, boardId);
 
 		int id = articleRepository.getLastInsertId();
 
@@ -48,15 +48,20 @@ public class ArticleService {
 	}
 
 
-	public List<Article> getArticles() {
-		return articleRepository.getArticles();
+	public List<Article> getArticles(int boardId, int i, int itemsPerPage) {
+		return articleRepository.getArticles(boardId, i, itemsPerPage);
 	}
-
 
 	public ResultData actorCanModify(int loginedMemberId, Article article) {
 		if(article.getMemberId() != loginedMemberId) {
 			return ResultData.from("F-C", Ut.f("해당 글에 대한 권한이 없습니다"));
 		}
 		return ResultData.from("S-1", "수정 가능");
+	}
+	
+	
+
+	public int getArticlesCount(Integer boardId) {
+		return articleRepository.getArticlesCount(boardId);
 	}
 }
