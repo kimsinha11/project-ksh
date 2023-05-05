@@ -22,10 +22,10 @@ public class ArticleService {
 
 
 	// 서비스 메서드
-	public ResultData writeArticle(int memberId, String title, String body) {
+	public ResultData writeArticle(String body, String title, int memberId) {
 		int id = articleRepository.getLastInsertId();
 		articleRepository.writeArticle(memberId, title, body);
-		return ResultData.from("S-1", Ut.f("%d번 글이 생성되었씁니다", id),id);
+		return ResultData.from("S-1", Ut.f("%d번 글이 생성되었습니다", id),id);
 	}
 
 	public void deleteArticle(int id) {
@@ -44,8 +44,8 @@ public class ArticleService {
 	}
 
 
-	public ResultData getArticles() {
-		return ResultData.from("S-1", Ut.f("게시물 리스트"), articleRepository.getArticles());
+	public List<Article> getArticles() {
+		return articleRepository.getArticles();
 	}
 
 

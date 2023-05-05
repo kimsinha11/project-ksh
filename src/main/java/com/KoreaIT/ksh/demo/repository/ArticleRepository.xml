@@ -2,38 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-		namespace="com.KoreaIT.ksh.demo.repository.ArticleRepository">
-		
-		<insert id="writeArticle">
-				 INSERT INTO article
-				 SET regDate = NOW(),
-				 updateDate = NOW(),
-				 memberId = #{memberId},
-				 title = #{title},
-				 `body` = #{body}
-		</insert>	
-		
-		<select id="getArticles" resultType="Article">
-		SELECT *
+	namespace="com.KoreaIT.ksh.demo.repository.ArticleRepository">
+
+	<insert id="writeArticle">
+		INSERT INTO article
+		SET regDate = NOW(),
+		updateDate =
+		NOW(),
+		title = #{title},
+		`body` = #{body},
+		memberId = #{memberId}
+	</insert>
+
+	<select id="getArticles" resultType="Article">
+		SELECT article.id,
+		article.regDate, article.updateDate, article.title, article.body,
+		article.memberId, member.name AS 'name'
 		FROM article
+		INNER JOIN `member`
+		ON article.memberId = member.id
 		ORDER BY
-		id DESC
-		</select>
+		article.id DESC
+	</select>
 
-		<select id="getArticle" resultType="Article">
-		SELECT *
+	<select id="getArticle" resultType="Article">
+		SELECT article.id,
+		article.regDate, article.updateDate, article.title, article.body,
+		article.memberId, member.name AS 'name'
 		FROM article
-		WHERE id
+		INNER JOIN `member`
+		ON article.memberId = member.id
+		WHERE article.id
 		= #{id}
-		</select>
+	</select>
 
-		<delete id="deleteArticle">
+	<delete id="deleteArticle">
 		DELETE FROM
 		article
 		WHERE id = #{id}
-		</delete>
+	</delete>
 
-		<update id="modifyArticle">
+	<update id="modifyArticle">
 		UPDATE article
 		<set>
 			<if test="title != null and title != ''">title = #{title},</if>
@@ -41,10 +50,10 @@
 			updateDate= NOW()
 		</set>
 		WHERE id = #{id}
-		</update>
+	</update>
 
-		<select id="getLastInsertId" resultType="int">
+	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
-		</select>
-	
+	</select>
+
 </mapper>

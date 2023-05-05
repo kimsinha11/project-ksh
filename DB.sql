@@ -9,27 +9,32 @@ CREATE TABLE article(
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
     title CHAR(100) NOT NULL,
-    `body` TEXT NOT NULL
+    `body` TEXT NOT NULL,
+    memberId INT(10) NOT NULL
 );
+#글 작성시 작성자 정보 남기려고 memberId 추가 >> ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `body`;
 
 # 게시물 테스트데이터 생성
 INSERT INTO article 
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목 1',
-`body` = '내용 1';
+`body` = '내용 1',
+memberId = 2;
 
 INSERT INTO article 
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목 2',
-`body` = '내용 2';
+`body` = '내용 2',
+memberId= 3;
 
 INSERT INTO article 
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목 3',
-`body` = '내용 3';
+`body` = '내용 3',
+memberId= 2;
 
 # 회원 테이블 생성
 CREATE TABLE `member`(
