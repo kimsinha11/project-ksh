@@ -56,15 +56,13 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 						<%
 						if (article.getMemberId() == loginedMemberId) {
 						%>
-						<button class="btn-text-link btn btn-outline btn-xs" type="button" onclick="history.back()">뒤로가기</button>
-						<a class="btn-text-link btn btn-outline btn-xs" onclick="if(confirm('정말 수정하시겠습니까?') == false) return false;"
-								href="modify?id=${article.id }">수정</a>
-						<a class="btn-text-link btn btn-outline btn-xs" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-								href="delete?id=${article.id }">삭제</a>
+							<button type="button" onclick="history.back()">뒤로가기</button>
+				<a onclick="if(confirm('정말 수정하시겠습니까?') == false) return false;" href="modify?id=${article.id }">수정</a>
+				<a onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"href="delete?id=${article.id }">삭제</a>
 						<%
 						}
 						%>
-		</div>
+				</div>
 		</div>
 </section>
 

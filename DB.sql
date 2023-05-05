@@ -36,6 +36,15 @@ title = '제목 3',
 `body` = '내용 3',
 memberId= 2;
 
+
+INSERT INTO article 
+SET regDate = NOW(),
+updateDate = NOW(),
+title = '제목 3',
+`body` = '내용 3',
+memberId= 1;
+
+
 # 회원 테이블 생성
 CREATE TABLE `member`(
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -85,9 +94,49 @@ loginPw = 'test2',
 cellphoneNum = '01067896789',
 email = 'zxcv@gmail.com';
 
+
+# 게시물 테이블 생성
+CREATE TABLE board(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `code` CHAR(50) NOT NULL UNIQUE COMMENT 'notice(공지사항), free(자유), QnA(질의응답), ....',
+    `name` CHAR(50) NOT NULL UNIQUE COMMENT '게시판 이름',
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1=삭제 후)',
+    delDate DATETIME COMMENT '삭제 날짜'
+);
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'notice',
+`name` = '공지사항';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'free',
+`name` = '자유';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'QnA',
+`name` = '질의응답';
+
+
+ALTER TABLE article ADD boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
+
+UPDATE article SET boardId = 1 WHERE id IN (1,2);
+
+UPDATE article SET boardId = 2 WHERE id = 3;
+
+UPDATE article SET boardId = 3 WHERE id = 4;
+###################################################################################
+
 SELECT * FROM article;
 SELECT * FROM `member`;
-
+SELECT * FROM board;
 DESC `member`;
 
 SELECT LAST_INSERT_ID();

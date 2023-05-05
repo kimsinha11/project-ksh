@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.KoreaIT.ksh.demo.service.ArticleService;
 import com.KoreaIT.ksh.demo.util.Ut;
 import com.KoreaIT.ksh.demo.vo.Article;
-import com.KoreaIT.ksh.demo.vo.ResultData;
 import com.KoreaIT.ksh.demo.vo.Rq;
 
 @Controller
@@ -22,8 +21,35 @@ public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
 	//F-A 로그인 오류 F-B 로그아웃 오류 F-N 빈 값 오류 F-F 없거나 불일치 오류 F-C 권한오류
-	@RequestMapping("/usr/article/modify")
+	
+	
+	@RequestMapping("/usr/article/write")
+	public String write(Model model, String title, String body) {
 
+		return "usr/article/write";
+	}
+	
+	@RequestMapping("/usr/article/doWrite")
+	@ResponseBody
+	public String doWrite(HttpServletRequest req, HttpSession httpSession, String title, String body) {
+	
+		Rq rq = (Rq) req.getAttribute("rq");
+	
+		
+		if (Ut.empty(title)) {
+			return Ut.jsHistoryBack("F-A", "제목을 입력해주세요.");
+		}
+		if (Ut.empty(body)) {
+			return Ut.jsHistoryBack("F-A", "내용을 입력해주세요");
+		}
+		articleService.writeArticle(title, body, rq.getLoginedMemberId());
+		
+		
+		return Ut.jsReplace("S-1", "작성완료", "list");
+		
+	}
+	
+	@RequestMapping("/usr/article/modify")
 	public String modify(Model model, HttpServletRequest req, int id, String title, String body) {
 		Rq rq = (Rq) req.getAttribute("rq");
 				
@@ -43,12 +69,7 @@ public class UsrArticleController {
 
 	}
 
-	@RequestMapping("/usr/article/write")
-
-	public String write(Model model, String title, String body) {
-
-		return "usr/article/write";
-	}
+	
 	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
@@ -67,25 +88,6 @@ public class UsrArticleController {
 
 	}
 
-	@RequestMapping("/usr/article/doWrite")
-	@ResponseBody
-	public String doWrite(HttpServletRequest req, HttpSession httpSession, String title, String body) {
-	
-		Rq rq = (Rq) req.getAttribute("rq");
-	
-		
-		if (Ut.empty(title)) {
-			return Ut.jsHistoryBack("F-N", "제목을 입력해주세요.");
-		}
-		if (Ut.empty(body)) {
-			return Ut.jsHistoryBack("F-N", "내용을 입력해주세요");
-		}
-		articleService.writeArticle(title, body, rq.getLoginedMemberId());
-		
-		
-		return Ut.jsReplace("S-1", "작성완료", "list");
-		
-	}
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
 	public String doDelete(Model model, HttpServletRequest req, int id) {
