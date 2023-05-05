@@ -62,4 +62,15 @@ public class ArticleService {
 	public int getArticlesCount(Integer boardId, Integer searchId, String searchKeyword) {
 		return articleRepository.getArticlesCount(boardId, searchId, searchKeyword);
 	}
+	
+
+	public ResultData increaseHitCount(int id) {
+		int affectedRow = articleRepository.increaseHitCount(id);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "해당 게시물은 없음", affectedRow);
+		}
+
+		return ResultData.from("S-1", "조회수 증가", affectedRow);
+	}
 }

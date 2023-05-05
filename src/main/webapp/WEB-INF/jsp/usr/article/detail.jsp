@@ -8,6 +8,42 @@
 Article article = (Article) request.getAttribute("article");
 int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 %>
+
+<!-- <iframe src="http://localhost:8081/usr/article/doIncreaseHitCountRd?id=2" frameborder="0"></iframe> -->
+<!-- 변수 생성 -->
+<script>
+	const params = {};
+	params.id = parseInt('${param.id}');
+	params.memberId = parseInt('${loginedMemberId}');
+</script>
+
+<!-- 메서드 생성 -->
+<script>
+	function ArticleDetail__increaseHitCount() {
+		const localStorageKey = 'article__' + params.id + '__alreadyView';
+
+		if (localStorage.getItem(localStorageKey)) {
+			return;
+		}
+
+		localStorage.setItem(localStorageKey, true);
+
+		$.get('../article/doIncreaseHitCountRd', {
+			id : params.id,
+			ajaxMode : 'Y'
+		}, function(data) {
+			$('.article-detail__hit-count').empty().html(data.data1);
+		}, 'json');
+	}
+	$(function() {
+		// 실전코드
+		ArticleDetail__increaseHitCount();
+		// 연습코드
+		//setTimeout(ArticleDetail__increaseHitCount, 2000);
+	})
+</script>
+
+
 <section class="mt-10 text-xl">
 		<div class="mx-auto overflow-x-auto">
 				<table class=" table w-full table-box-type-1" style="width: 500px;">
@@ -38,7 +74,12 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 										<th style="font-size: 15px">내용</th>
 										<th>${article.body }</th>
 								</tr>
-
+								<tr>
+										<th style="font-size: 15px">조회수</th>
+										<th>
+												<span class="article-detail__hit-count">${article.hitCount }</span>
+										</th>
+								</tr>
 
 						</thead>
 

@@ -12,7 +12,8 @@
 		title =#{title},
 		`body`= #{body},
 		memberId = #{memberId},
-		boardId = #{boardId}
+		boardId = #{boardId},
+		hitCount = 0
 	</insert>
 
 	<select id="getArticles" resultType="Article">

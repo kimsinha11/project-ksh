@@ -51,6 +51,13 @@ public class Rq {
 		this.req.setAttribute("rq", this);
 	}
 
+	public String jsHitoryBackOnView(String msg) {
+		req.setAttribute("msg", msg);
+		req.setAttribute("historyBack", true);
+		return "usr/common/js";
+
+	}
+	
 	public void printHitoryBackJs(String msg) throws IOException {
 
 		resp.setContentType("text/html; charset=UTF-8");

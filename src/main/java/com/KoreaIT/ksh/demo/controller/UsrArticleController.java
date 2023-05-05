@@ -142,7 +142,10 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/detail")
 	public String getArticle(Model model, int id) {
-	
+		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
+		if (increaseHitCountRd.isFail()) {
+			return rq.jsHitoryBackOnView(increaseHitCountRd.getMsg());
+		}
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {

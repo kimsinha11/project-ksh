@@ -30,6 +30,8 @@
 										<th style="font-size: 19px">날짜</th>
 										<th style="font-size: 19px">제목</th>
 										<th style="font-size: 19px">작성자</th>
+										<th style="font-size: 19px">조회수</th>
+										
 								</tr>
 						</thead>
 						<tbody>
@@ -48,6 +50,7 @@
 														<a href="detail?id=${article.id }">${article.title }</a>
 												</th>
 												<th>${article.name }</th>
+												<th>${article.hitCount}</th>
 										</tr>
 								</c:forEach>
 						</tbody>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.KoreaIT.ksh.demo.vo.Article;
 
@@ -51,4 +52,14 @@ public interface ArticleRepository {
 				""")
 	public int getArticlesCount(int boardId, Integer searchId, String searchKeyword);
 
+	
+	@Update("""
+			<script>
+				UPDATE article
+				SET hitCount = hitCount + 1
+				WHERE id = #{id}
+			</script>
+			""")
+
+	public int increaseHitCount(int id);
 }

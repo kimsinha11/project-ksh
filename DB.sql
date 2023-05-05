@@ -9,41 +9,27 @@ CREATE TABLE article(
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
     title CHAR(100) NOT NULL,
-    `body` TEXT NOT NULL,
-    memberId INT(10) NOT NULL
+    `body` TEXT NOT NULL
 );
-#글 작성시 작성자 정보 남기려고 memberId 추가 >> ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `body`;
 
 # 게시물 테스트데이터 생성
 INSERT INTO article 
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목 1',
-`body` = '내용 1',
-memberId = 2;
+`body` = '내용 1';
 
 INSERT INTO article 
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목 2',
-`body` = '내용 2',
-memberId= 3;
+`body` = '내용 2';
 
 INSERT INTO article 
 SET regDate = NOW(),
 updateDate = NOW(),
 title = '제목 3',
-`body` = '내용 3',
-memberId= 2;
-
-
-INSERT INTO article 
-SET regDate = NOW(),
-updateDate = NOW(),
-title = '제목 3',
-`body` = '내용 3',
-memberId= 1;
-
+`body` = '내용 3';
 
 # 회원 테이블 생성
 CREATE TABLE `member`(
@@ -94,14 +80,24 @@ loginPw = 'test2',
 cellphoneNum = '01067896789',
 email = 'zxcv@gmail.com';
 
+# 게시물 테이블 구조 변경 - memberId 추가
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `updateDate`;
 
-# 게시물 테이블 생성
-CREATE TABLE board(
+UPDATE article 
+SET memberId = 2
+WHERE id IN(1,2);
+
+UPDATE article 
+SET memberId = 3
+WHERE id = 3;
+
+# 게시판 테이블 생성
+CREATE TABLE board (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
-    `code` CHAR(50) NOT NULL UNIQUE COMMENT 'notice(공지사항), free(자유), QnA(질의응답), ....',
-    `name` CHAR(50) NOT NULL UNIQUE COMMENT '게시판 이름',
+    `code` CHAR(50) NOT NULL UNIQUE COMMENT 'notice(공지사항), free(자유), qna(질의응답), ....',
+    `name` CHAR(20) NOT NULL UNIQUE COMMENT '게시판 이름',
     delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제 여부 (0=삭제 전, 1=삭제 후)',
     delDate DATETIME COMMENT '삭제 날짜'
 );
@@ -109,34 +105,75 @@ CREATE TABLE board(
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
-`code` = 'notice',
+`code` = 'NOTICE',
 `name` = '공지사항';
 
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
-`code` = 'free',
+`code` = 'FREE',
 `name` = '자유';
 
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
-`code` = 'QnA',
+`code` = 'QNA',
 `name` = '질의응답';
 
+ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
 
-ALTER TABLE article ADD boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
+UPDATE article
+SET boardId = 1
+WHERE id IN (1,2);
 
-UPDATE article SET boardId = 1 WHERE id IN (1,2);
+UPDATE article
+SET boardId = 2
+WHERE id = 3;
 
-UPDATE article SET boardId = 2 WHERE id = 3;
+###################################################################
 
-UPDATE article SET boardId = 3 WHERE id = 4;
-###################################################################################
+UPDATE article
+SET `body` = '내용4'
+WHERE id= 1;
+
+UPDATE article
+SET `body` = '내용5'
+WHERE id= 2;
+
+UPDATE article
+SET `body` = '내용6'
+WHERE id= 3;
+
+
+# 게시물 갯수 늘리기
+INSERT INTO article 
+( 
+    regDate, updateDate, memberId, boardId, title, `body`
+)
+SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 2, FLOOR(RAND() * 2) + 1, CONCAT('제목_',RAND()), CONCAT('내용_',RAND())
+FROM article;
+
+SELECT COUNT(*) FROM article;
+
+DESC article;
 
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
+
+SELECT COUNT(*) AS cnt
+FROM article AS A
+WHERE 1
+AND A.boardId = 1
+
+SELECT *
+		  FROM article
+		  WHERE boardId = 1
+		  ORDER BY id DESC
+		  LIMIT 0, 10
+
 DESC `member`;
 
 SELECT LAST_INSERT_ID();
+
+SELECT  CONCAT('%' 'abc' '%');
