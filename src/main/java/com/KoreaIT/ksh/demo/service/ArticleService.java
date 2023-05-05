@@ -22,9 +22,9 @@ public class ArticleService {
 
 
 	// 서비스 메서드
-	public ResultData writeArticle(String title, String body) {
+	public ResultData writeArticle(int memberId, String title, String body) {
 		int id = articleRepository.getLastInsertId();
-		articleRepository.writeArticle(title, body);
+		articleRepository.writeArticle(memberId, title, body);
 		return ResultData.from("S-1", Ut.f("%d번 글이 생성되었씁니다", id),id);
 	}
 

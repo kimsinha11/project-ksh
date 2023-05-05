@@ -10,7 +10,7 @@ import com.KoreaIT.ksh.demo.vo.Article;
 public interface ArticleRepository {
 
 	// 서비스 메서드
-	public Article writeArticle(String title, String body);
+	public Article writeArticle(int memberId, String title, String body);
 
 	public void deleteArticle(int id);
 	
