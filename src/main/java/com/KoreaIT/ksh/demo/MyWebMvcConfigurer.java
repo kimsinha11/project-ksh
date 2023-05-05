@@ -11,22 +11,22 @@ import com.KoreaIT.ksh.demo.interceptor.NeedLoginInterceptor;
 @Configuration
 public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	// BeforeActionInterceptor 불러오기
-	@Autowired
-	BeforeActionInterceptor beforeActionInterceptor;
-	// NeedLoginInterceptor 불러오기
-	@Autowired
-	NeedLoginInterceptor needLoginInterceptor;
+		@Autowired
+		BeforeActionInterceptor beforeActionInterceptor;
+		// NeedLoginInterceptor 불러오기
+		@Autowired
+		NeedLoginInterceptor needLoginInterceptor;
 
-	// /resource/common.css
-	// 인터셉터 적용
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**")
-				.excludePathPatterns("/error");
-		registry.addInterceptor(needLoginInterceptor).addPathPatterns("/usr/article/write")
-				.addPathPatterns("/usr/article/doWrtie").addPathPatterns("/usr/article/delete")
-				.addPathPatterns("/usr/article/modify").addPathPatterns("/usr/article/doModify")
-				.excludePathPatterns("/resource/**").excludePathPatterns("/error");
+		// /resource/common.css
+		// 인터셉터 적용
+		public void addInterceptors(InterceptorRegistry registry) {
+			registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**")
+					.excludePathPatterns("/error");
+			registry.addInterceptor(needLoginInterceptor).addPathPatterns("/usr/article/write")
+					.addPathPatterns("/usr/article/doWrtie").addPathPatterns("/usr/article/delete")
+					.addPathPatterns("/usr/article/modify").addPathPatterns("/usr/article/doModify")
+					.excludePathPatterns("/resource/**").excludePathPatterns("/error");
 
-	}
+		}
 
 }

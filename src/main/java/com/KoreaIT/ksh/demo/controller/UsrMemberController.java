@@ -99,7 +99,7 @@ public class UsrMemberController {
 			return Ut.jsHistoryBack("F-N", "이메일을 입력해주세요.");
 		}
 
-		ResultData joinRd = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if (joinRd.isFail()) {
 			return Ut.jsHistoryBack("F-3", "이미 사용중인 아이디입니다");

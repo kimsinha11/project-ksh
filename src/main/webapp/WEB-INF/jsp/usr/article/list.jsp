@@ -62,41 +62,60 @@
 </section>
 
 <div class="pagination flex justify-center mt-3">
-	<c:set var="baseUri2"
-		value="itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}" />
-	<c:if test="${pageNum > 1}">
-		<a href="?boardId=${param.boardId}&pageNum=1&${baseUri2 }">◀◀</a>
-	</c:if>
-	<c:if test="${pageNum > 10}">
-		<a class="btn-text-link btn btn-outline btn-xs"
-			href="?boardId=${param.boardId}&pageNum=${pageNum - 10}&${baseUri2 }">이전</a>
-	</c:if>
-
-	<c:forEach var="i" begin="1" end="${totalPages}" varStatus="status">
-		<c:set var="baseUri"
-			value="?boardId=${param.boardId}&pageNum=${i}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}" />
-
-		<c:if
-			test="${status.index >= ((pageNum-1) / 10) * 10 && status.index < ((pageNum-1) / 10 + 1) * 10}">
-			<c:choose>
-				<c:when test="${i == pageNum}">
-					<a class="btn-text-link btn btn-outline btn-xs active"
-						href="${baseUri }">${i}</a>
-				</c:when>
-				<c:otherwise>
-					<a class="btn-text-link btn btn-outline btn-xs" href="${baseUri }">${i}</a>
-				</c:otherwise>
-			</c:choose>
+		<c:if test="${pageNum > 1}">
+				<a href="?boardId=${board.id}&pageNum=1&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">◀◀</a>
 		</c:if>
-	</c:forEach>
-	<c:if test="${pageNum < totalPages && totalPages - pageNum >= 10}">
-		<a class="btn-text-link btn btn-outline btn-xs"
-			href="?boardId=${article.boardId}&pageNum=${pageNum + 10}&${baseUri2 }">다음</a>
-	</c:if>
-
-	<c:if test="${pageNum < totalPages && totalPages - pageNum >= 10}">
-		<a href="?boardId=${article.boardId}&pageNum=${totalPages}&${baseUri2 }">▶▶</a>
-	</c:if>
+		<c:if test="${pageNum > 10}">
+				<a class="btn-text-link btn btn-outline btn-xs"
+						href="?boardId=${board.id}&pageNum=${pageNum - 10}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">이전</a>
+		</c:if>
+		<c:forEach var="i" begin="1" end="${totalPages}" varStatus="status">
+				<c:if test="${status.index >= ((pageNum-1) / 10) * 10 && status.index < ((pageNum-1) / 10 + 1) * 10}">
+						<c:choose>
+								<c:when test="${i == pageNum}">
+										<a class="btn-text-link btn btn-outline btn-xs active"
+												href="?boardId=${board.id}&pageNum=${i}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">${i}</a>
+								</c:when>
+								<c:otherwise>
+										<a class="btn-text-link btn btn-outline btn-xs"
+												href="?boardId=${board.id}&pageNum=${i}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">${i}</a>
+								</c:otherwise>
+						</c:choose>
+				</c:if>
+		</c:forEach>
+		<c:if test="${pageNum < totalPages}">
+				<a class="btn-text-link btn btn-outline btn-xs"
+						href="?boardId=${board.id}&pageNum=${pageNum + 10}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">다음</a>
+		</c:if>
+		<c:if test="${pageNum < totalPages}">
+				<a href="?boardId=${board.id}&pageNum=${totalPages}&itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}">▶▶</a>
+		</c:if>
 </div>
+<br />
+<form style="text-align: center;" method="get" action="list">
+		<div>
+				<select data-value="${param.searchId}" name ="searchId" class="select select-bordered max-w-xs">
+						<option disabled selected>제목+내용</option>
+						<option value="1">제목</option>
+						<option value="2">내용</option>
+				</select>
+
+				<input type="hidden" name="boardId" value="${board.id}" />
+				<input value="${param.searchKeyword }" class="input input-bordered w-full max-w-xs" type="text" name="searchKeyword" placeholder="검색어를 입력해주세요" />
+				<button class="btn-text-link btn btn-outline btn-xl" style="display: inline;" type="submit">검색</button>
+		</div>
+
+		<script>
+			const searchSelect = document.getElementsByName("searchId")[0];
+			const searchdInput = document.getElementsByName("searchId")[0];
+			searchSelect.onchange = function() {
+				var selectedValue = searchSelect.value;
+				searchdInput.value = selectedValue;
+			}
+		</script>
+
+
+		<!-- pageNum과 itemsPerPage 파라미터는 제거하거나 기본값 설정 -->
+</form>
 
 <%@ include file="../common/foot.jspf"%>

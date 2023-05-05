@@ -16,7 +16,7 @@ Article article = (Article) request.getAttribute("article");
 
 <form style="text-align: center;" method="post" action="doWrite">
   <div style="display: inline-block; border: 2px solid black; padding: 50px; text-align: left;">
-  <div style="text-align: right;">이름 : ${article.name }</div>
+  <div style="text-align: right;">${rq.loginedMember.nickname }</div>
     <select class="select select-bordered w-full max-w-xs" name="boardId">
       <option disabled selected>게시판 선택</option>
       <option value="1">Notice</option>

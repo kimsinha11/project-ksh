@@ -16,10 +16,9 @@ Article article = (Article) request.getAttribute("article");
 
 <form style="text-align: center;" method="post" action="doModify">
 <div  style="display: inline-block;  border: 2px solid black; padding: 17px; text-align:left;">
-	<div>
-		번호 : <input value="${article.id }" class="input input-bordered w-full max-w-xs"  type="hidden" name="id"
+<div style="text-align: right;">${rq.loginedMember.nickname }</div>
+	 <input value="${article.id }" class="input input-bordered w-full max-w-xs"  type="hidden" name="id"
 			/>
-	</div>
 	<div>작성날짜 : ${article.regDate }</div>
 	<div>
 		제목 : <input value="${article.title }" class="input input-bordered w-full max-w-xs"  type="text" name="title"

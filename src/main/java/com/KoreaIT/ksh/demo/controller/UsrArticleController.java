@@ -111,36 +111,35 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, Integer boardId, @RequestParam(defaultValue = "1") int pageNum,
-			@RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
+	public String showList(Model model, Integer boardId, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
 
-		if (boardId == null) {
-			boardId = 1;
-		}
 		Board board = BoardService.getBoardById(boardId);
+	    if(boardId == null) {
+	        boardId = 1;
+	    }
 
-		if (board == null) {
-			return rq.jsHistoryBackOnView("그런 게시판은 없어");
-		}
+	    if(board == null) {
+	        return rq.jsHistoryBackOnView("그런 게시판은 없어");
+	    }
+	    
+	
+		int totalCount = articleService.getArticlesCount(boardId, searchId, searchKeyword);
+	    int totalPages = (int) Math.ceil((double)totalCount / itemsPerPage);
+	    int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
+	    int itemsInAPage = (pageNum - 1) * itemsPerPage;
+	    List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage, searchKeyword, searchId);
 
-		int totalCount = articleService.getArticlesCount(boardId);
-		int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage);
-		int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
-		int itemsInAPage = (pageNum - 1) * itemsPerPage;
-		List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage);
-			
-		model.addAttribute("board", board);
+	    model.addAttribute("board", board);
+	    model.addAttribute("articles", articles);
+	    model.addAttribute("totalCount", totalCount);
+	    model.addAttribute("totalPages", totalPages);
+	    model.addAttribute("pageNum", pageNum);
+	    model.addAttribute("itemsPerPage", itemsPerPage);
+	    model.addAttribute("lastPageInGroup", lastPageInGroup);
 
-		model.addAttribute("articles", articles);
-		model.addAttribute("totalCount", totalCount);
-		model.addAttribute("totalPages", totalPages);
-		model.addAttribute("pageNum", pageNum);
-		model.addAttribute("itemsPerPage", itemsPerPage);
-		model.addAttribute("lastPageInGroup", lastPageInGroup);
-
-		return "usr/article/list";
+	    return "usr/article/list";
 	}
-
+	
 	@RequestMapping("/usr/article/detail")
 	public String getArticle(Model model, int id) {
 	

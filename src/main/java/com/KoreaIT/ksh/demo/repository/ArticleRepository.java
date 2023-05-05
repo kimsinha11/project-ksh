@@ -19,7 +19,8 @@ public interface ArticleRepository {
 
 	public Article getArticle(int id);
 
-	public List<Article> getArticles(int boardId, int i, int itemsPerPage);
+	public List<Article> getArticles(int boardId, int i, int itemsPerPage, String searchKeyword, Integer searchId);
+
 
 	public int getLastInsertId();
 	
@@ -31,7 +32,23 @@ public interface ArticleRepository {
 			<if test="boardId != 0">
 				AND A.boardId = #{boardId}
 			</if>
+			<if test="searchKeyword != null and searchKeyword != ''">
+			<choose>
+				<when test="searchId != null and searchId.intValue() == 1">
+					AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<when test="searchId != null and searchId.intValue() == 2">
+					AND body LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<otherwise>
+					AND (title LIKE CONCAT('%', #{searchKeyword}, '%') OR body LIKE
+					CONCAT('%', #{searchKeyword}, '%'))
+				</otherwise>
+			</choose>
+		</if>
+	
 			</script>
 				""")
-	public int getArticlesCount(int boardId);
+	public int getArticlesCount(int boardId, Integer searchId, String searchKeyword);
+
 }

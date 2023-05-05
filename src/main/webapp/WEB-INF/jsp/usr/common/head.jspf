@@ -45,12 +45,6 @@
 			<a style="display: block;" href="/usr/member/join">회원가입</a>
 		</div>
 		<%} %>
-		<% if (isLogined) { %>
-		<div
-			style="display: inline-block; width: 9%; text-align: center;">
-			<a style="display: block;" href="/usr/member/logout">로그아웃</a>
-		</div>
-		<%} %>
 				<div class="list" style="display: inline-block; width: 7%; text-align: center;">
 						<a style="display: block;" href="/usr/article/list">리스트</a>
 							<ul>
@@ -59,7 +53,17 @@
 								<li><a href="/usr/article/list?boardId=3">QnA</a></li>
 							</ul>
 				</div>
-	</div>
+				<%
+				if (isLogined) {
+				%>
+				<div style="display: inline-block; width: 9%; text-align: center;">
+						<a style="display: block;" href="/usr/member/logout">로그아웃</a>
+				</div>
+				<div style="display: inline-block; width: 7%; text-align: center;">
+						<a style="display: block;" href="#">${rq.loginedMember.nickname }</a>
+				</div>
+				<%} %>
+		</div>
 	<h1
 		style="text-align: center; font-size: 50px; background-color: #9ACD32">${pageTitle  }</h1>
 	<hr />
