@@ -80,7 +80,7 @@ List<Article> commentsCount = (List<Article>) request.getAttribute("commentsCoun
 	<c:set var="baseUri2"
 		value="itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}" />
 	<c:if test="${pageNum > 1}">
-		<a href="?boardId=${article.boardId}&pageNum=1&${baseUri2 }">◀◀</a>
+		<a class="btn-text-link btn btn-outline btn-xs" href="?boardId=${article.boardId}&pageNum=1&${baseUri2 }">◀◀</a>
 	</c:if>
 	<c:if test="${pageNum > 10}">
 		<a class="btn-text-link btn btn-outline btn-xs"
@@ -110,7 +110,7 @@ List<Article> commentsCount = (List<Article>) request.getAttribute("commentsCoun
 	</c:if>
 
 	<c:if test="${pageNum < totalPages && totalPages - pageNum >= 10}">
-		<a
+		<a class="btn-text-link btn btn-outline btn-xs"
 			href="?boardId=${article.boardId}&pageNum=${totalPages}&${baseUri2 }">▶▶</a>
 	</c:if>
 </div>
