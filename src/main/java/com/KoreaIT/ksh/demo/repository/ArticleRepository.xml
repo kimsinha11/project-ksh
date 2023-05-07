@@ -34,7 +34,10 @@
 		member.id
 		LEFT JOIN reactionPoint
 		ON article.id = reactionPoint.relId AND reactionPoint.relTypeCode = 'article'
-		WHERE article.boardId = #{boardId}
+		WHERE 1
+		<if test="boardId != 0">
+		AND article.boardId = #{boardId}
+		</if>
 		<if test="searchKeyword != null and searchKeyword != ''">
 			<choose>
 				<when test="searchId != null and searchId.intValue() == 1">

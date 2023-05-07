@@ -46,7 +46,7 @@ boolean isLogined = rq.isLogined();
 				}
 				%>
 				<div class="list" style="display: inline-block; width: 7%; text-align: center;">
-						<a style="display: block;" href="/usr/article/list">리스트</a>
+						<a style="display: block;" href="/usr/article/list">게시판</a>
 						<ul>
 								<li>
 										<a href="/usr/article/list?boardId=1">NOTICE</a>
@@ -73,6 +73,5 @@ boolean isLogined = rq.isLogined();
 				%>
 		</div>
 		<h1 style="text-align: center; font-size: 50px; background-color: #9ACD32">${pageTitle  }</h1>
-		<hr />
 
 		<main>

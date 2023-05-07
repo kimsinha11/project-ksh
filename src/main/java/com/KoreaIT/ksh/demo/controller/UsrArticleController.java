@@ -113,14 +113,11 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, Integer boardId, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
+	public String showList(Model model,@RequestParam(defaultValue = "0") Integer boardId, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
 
 		Board board = BoardService.getBoardById(boardId);
-	    if(boardId == null) {
-	        boardId = 1;
-	    }
-
-	    if(board == null) {
+	    
+	    if(boardId!=0 && board == null) {
 	        return rq.jsHistoryBackOnView("그런 게시판은 없어");
 	    }
 	    
