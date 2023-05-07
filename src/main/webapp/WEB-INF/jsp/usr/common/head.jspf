@@ -26,6 +26,7 @@ boolean isLogined = rq.isLogined();
 
 
 		<div class="h-10 flex mx-auto text-3xl ">
+	
 				<a href="/">로고</a>
 				<div class="flex-grow"></div>
 				<div style="display: inline-block; width: 6%; text-align: center;">

@@ -116,6 +116,66 @@ Reply reply = (Reply) request.getAttribute("reply");
 		      });
 		  }
 </script>   
+<!-- 댓글 리액션 실행 코드 -->
+<script>
+function doReplyGoodReaction(replyId) {
+    if (params.memberId == 0) {
+        alert('로그인 후 이용해주세요.');
+        return;
+    }
+    $.ajax({
+        url: '/usr/reactionPoint/doGoodReaction',
+        type: 'POST',
+        data: {relTypeCode: 'reply', relId: replyId},
+        dataType: 'json',
+        success: function(data) {
+            if (data.resultCode.startsWith('S-')) {
+                var likeButton = $('#replyLikeButton');
+                var likeCount = $('#replylikeCount');
+                if (data.resultCode == 'S-1') {
+          
+                    likeCount.text(parseInt(likeCount.text()) - 1);
+                } else {
+                    likeCount.text(parseInt(likeCount.text()) + 1);
+                }
+            } else {
+                alert(data.msg);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('오류가 발생했습니다: ' + textStatus);
+        }
+    });
+}
+function doReplyBadReaction(replyId) {
+    if (params.memberId == 0) {
+        alert('로그인 후 이용해주세요.');
+        return;
+    }
+    $.ajax({
+        url: '/usr/reactionPoint/doBadReaction',
+        type: 'POST',
+        data: {relTypeCode: 'reply', relId: replyId},
+        dataType: 'json',
+        success: function(data) {
+            if (data.resultCode.startsWith('S-')) {
+                var dislikeButton = $('#replyDislikeButton');
+                var dislikeCount = $('#replyDislikeCount');
+                if (data.resultCode == 'S-1') {
+                    dislikeCount.text(parseInt(dislikeCount.text()) - 1);
+                } else {
+                    dislikeCount.text(parseInt(dislikeCount.text()) + 1);
+                }
+            } else {
+                alert(data.msg);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('오류가 발생했습니다: ' + textStatus);
+        }
+    });
+}
+</script>
 <script type="text/javascript">
 	let ReplyWrite__submitFormDone = false;
 	function ReplyWrite__submitForm(form) {
@@ -299,7 +359,29 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 					onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
 					href="../reply/delete?id=${reply.id }&relId=${reply.relId }">삭제</a>
 				</th>
+				<th>
+					<button id="replylikeButton" class="btn btn-outline" type="button"
+						onclick="doReplyGoodReaction(${reply.id })">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+							fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			    <path stroke-linecap="round" stroke-linejoin="round"
+								stroke-width="2"
+								d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+			  </svg>
+						<span id="replylikeCount">${reply.goodReactionPoint}</span>
 
+					</button>
+					<button id="replyDislikeButton" class="btn btn-outline" type="button"
+						onclick="doReplyBadReaction(${reply.id })">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+							fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			    <path stroke-linecap="round" stroke-linejoin="round"
+								stroke-width="2"
+								d="M18,4h3v10h-3V4z M5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21c0.58,0,1.14-0.24,1.52-0.65L17,14V4H6.57 C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14z" />
+			  </svg>
+						<span id="replyDislikeCount">${reply.badReactionPoint}</span>
+					</button>
+				</th>
 			</tr>
 		</c:forEach>
 	</tbody>

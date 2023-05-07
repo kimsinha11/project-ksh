@@ -21,18 +21,25 @@
 		badReactionPoint = 0
 	</insert>
 
-	<select id="getReply" resultType="Reply">
+		<select id="getReply" resultType="Reply">
 		SELECT reply.*,
-		member.name
+		IFNULL(SUM(reactionPoint.point),0) AS extra__sumReactionPoint,
+		IFNULL(SUM(IF(reactionPoint.point &gt; 0,reactionPoint.point,0)),0) AS
+		extra__goodReactionPoint,
+		IFNULL(SUM(IF(reactionPoint.point &lt;
+		0,reactionPoint.point,0)),0) AS extra__badReactionPoint, member.name
 		AS 'name'
 		FROM reply
-		INNER JOIN
-		`member`
+		INNER JOIN `member`
 		ON reply.memberId =
 		member.id
+		LEFT JOIN reactionPoint
+		ON reply.id = reactionPoint.relId
+		AND reactionPoint.relTypeCode = 'article'
 		WHERE reply.id
 		=
-		#{id}
+		#{id} 
+
 	</select>
 
 	<delete id="deleteReply">
@@ -64,4 +71,28 @@
 		WHERE reply.relId = #{id}
 		ORDER BY reply.id DESC
 	</select>
+	
+		<update id="increaseGoodReactionPoint">
+		UPDATE reply
+		SET goodReactionPoint = goodReactionPoint + 1
+		WHERE id = #{relId}
+	</update>
+	
+	<update id="decreaseGoodReactionPoint">
+		UPDATE reply
+		SET goodReactionPoint = goodReactionPoint - 1
+		WHERE id = #{relId}
+	</update>
+	
+	<update id="increaseBadReactionPoint">
+		UPDATE reply
+		SET badReactionPoint = badReactionPoint + 1
+		WHERE id = #{relId}
+	</update>
+	
+	<update id="decreaseBadReactionPoint">
+		UPDATE reply
+		SET badReactionPoint = badReactionPoint - 1
+		WHERE id = #{relId}
+	</update>
 </mapper>

@@ -43,4 +43,40 @@ public class ReplyService {
 		return replyRepository.getReplys(id);
 	}
 
+	public ResultData increaseGoodReactionPoint(int relId) {
+		int affectedRow = replyRepository.increaseGoodReactionPoint(relId);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "게시글 정보가 없습니다.",affectedRow);
+		}
+		return ResultData.from("S-1", "좋아요 증가", affectedRow);
+	}
+
+	public ResultData increaseBadReactionPoint(int relId) {
+		int affectedRow = replyRepository.increaseBadReactionPoint(relId);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "게시글 정보가 없습니다.", affectedRow);
+		}
+		return ResultData.from("S-1", "싫어요 증가", affectedRow);
+	}
+
+	public ResultData decreaseGoodReactionPoint(int relId) {
+		int affectedRow = replyRepository.decreaseGoodReactionPoint(relId);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "해당 게시글은 존재하지 않습니다.", affectedRow);
+		}
+		return ResultData.from("S-1", "좋아요 감소", affectedRow);
+	}
+
+	public ResultData decreaseBadReactionPoint(int relId) {
+		int affectedRow = replyRepository.decreaseBadReactionPoint(relId);
+
+		if (affectedRow == 0) {
+			return ResultData.from("F-1", "해당 게시글은 존재하지 않습니다.", affectedRow);
+		}
+		return ResultData.from("S-1", "싫어요 감소", affectedRow);
+
+	}
 }

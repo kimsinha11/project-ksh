@@ -108,7 +108,7 @@
 
 	<select id="getReplysCount" resultType="Article">
 		SELECT article.id AS
-		'id', COUNT(*) AS 'count'
+		'id', COUNT(*) AS 'reply'
 		FROM reply
 		INNER JOIN article
 		ON reply.relId = article.id
