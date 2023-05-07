@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.KoreaIT.ksh.demo.service.ArticleService;
 import com.KoreaIT.ksh.demo.service.BoardService;
 import com.KoreaIT.ksh.demo.service.ReactionPointService;
+import com.KoreaIT.ksh.demo.service.ReplyService;
 import com.KoreaIT.ksh.demo.util.Ut;
 import com.KoreaIT.ksh.demo.vo.Article;
 import com.KoreaIT.ksh.demo.vo.Board;
+import com.KoreaIT.ksh.demo.vo.Reply;
 import com.KoreaIT.ksh.demo.vo.ResultData;
 import com.KoreaIT.ksh.demo.vo.Rq;
 
@@ -30,41 +32,42 @@ public class UsrArticleController {
 	private Rq rq;
 	@Autowired
 	private ReactionPointService reactionPointService;
-	//F-A 로그인 오류 F-B 로그아웃 오류 F-N 빈 값 오류 F-F 없거나 불일치 오류 F-C 권한오류
-	
-	
+	@Autowired
+	private ReplyService replyService;
+	// F-A 로그인 오류 F-B 로그아웃 오류 F-N 빈 값 오류 F-F 없거나 불일치 오류 F-C 권한오류
+
 	@RequestMapping("/usr/article/write")
 	public String write(Model model, String title, String body) {
 
 		return "usr/article/write";
 	}
-	
+
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
 	public String doWrite(HttpSession httpSession, String title, String body, int boardId) {
-		
+
 		if (Ut.empty(title)) {
 			return Ut.jsHistoryBack("F-A", "제목을 입력해주세요.");
 		}
 		if (Ut.empty(body)) {
 			return Ut.jsHistoryBack("F-A", "내용을 입력해주세요");
 		}
-		
+
 		Board board = BoardService.getBoardById(boardId);
 		ResultData writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
 		int id = (int) writeArticleRd.getData1();
-		
-		return Ut.jsReplace("S-1", "작성완료", Ut.f("../article/detail?id=%d",id));
-		
+
+		return Ut.jsReplace("S-1", "작성완료", Ut.f("../article/detail?id=%d", id));
+
 	}
-	
+
 	@RequestMapping("/usr/article/modify")
 	public String modify(Model model, int id, String title, String body) {
-	
+
 		Article article = articleService.getArticle(id);
-		
-		if(article == null) {
-			return rq.jsHistoryBackOnView(Ut.f("%d번 글은 존재하지 않습니다",id));
+
+		if (article == null) {
+			return rq.jsHistoryBackOnView(Ut.f("%d번 글은 존재하지 않습니다", id));
 		}
 		if (article.getMemberId() == rq.getLoginedMemberId()) {
 
@@ -76,15 +79,13 @@ public class UsrArticleController {
 
 	}
 
-	
-	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify( int id, String title, String body) {
-		
+	public String doModify(int id, String title, String body) {
+
 		Article article = articleService.getArticle(id);
-		
-		if(article == null) {
+
+		if (article == null) {
 			return Ut.jsHistoryBack("F-F", id + "번 글은 존재하지 않습니다.");
 		}
 		articleService.modifyArticle(id, title, body);
@@ -96,7 +97,6 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
 	public String doDelete(Model model, int id) {
-
 
 		Article article = articleService.getArticle(id);
 		if (article == null) {
@@ -113,37 +113,42 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model,@RequestParam(defaultValue = "0") Integer boardId, @RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
+	public String showList(Model model, @RequestParam(defaultValue = "0") Integer boardId,
+			@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int itemsPerPage,
+			String searchKeyword, Integer searchId) {
 
 		Board board = BoardService.getBoardById(boardId);
-	    
-	    if(boardId!=0 && board == null) {
-	        return rq.jsHistoryBackOnView("그런 게시판은 없어");
-	    }
-	    
-	
+
+		if (boardId != 0 && board == null) {
+			return rq.jsHistoryBackOnView("그런 게시판은 없어");
+		}
+
 		int totalCount = articleService.getArticlesCount(boardId, searchId, searchKeyword);
-	    int totalPages = (int) Math.ceil((double)totalCount / itemsPerPage);
-	    int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
-	    int itemsInAPage = (pageNum - 1) * itemsPerPage;
-	    List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage, searchKeyword, searchId);
+		int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage);
+		int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
+		int itemsInAPage = (pageNum - 1) * itemsPerPage;
+		List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage, searchKeyword,
+				searchId);
+		List<Article> replysCount = articleService.getReplysCount();
 
-	    model.addAttribute("board", board);
-	    model.addAttribute("articles", articles);
-	    model.addAttribute("totalCount", totalCount);
-	    model.addAttribute("totalPages", totalPages);
-	    model.addAttribute("pageNum", pageNum);
-	    model.addAttribute("itemsPerPage", itemsPerPage);
-	    model.addAttribute("lastPageInGroup", lastPageInGroup);
+		model.addAttribute("replysCount", replysCount);
+		model.addAttribute("board", board);
+		model.addAttribute("articles", articles);
+		model.addAttribute("totalCount", totalCount);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("itemsPerPage", itemsPerPage);
+		model.addAttribute("lastPageInGroup", lastPageInGroup);
 
-	    return "usr/article/list";
+		return "usr/article/list";
 	}
-	
+
 	@RequestMapping("/usr/article/detail")
 	public String getArticle(Model model, int id) {
 		Article article = articleService.getArticle(id);
 
-		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "id", id);
+		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(),
+				"id", id);
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
@@ -162,8 +167,10 @@ public class UsrArticleController {
 				model.addAttribute("actorCanCancelBadReaction", true);
 			}
 		}
+		List<Reply> replys = replyService.getReplys(id);
 
-			
+		model.addAttribute("replys", replys);
+
 		return "usr/article/detail";
 	}
 }

@@ -110,4 +110,9 @@ public class ArticleService {
 		return ResultData.from("S-1", "싫어요 감소", affectedRow);
 
 	}
+
+
+	public List<Article> getReplysCount() {
+		return articleRepository.getReplysCount();
+	}
 }

@@ -3,6 +3,10 @@
 <%@ page import="com.KoreaIT.ksh.demo.vo.Article"%>
 <c:set var="pageTitle" value="DETAIL" />
 <%@ include file="../common/head.jspf"%>
+<%@ page import="com.KoreaIT.ksh.demo.vo.Reply"%>
+<%
+Reply reply = (Reply) request.getAttribute("reply");
+%>
 
 <!-- <iframe src="http://localhost:8081/usr/article/doIncreaseHitCountRd?id=2" frameborder="0"></iframe> -->
 <!-- 변수 생성 -->
@@ -227,5 +231,77 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 
 <br />
 
+<c:if test="${rq.logined }">
+	<form style="text-align: center;" action="../reply/doWrite"
+		method="POST" onsubmit="ReplyWrite__submitForm(this); return false;">
 
+		<div
+			style="display: inline-block; border: 2px solid black; width: 700px; height: 100px; text-align: left;">
+			<div style="display: none">
+
+				<input value="${article.id }"
+					class="input input-bordered w-full max-w-xs" type="hidden"
+					name="relId" /> <input type="hidden" name="relTypeCode"
+					value="article" /> <input value="${article.boardId }"
+					class="input input-bordered w-full max-w-xs" type="hidden"
+					name="boardId" />
+
+			</div>
+
+			<div>작성자 : ${rq.loginedMember.nickname}</div>
+			<div>
+				내용 :
+				<textarea type="text" class="input input-bordered w-full max-w-xs"
+					placeholder="내용을 입력해주세요" name="body" /></textarea>
+				<button class="btn-text-link btn btn-outline btn-xs"
+					style="display: inline" type="submit">작성하기</button>
+			</div>
+
+
+		</div>
+	</form>
+</c:if>
+<div style="text-align: center;">
+	<c:if test="${rq.notLogined }">
+		<a class="btn-text-link btn btn-outline btn-xs" type="button"
+			href="/usr/member/login">로그인</a> 후 댓글 작성을 이용해주세요
+</c:if>
+</div>
+<br />
+<div style="text-align: center;">댓글 리스트</div>
+<table class="table-box-type-2 table w-full"
+	style="border-collaspe: collaspe; width: 700px;">
+	<thead>
+
+		<tr>
+			<th style="font-size: 19px">내용</th>
+			<th style="font-size: 19px">날짜</th>
+			<th style="font-size: 19px">작성자</th>
+			<th style="font-size: 19px">수정</th>
+			<th style="font-size: 19px">삭제</th>
+			<th style="font-size: 19px">공감</th>
+
+
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach var="reply" items="${replys }">
+			<tr>
+				<th>${reply.body }</th>
+				<th>${reply.regDate.substring(0,10) }</th>
+				<th>${reply.name}</th>
+
+				<th><a class="btn-text-link btn btn-outline btn-xs"
+					onclick="if(confirm('정말 수정하시겠습니까?') == false) return false;"
+					href="../reply/modify?id=${reply.id }&relId=${reply.relId }">수정</a>
+				</th>
+				<th><a class="btn-text-link btn btn-outline btn-xs"
+					onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
+					href="../reply/delete?id=${reply.id }&relId=${reply.relId }">삭제</a>
+				</th>
+
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>
 <%@ include file="../common/foot.jspf"%>

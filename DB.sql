@@ -207,13 +207,28 @@ ON A.id = RP_SUM.relId
 SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
 A.badReactionPoint = RP_SUM.badReactionPoint;
 
+
+# 댓글 테이블 생성
+CREATE TABLE reply(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `body` TEXT NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    boardId INT(10) UNSIGNED NOT NULL,
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
+    relId INT(10) UNSIGNED NOT NULL,
+    goodReactionPoint INT(10) UNSIGNED NOT NULL,
+    badReactionPoint INT(10) UNSIGNED NOT NULL
+);
+
 ###################################################################
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
+SELECT * FROM reply;
 
-SELECT *
 FROM reactionPoint AS RP
 GROUP BY RP.relTypeCode, RP.relId;
 

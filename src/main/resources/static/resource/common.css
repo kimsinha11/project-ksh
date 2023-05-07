@@ -20,12 +20,12 @@ html > body {
 }
 
 .title-text,
-.comment-count {
+.reply-count {
   display: inline-block;
 }
 
 .title-text:hover,
-.comment-count:hover {
+.reply-count:hover {
   text-decoration: underline;
 }
 

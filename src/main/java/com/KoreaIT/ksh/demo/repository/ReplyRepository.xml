@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.KoreaIT.ksh.demo.repository.ReplyRepository">
+
+	<insert id="writeReply">
+		INSERT INTO reply
+		SET regDate = NOW(),
+		updateDate =
+		NOW(),
+		`body` = #{body},
+		memberId = #{memberId},
+		boardId =
+		#{boardId},
+		relTypeCode =
+		'comment',
+		relId =
+		#{relId},
+		goodReactionPoint = 0,
+		badReactionPoint = 0
+	</insert>
+
+	<select id="getReply" resultType="Reply">
+		SELECT reply.*,
+		member.name
+		AS 'name'
+		FROM reply
+		INNER JOIN
+		`member`
+		ON reply.memberId =
+		member.id
+		WHERE reply.id
+		=
+		#{id}
+	</select>
+
+	<delete id="deleteReply">
+		DELETE FROM
+		reply
+		WHERE id = #{id}
+	</delete>
+
+	<update id="modifyReply">
+		UPDATE reply
+		<set>
+			<if test="body != null and body != ''">`body` = #{body},</if>
+			updateDate = NOW()
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
+
+	<select id="getReplys" resultType="Reply">
+		SELECT reply.*, member.name
+		FROM reply
+		INNER JOIN `member`
+		ON reply.memberId = member.id
+		INNER JOIN article
+		ON reply.relId = article.id
+		WHERE reply.relId = #{id}
+		ORDER BY reply.id DESC
+	</select>
+</mapper>

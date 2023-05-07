@@ -16,7 +16,7 @@
 <c:set var="itemsPerPage" value="${itemsPerPage}" />
 
 <%
-List<Article> commentsCount = (List<Article>) request.getAttribute("commentsCount");
+List<Article> replysCount = (List<Article>) request.getAttribute("replysCount");
 %>
 <%@ include file="../common/head.jspf"%>
 
@@ -58,14 +58,19 @@ List<Article> commentsCount = (List<Article>) request.getAttribute("commentsCoun
 												<th>${article.regDate.substring(0,10)}</th>
 												<th class="title">
 														<div class="title-text">
-																<a href="detail?id=${article.id}"> 
-																<c:if test="${article.title.length()> 15}">
+																<a href="detail?id=${article.id}">
+																		<c:if test="${article.title.length()> 15}">
 																${article.title.substring(0, 15)}
 																</c:if>
-																<c:if test="${article.title.length()<15}">
+																		<c:if test="${article.title.length()<15}">
 																${article.title }
 																</c:if>
 																</a>
+														</div>
+														<div class="reply-count" style="color: red; font-size: 13px;">
+																<c:forEach var="replysCount" items="${replysCount}">
+																		<c:if test="${replysCount.id == article.id}"> (${replysCount.count})  </c:if>
+																</c:forEach>
 														</div>
 												</th>
 												<th>${article.name}</th>

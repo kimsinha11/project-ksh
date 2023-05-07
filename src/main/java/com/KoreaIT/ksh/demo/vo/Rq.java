@@ -24,8 +24,7 @@ public class Rq {
 	private int loginedMemberId;
 	@Getter
 	private Member loginedMember;
-	
-	
+
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private HttpSession session;
@@ -33,12 +32,12 @@ public class Rq {
 	public Rq(HttpServletRequest req, HttpServletResponse resp, MemberService memberService) {
 		this.req = req;
 		this.resp = resp;
+
 		this.session = req.getSession();
-		
 		boolean isLogined = false;
 		int loginedMemberId = 0;
 		Member loginedMember = null;
-
+		
 		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
@@ -51,13 +50,6 @@ public class Rq {
 		this.req.setAttribute("rq", this);
 	}
 
-	public String jsHitoryBackOnView(String msg) {
-		req.setAttribute("msg", msg);
-		req.setAttribute("historyBack", true);
-		return "usr/common/js";
-
-	}
-	
 	public void printHitoryBackJs(String msg) throws IOException {
 
 		resp.setContentType("text/html; charset=UTF-8");
@@ -83,7 +75,6 @@ public class Rq {
 
 	public void login(Member member) {
 		session.setAttribute("loginedMemberId", member.getId());
-		
 
 	}
 
@@ -91,20 +82,51 @@ public class Rq {
 		session.removeAttribute("loginedMemberId");
 		
 	}
-	public String jsReplace(String msg, String uri) {
-		return Ut.jsReplace(msg, uri);
+	
+
+	public String jsHistoryBackOnView(String msg) {
+		req.setAttribute("msg", msg);
+		req.setAttribute("historyBack", true);
+		return "usr/common/common";
+
 	}
+
 	public String jsHistoryBack(String resultCode, String msg) {
 		return Ut.jsHistoryBack(resultCode, msg);
 	}
-	
-	public String jsHistoryBackOnView(String msg) {
-		req.setAttribute("msg", msg);
-		req.setAttribute("historyBack",true);
-		return "usr/common/common";
+
+	public String jsReplace(String msg, String uri) {
+		return Ut.jsReplace(msg, uri);
 	}
 
-	public void initOnBeforeActionInterceptor() {
-	
+	public String getCurrentUri() {
+		String currentUri = req.getRequestURI();
+		String queryString = req.getQueryString();
+		
+		System.out.println(currentUri);
+		System.out.println(queryString);
+		
+		if (queryString != null && queryString.length() > 0) {
+			currentUri += "?" + queryString;
+		}
+
+		System.out.println(currentUri);
+		return currentUri;
+
 	}
+	
+	//public String getEncodedCurrentUri() {
+	//	return Ut.getEncodedCurrentUri(getCurrentUri());
+	//}
+
+	// Rq 객체 생성 유도
+	// 삭제 x, BeforeActionInterceptor 에서 강제 호출
+	public void initOnBeforeActionInterceptor() {
+
+	}
+
+	public boolean isNotLogined() {
+		return !isLogined;
+	}
+
 }

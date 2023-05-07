@@ -54,6 +54,7 @@ public interface ArticleRepository {
 
 	public int increaseHitCount(int id);
 
+	public List<Article> getReplysCount();
 	
 	public int increaseGoodReactionPoint(int relId);
 
