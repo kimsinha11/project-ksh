@@ -5,6 +5,34 @@
 <%@ page import="java.util.Map"%>
 <c:set var="pageTitle" value="ARTICLE WRITE" />
 <%@ include file="../common/head.jspf"%>
+<%@ include file="../common/toastUiEditorLib.jspf"%>
+
+<script type="text/javascript">
+let ArticleWrite__submitFormDone = false;
+function ArticleWrite__submit(form) {
+	if (ArticleWrite__submitFormDone) {
+		return;
+	}
+	form.title.value = form.title.value.trim();
+	if(form.title.value == 0){
+		alert('제목을 입력해주세요');
+		return;
+	}
+	const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+	const markdown = editor.getMarkdown().trim();
+	
+	if(markdown.length == 0){
+		alert('내용 써라');
+		editor.focus();
+		return;
+	}
+
+	form.body.value = markdown;
+	
+	ArticleWrite__submitFormDone = true;
+	form.submit();
+}
+</script>
 
 <%
 Article article = (Article) request.getAttribute("article");
@@ -14,8 +42,9 @@ Article article = (Article) request.getAttribute("article");
 
 
 
-<form style="text-align: center;" method="post" action="doWrite">
-  <div style="display: inline-block; border: 2px solid black; padding: 50px; text-align: left;">
+<form style="text-align: center;" method="post" onsubmit="ArticleWrite__submit(this); return false;" action="doWrite">
+<input type="hidden" name="body" />
+  <div style="display: inline-block; border: 2px solid black; padding: 17px; text-align: left;">
   <div style="text-align: right;">${rq.loginedMember.nickname }</div>
     <select class="select select-bordered w-full max-w-xs" name="boardId">
       <option disabled selected>게시판 선택</option>
@@ -30,7 +59,14 @@ Article article = (Article) request.getAttribute("article");
     </div>
     <div>
       내용 :
-      <textarea type="text" class="input input-bordered w-full max-w-xs" placeholder="내용을 입력해주세요" name="body" /></textarea>
+         <div class="toast-ui-editor">
+      <script type="text/x-template">
+      </script>
+    </div>
+		<!--  <textarea type="text" class="input input-bordered w-full max-w-xs"  placeholder="내용을 입력해주세요" name="body" /></textarea>--> 
+	</div>
+
+    <button class="btn-text-link btn btn-outline btn-xs" style="display: inline" type="submit"> 작성하기</button>
     </div>
 
     <script>
@@ -41,7 +77,8 @@ Article article = (Article) request.getAttribute("article");
         boardIdInput.value = selectedValue;
       }
     </script>
-    <button class="btn-text-link btn btn-outline btn-xs" style="display: inline;" type="submit">작성하기</button>
-
-  </div>
+    
+ 
 </form>
+
+<%@ include file="../common/foot.jspf"%>
