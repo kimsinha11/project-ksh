@@ -2,7 +2,6 @@ package com.KoreaIT.ksh.demo.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.ksh.demo.service.ArticleService;
 import com.KoreaIT.ksh.demo.service.BoardService;
+import com.KoreaIT.ksh.demo.service.ReactionPointService;
 import com.KoreaIT.ksh.demo.util.Ut;
 import com.KoreaIT.ksh.demo.vo.Article;
 import com.KoreaIT.ksh.demo.vo.Board;
@@ -28,6 +28,8 @@ public class UsrArticleController {
 	private BoardService boardService;
 	@Autowired
 	private Rq rq;
+	@Autowired
+	private ReactionPointService reactionPointService;
 	//F-A 로그인 오류 F-B 로그아웃 오류 F-N 빈 값 오류 F-F 없거나 불일치 오류 F-C 권한오류
 	
 	
@@ -142,19 +144,29 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/detail")
 	public String getArticle(Model model, int id) {
-		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
-		if (increaseHitCountRd.isFail()) {
-			return rq.jsHitoryBackOnView(increaseHitCountRd.getMsg());
-		}
 		Article article = articleService.getArticle(id);
 
-		if (article == null) {
-			return rq.jsHistoryBackOnView(Ut.f("%d번 글은 존재하지 않습니다",id));
-		}
-
+		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "id", id);
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
+		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
+		model.addAttribute("isAlreadyAddGoodRp", reactionPointService.isAlreadyAddGoodRp(id, "article"));
+		model.addAttribute("isAlreadyAddBadRp", reactionPointService.isAlreadyAddBadRp(id, "article"));
+		if (actorCanMakeReactionRd.isSuccess()) {
+			model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
+		}
 
+		if (actorCanMakeReactionRd.getResultCode().equals("F-1")) {
+			int sumReactionPointByMemberId = (int) actorCanMakeReactionRd.getData1();
+
+			if (sumReactionPointByMemberId > 0) {
+				model.addAttribute("actorCanCancelGoodReaction", true);
+			} else if (sumReactionPointByMemberId < 0) {
+				model.addAttribute("actorCanCancelBadReaction", true);
+			}
+		}
+
+			
 		return "usr/article/detail";
 	}
 }

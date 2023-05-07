@@ -91,6 +91,12 @@ public class Rq {
 		session.removeAttribute("loginedMemberId");
 		
 	}
+	public String jsReplace(String msg, String uri) {
+		return Ut.jsReplace(msg, uri);
+	}
+	public String jsHistoryBack(String resultCode, String msg) {
+		return Ut.jsHistoryBack(resultCode, msg);
+	}
 	
 	public String jsHistoryBackOnView(String msg) {
 		req.setAttribute("msg", msg);

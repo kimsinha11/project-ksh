@@ -10,14 +10,23 @@ html > body {
 }
 
 /* 라이브러리 */
-.table-box-type-1>thead th, .table-box-type-1 th{
+.table-box-type-1>thead th, .table-box-type-1 th {
 	border: 2px solid black;
-		
 }
 
-html {
-	width: 1200px;
-	margin: 0 auto; 
+.table-box-type-2>thead th, .table-box-type-2 th {
+	/*border: 2px solid black;*/
+	height: 0;
+}
+
+.title-text,
+.comment-count {
+  display: inline-block;
+}
+
+.title-text:hover,
+.comment-count:hover {
+  text-decoration: underline;
 }
 
 table {
@@ -28,16 +37,16 @@ table {
 	margin-right: auto;
 }
 
-body > div> div > ul > li > a{
+body>div>div>ul>li>a {
 	display: none;
 }
 
-body > div > .list:hover >  ul > li > a {
+body>div>.list:hover>ul>li>a {
 	display: block;
 }
 
 th {
-	border: 1px solid black;
+
 	text-align: center;
 	padding: 8px;
 	font-size: 17px;
@@ -50,16 +59,21 @@ th {
 }
 
 .pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
 }
 
 .pagination a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  border: 1px solid #ddd;
-  margin: 0 4px;
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	border: 1px solid #ddd;
+	margin: 0 4px;
+}
+
+.btn-text-link.active {
+	color: white;
+	background-color: #6c757d;
 }

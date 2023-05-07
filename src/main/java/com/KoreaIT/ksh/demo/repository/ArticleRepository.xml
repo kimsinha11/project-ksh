@@ -4,6 +4,7 @@
 <mapper
 	namespace="com.KoreaIT.ksh.demo.repository.ArticleRepository">
 
+
 	<insert id="writeArticle">
 		INSERT INTO article
 		SET regDate = NOW(),
@@ -12,22 +13,28 @@
 		title =#{title},
 		`body`= #{body},
 		memberId = #{memberId},
-		boardId = #{boardId},
-		hitCount = 0
+		boardId =
+		#{boardId},
+		hitCount =
+		0,
+		goodReactionPoint = 0,
+		badReactionPoint = 0
 	</insert>
 
 	<select id="getArticles" resultType="Article">
-		SELECT article.id, article.regDate, article.updateDate, article.title,
-		article.body, article.memberId, article.boardId, board.id, member.name
-		AS 'name'
+		SELECT article.*,
+		IFNULL(SUM(reactionPoint.point),0) AS extra__sumReactionPoint,
+		IFNULL(SUM(IF(reactionPoint.point &gt; 0,reactionPoint.point,0)),0) AS extra__goodReactionPoint,
+		IFNULL(SUM(IF(reactionPoint.point &lt; 0,reactionPoint.point,0)),0) AS extra__badReactionPoint,
+		member.name AS 'name'
 		FROM article
-		INNER JOIN `member`
+		INNER JOIN
+		`member`
 		ON article.memberId =
 		member.id
-		INNER JOIN board
-		ON article.boardId = board.id
-		WHERE board.id =
-		#{boardId}
+		LEFT JOIN reactionPoint
+		ON article.id = reactionPoint.relId AND reactionPoint.relTypeCode = 'article'
+		WHERE article.boardId = #{boardId}
 		<if test="searchKeyword != null and searchKeyword != ''">
 			<choose>
 				<when test="searchId != null and searchId.intValue() == 1">
@@ -37,24 +44,33 @@
 					AND body LIKE CONCAT('%', #{searchKeyword}, '%')
 				</when>
 				<otherwise>
-					AND (title LIKE CONCAT('%', #{searchKeyword}, '%') OR body LIKE
+					AND (title LIKE CONCAT('%', #{searchKeyword}, '%') OR
+					body LIKE
 					CONCAT('%', #{searchKeyword}, '%'))
 				</otherwise>
 			</choose>
 		</if>
+		GROUP BY article.id
 		ORDER BY article.id DESC
-		LIMIT #{i}, #{itemsPerPage}
+		<if test="i >= 0">
+			LIMIT #{i}, #{itemsPerPage}
+		</if>
 	</select>
 
 	<select id="getArticle" resultType="Article">
-		SELECT article.id,
-		article.regDate, article.updateDate, article.title, article.body,
-		article.memberId, member.name AS 'name'
+		SELECT article.*,
+		IFNULL(SUM(reactionPoint.point),0) AS extra__sumReactionPoint,
+		IFNULL(SUM(IF(reactionPoint.point &gt; 0,reactionPoint.point,0)),0) AS extra__goodReactionPoint,
+		IFNULL(SUM(IF(reactionPoint.point &lt; 0,reactionPoint.point,0)),0) AS extra__badReactionPoint, member.name AS 'name'
 		FROM article
 		INNER JOIN `member`
 		ON article.memberId = member.id
+		LEFT JOIN reactionPoint
+		ON article.id = reactionPoint.relId AND reactionPoint.relTypeCode = 'article'
 		WHERE article.id
-		= #{id}
+		=
+		#{id}
+		
 	</select>
 
 	<delete id="deleteArticle">
@@ -77,4 +93,34 @@
 		SELECT LAST_INSERT_ID()
 	</select>
 
+	<update id="increaseHitCount">
+		UPDATE article
+		SET hitCount = hitCount + 1
+		WHERE id = #{id}
+	</update>
+	
+	<update id="increaseGoodReactionPoint">
+		UPDATE article
+		SET goodReactionPoint = goodReactionPoint + 1
+		WHERE id = #{relId}
+	</update>
+	
+	<update id="decreaseGoodReactionPoint">
+		UPDATE article
+		SET goodReactionPoint = goodReactionPoint - 1
+		WHERE id = #{relId}
+	</update>
+	
+	<update id="increaseBadReactionPoint">
+		UPDATE article
+		SET badReactionPoint = badReactionPoint + 1
+		WHERE id = #{relId}
+	</update>
+	
+	<update id="decreaseBadReactionPoint">
+		UPDATE article
+		SET badReactionPoint = badReactionPoint - 1
+		WHERE id = #{relId}
+	</update>
+	
 </mapper>
