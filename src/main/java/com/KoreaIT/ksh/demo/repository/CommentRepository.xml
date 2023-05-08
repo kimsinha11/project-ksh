@@ -2,14 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-	namespace="com.KoreaIT.ksh.demo.repository.ReplyRepository">
+	namespace="com.KoreaIT.ksh.demo.repository.CommentRepository">
 
-	<insert id="writeReply">
-		INSERT INTO reply
+
+	<insert id="cwriteComment">
+		INSERT INTO comment
 		SET regDate = NOW(),
-		updateDate =
+		updateDate=
 		NOW(),
-		`body` = #{body},
+		`body`= #{body},
 		memberId = #{memberId},
 		boardId =
 		#{boardId},
@@ -21,77 +22,80 @@
 		badReactionPoint = 0
 	</insert>
 
-		<select id="getReply" resultType="Reply">
-		SELECT reply.*,
+
+	<select id="getComment" resultType="Comment">
+		SELECT comment.*,
 		IFNULL(SUM(reactionPoint.point),0) AS extra__sumReactionPoint,
 		IFNULL(SUM(IF(reactionPoint.point &gt; 0,reactionPoint.point,0)),0) AS
 		extra__goodReactionPoint,
 		IFNULL(SUM(IF(reactionPoint.point &lt;
 		0,reactionPoint.point,0)),0) AS extra__badReactionPoint, member.name
 		AS 'name'
-		FROM reply
+		FROM comment
 		INNER JOIN `member`
-		ON reply.memberId =
+		ON comment.memberId =
 		member.id
 		LEFT JOIN reactionPoint
-		ON reply.id = reactionPoint.relId
+		ON comment.id = reactionPoint.relId
 		AND reactionPoint.relTypeCode = 'article'
-		WHERE reply.id
+		WHERE comment.id
 		=
 		#{id} 
 
 	</select>
 
-	<delete id="deleteReply">
+	<delete id="cdeleteComment">
 		DELETE FROM
-		reply
+		comment
 		WHERE id = #{id}
 	</delete>
 
-	<update id="modifyReply">
-		UPDATE reply
+	<update id="cmodifyComment">
+		UPDATE comment
 		<set>
 			<if test="body != null and body != ''">`body` = #{body},</if>
-			updateDate = NOW()
+			updateDate= NOW()
 		</set>
-		WHERE id = #{id}
+		WHERE id = #{id} 
 	</update>
 
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
 
-	<select id="getReplys" resultType="Reply">
-		SELECT reply.*, member.name
-		FROM reply
+	<select id="getComments" resultType="Comment">
+		SELECT comment.*, member.name
+		FROM `comment`
 		INNER JOIN `member`
-		ON reply.memberId = member.id
+		ON comment.memberId = member.id
 		INNER JOIN article
-		ON reply.relId = article.id
-		WHERE reply.relId = #{id}
-		ORDER BY reply.id DESC
+		ON comment.relId = article.id
+		WHERE comment.relId = #{id}
+		ORDER BY comment.id DESC
+		
 	</select>
-	
-		<update id="increaseGoodReactionPoint">
-		UPDATE reply
+
+
+	<update id="increaseGoodReactionPoint">
+		UPDATE comment
 		SET goodReactionPoint = goodReactionPoint + 1
 		WHERE id = #{relId}
 	</update>
 	
 	<update id="decreaseGoodReactionPoint">
-		UPDATE reply
+		UPDATE comment
 		SET goodReactionPoint = goodReactionPoint - 1
 		WHERE id = #{relId}
 	</update>
 	
 	<update id="increaseBadReactionPoint">
-		UPDATE reply
+		UPDATE comment
 		SET badReactionPoint = badReactionPoint + 1
 		WHERE id = #{relId}
 	</update>
 	
 	<update id="decreaseBadReactionPoint">
-		UPDATE reply
+		UPDATE comment
 		SET badReactionPoint = badReactionPoint - 1
 		WHERE id = #{relId}
 	</update>

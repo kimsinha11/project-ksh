@@ -5,6 +5,7 @@
 Rq rq = (Rq) request.getAttribute("rq");
 boolean isLogined = rq.isLogined();
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,7 @@ boolean isLogined = rq.isLogined();
 <script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
-
+		
 
 		<div class="h-10 flex mx-auto text-3xl ">
 	
@@ -68,12 +69,13 @@ boolean isLogined = rq.isLogined();
 						<a style="display: block;" href="/usr/member/logout">로그아웃</a>
 				</div>
 				<div style="display: inline-block; width: 7%; text-align: center;">
-						<a style="display: block;" href="#">${rq.loginedMember.nickname }</a>
+						<a style="display: block;" href="/usr/member/profile?id=${rq.loginedMember.id }">${rq.loginedMember.nickname }</a>
 				</div>
 				<%
 				}
 				%>
 		</div>
 		<h1 style="text-align: center; font-size: 50px; background-color: #9ACD32">${pageTitle  }</h1>
+
 
 		<main>

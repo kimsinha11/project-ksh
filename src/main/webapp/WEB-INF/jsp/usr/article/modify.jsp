@@ -45,6 +45,7 @@ function ArticleModify__submit(form) {
 <form style="text-align: center;" method="post" onsubmit="ArticleModify__submit(this); return false;" action="doModify">
 <input type="hidden" name="body" />
 <div  style="display: inline-block;  border: 2px solid black; padding: 17px; text-align:left;">
+<div style="text-align: right;">${rq.loginedMember.nickname }</div>
 	<div>
 		번호 : <input value="${article.id }" class="input input-bordered w-full max-w-xs"  type="hidden" name="id"
 			/>

@@ -14,10 +14,11 @@ public class Article {
 	private String title;
 	private String body;
 	private int memberId;
-	private int boardId;
 	private String name;
+	private int boardId;
 	private int hitCount;
-	private int count;
 	private int goodReactionPoint;
 	private int badReactionPoint;
+	private int count;
+//	private boolean actorCanDelete;
 }

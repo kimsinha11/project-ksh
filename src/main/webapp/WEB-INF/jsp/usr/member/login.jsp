@@ -5,11 +5,11 @@
 <c:set var="pageTitle" value="LOGIN" />
 <%@ include file="../common/head.jspf"%>
 
-
 <h1 style="text-align: center; padding: 70px 20px 0;">로그인</h1>
 
 
 <form style="text-align: center;" method="post" action="doLogin">
+<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri }" />
 <div  style="display: inline-block;  border: 2px solid black; padding: 17px; text-align:left;">
 
 	<div>
@@ -29,3 +29,4 @@
 	</div>
 </div>
 </form>
+<%@ include file="../common/foot.jspf"%>

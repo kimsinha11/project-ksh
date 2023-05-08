@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Reply {
+public class Comment {
 	private int id;
 	private String regDate;
 	private String updateDate;
@@ -19,7 +19,7 @@ public class Reply {
 	private int relId;
 	private int goodReactionPoint;
 	private int badReactionPoint;
-
+//	private boolean actorCanDelete;
 	
 	public String getForPrintBody() {
 		return body.replaceAll("\n", "<br>");

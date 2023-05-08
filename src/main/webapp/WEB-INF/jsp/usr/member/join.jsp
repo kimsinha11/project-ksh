@@ -43,3 +43,4 @@
 				</div>
 		</div>
 </form>
+<%@ include file="../common/foot.jspf"%>

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.KoreaIT.ksh.demo.repository.MemberRepository;
 import com.KoreaIT.ksh.demo.util.Ut;
+import com.KoreaIT.ksh.demo.vo.Article;
 import com.KoreaIT.ksh.demo.vo.Member;
 import com.KoreaIT.ksh.demo.vo.ResultData;
 
@@ -31,11 +32,11 @@ public class MemberService {
 			return ResultData.from("F-8", Ut.f("이미 사용중인 이름(%s)과 이메일(%s)입니다", name, email));
 		}
 
-		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		int id = memberRepository.getLastInsertId();
 
-		return ResultData.from("S-1", "회원가입이 완료되었습니다", id);
+		return ResultData.from("S-1", "회원가입이 완료되었습니다", "id", id);
 	}
 
 	private Member getMemberByNameAndEmail(String name, String email) {
@@ -49,5 +50,19 @@ public class MemberService {
 	public Member getMemberById(int id) {
 		return memberRepository.getMemberById(id);
 	}
+
+	public Member profile(int id) {
+		return memberRepository.profile(id);
+	}
+
+	public ResultData modifyMember(int id, String loginPw, String name, String nickname, String cellphoneNum, String email) {
+		memberRepository.modifyMember(id,loginPw, name, nickname, cellphoneNum, email);
+
+		Member member = getMemberById(id);
+
+		return ResultData.from("S-1", Ut.f("%d번 회원을 수정 했습니다", id), "member", member);
+	}
+
+
 
 }

@@ -241,7 +241,7 @@ function youtubePlugin() {
     let width = "100%";
     let height = "100%";
 
-    let maxWidth = 500;
+    let maxWidth = 400;
 
     if (!uriParams["max-width"] && uriParams["ratio"] == "9/16") {
       uriParams["max-width"] = 300;

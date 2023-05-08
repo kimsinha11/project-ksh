@@ -1,6 +1,7 @@
 package com.KoreaIT.ksh.demo.vo;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,16 +25,19 @@ public class Rq {
 	private int loginedMemberId;
 	@Getter
 	private Member loginedMember;
-
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private HttpSession session;
 	
+	private Map<String, String> paramMap;
+	
 	public Rq(HttpServletRequest req, HttpServletResponse resp, MemberService memberService) {
 		this.req = req;
 		this.resp = resp;
-
 		this.session = req.getSession();
+		
+		paramMap = Ut.getParamMap(req);
+		
 		boolean isLogined = false;
 		int loginedMemberId = 0;
 		Member loginedMember = null;
@@ -58,6 +62,16 @@ public class Rq {
 			println("alert('" + msg + "');");
 		}
 		println("history.back();");
+		println("</script>");
+	}
+	
+	public void printLoginBackJs(String msg) throws IOException {
+		resp.setContentType("text/html; charset=UTF-8");
+		println("<script>");
+		if (!Ut.empty(msg)) {
+			println("alert('" + msg + "');");
+		}
+		println("location.href='../member/login';");
 		println("</script>");
 	}
 
@@ -115,10 +129,41 @@ public class Rq {
 
 	}
 	
-	//public String getEncodedCurrentUri() {
-	//	return Ut.getEncodedCurrentUri(getCurrentUri());
-	//}
-
+	public String getLoginUri() {
+		return "../member/login?afterLoginUri=" + getAfterLoginUri();
+	}
+	
+	//로그인 후 접근 불가 페이지 afterLoginUri 값이 유지되도록
+	private String getAfterLoginUri() {
+		String requestUri = req.getRequestURI();
+		switch(requestUri) {
+		case "/usr/member/login":
+		case "/usr/member/join":
+			return Ut.getEncodedUri(Ut.getAttr(paramMap,"afterLoginUri","/usr/membr/profile"));
+		}
+		return getEncodedCurrentUri();
+	}
+	//로그인 후 접근 불가 페이지 afterLogoutUri 값이 유지되도록
+	private String getLogoutUri() {
+		String requestUri = req.getRequestURI();
+		switch(requestUri) {
+		case "/usr/article/write":
+		case "/usr/article/modify":
+			return "../member/doLogout?afterLogoutUri=" + "/";
+		}
+		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
+	}
+	
+	public String getAfterLogoutUri() {
+		return getEncodedCurrentUri();
+	}
+	
+	
+	public String getEncodedCurrentUri() {
+		return Ut.getEncodedCurrentUri(getCurrentUri());
+	}
+	
+	
 	// Rq 객체 생성 유도
 	// 삭제 x, BeforeActionInterceptor 에서 강제 호출
 	public void initOnBeforeActionInterceptor() {
@@ -128,5 +173,16 @@ public class Rq {
 	public boolean isNotLogined() {
 		return !isLogined;
 	}
+
+	public void run() {
+		System.out.println("===================================A");
+	}
+
+	public void jsprintReplace(String msg, String replaceUri) {
+		resp.setContentType("text/html; charset=UTF-8");
+		print(Ut.jsReplace(msg, replaceUri));
+
+	}
+
 
 }

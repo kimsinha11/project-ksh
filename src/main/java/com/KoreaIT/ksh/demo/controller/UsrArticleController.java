@@ -13,17 +13,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.ksh.demo.service.ArticleService;
 import com.KoreaIT.ksh.demo.service.BoardService;
+import com.KoreaIT.ksh.demo.service.CommentService;
 import com.KoreaIT.ksh.demo.service.ReactionPointService;
-import com.KoreaIT.ksh.demo.service.ReplyService;
 import com.KoreaIT.ksh.demo.util.Ut;
 import com.KoreaIT.ksh.demo.vo.Article;
 import com.KoreaIT.ksh.demo.vo.Board;
-import com.KoreaIT.ksh.demo.vo.Reply;
+import com.KoreaIT.ksh.demo.vo.Comment;
 import com.KoreaIT.ksh.demo.vo.ResultData;
 import com.KoreaIT.ksh.demo.vo.Rq;
 
 @Controller
 public class UsrArticleController {
+
 	@Autowired
 	private ArticleService articleService;
 	@Autowired
@@ -33,35 +34,11 @@ public class UsrArticleController {
 	@Autowired
 	private ReactionPointService reactionPointService;
 	@Autowired
-	private ReplyService replyService;
-	// F-A 로그인 오류 F-B 로그아웃 오류 F-N 빈 값 오류 F-F 없거나 불일치 오류 F-C 권한오류
+	private CommentService commentService;
 
-	@RequestMapping("/usr/article/write")
-	public String write(Model model, String title, String body) {
-
-		return "usr/article/write";
-	}
-
-	@RequestMapping("/usr/article/doWrite")
-	@ResponseBody
-	public String doWrite(HttpSession httpSession, String title, String body, int boardId) {
-
-		if (Ut.empty(title)) {
-			return Ut.jsHistoryBack("F-A", "제목을 입력해주세요.");
-		}
-		if (Ut.empty(body)) {
-			return Ut.jsHistoryBack("F-A", "내용을 입력해주세요");
-		}
-
-		Board board = BoardService.getBoardById(boardId);
-		ResultData writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
-		int id = (int) writeArticleRd.getData1();
-
-		return Ut.jsReplace("S-1", "작성완료", Ut.f("../article/detail?id=%d", id));
-
-	}
 
 	@RequestMapping("/usr/article/modify")
+
 	public String modify(Model model, int id, String title, String body) {
 
 		Article article = articleService.getArticle(id);
@@ -79,6 +56,13 @@ public class UsrArticleController {
 
 	}
 
+	@RequestMapping("/usr/article/write")
+
+	public String write(Model model, String title, String body) {
+
+		return "usr/article/write";
+	}
+
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public String doModify(int id, String title, String body) {
@@ -86,11 +70,29 @@ public class UsrArticleController {
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return Ut.jsHistoryBack("F-F", id + "번 글은 존재하지 않습니다.");
+			return Ut.jsHistoryBack("F-D", id + "번 글은 존재하지 않습니다.");
 		}
 		articleService.modifyArticle(id, title, body);
 
-		return Ut.jsReplace("S-1", "수정되었습니다", "list");
+		return Ut.jsReplace("S-1", "수정완료", Ut.f("../article/detail?id=%d", id));
+
+	}
+
+	@RequestMapping("/usr/article/doWrite")
+	@ResponseBody
+	public String doWrite(HttpSession httpSession, String title, String body, int boardId) {
+
+		if (Ut.empty(title)) {
+			return Ut.jsHistoryBack("F-A", "제목을 입력해주세요.");
+		}
+		if (Ut.empty(body)) {
+			return Ut.jsHistoryBack("F-A", "내용을 입력해주세요");
+		}
+
+		Board board = BoardService.getBoardById(boardId);
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
+		int id = (int) writeArticleRd.getData1();
+		return Ut.jsReplace("S-1", "작성완료", Ut.f("../article/detail?id=%d", id));
 
 	}
 
@@ -100,7 +102,7 @@ public class UsrArticleController {
 
 		Article article = articleService.getArticle(id);
 		if (article == null) {
-			return Ut.jsHistoryBack("F-F", id + "번 글은 존재하지 않습니다.");
+			return Ut.jsHistoryBack("F-D", id + "번 글은 존재하지 않습니다.");
 		}
 
 		if (article.getMemberId() == rq.getLoginedMemberId()) {
@@ -113,25 +115,23 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, @RequestParam(defaultValue = "0") Integer boardId,
-			@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int itemsPerPage,
-			String searchKeyword, Integer searchId) {
+	public String showList(Model model, @RequestParam(defaultValue = "0") Integer boardId, @RequestParam(defaultValue = "1") int pageNum,
+			@RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
 
 		Board board = BoardService.getBoardById(boardId);
 
 		if (boardId != 0 && board == null) {
 			return rq.jsHistoryBackOnView("그런 게시판은 없어");
 		}
-
 		int totalCount = articleService.getArticlesCount(boardId, searchId, searchKeyword);
 		int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage);
 		int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
 		int itemsInAPage = (pageNum - 1) * itemsPerPage;
 		List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage, searchKeyword,
 				searchId);
-		List<Article> replysCount = articleService.getReplysCount();
-
-		model.addAttribute("replysCount", replysCount);
+		List<Article> commentsCount = articleService.getCommentsCount();
+		
+		model.addAttribute("commentsCount", commentsCount);
 		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);
 		model.addAttribute("totalCount", totalCount);
@@ -142,13 +142,13 @@ public class UsrArticleController {
 
 		return "usr/article/list";
 	}
-
+	
 	@RequestMapping("/usr/article/detail")
 	public String getArticle(Model model, int id) {
+
 		Article article = articleService.getArticle(id);
 
-		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(),
-				"id", id);
+		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "id", id);
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
@@ -167,10 +167,30 @@ public class UsrArticleController {
 				model.addAttribute("actorCanCancelBadReaction", true);
 			}
 		}
-		List<Reply> replys = replyService.getReplys(id);
 
-		model.addAttribute("replys", replys);
+			List<Comment> comments = commentService.getComments(id);
 
+			model.addAttribute("comments", comments);
+
+			
 		return "usr/article/detail";
 	}
+
+	@RequestMapping("/usr/article/doIncreaseHitCountRd")
+	@ResponseBody
+	public ResultData doIncreaseHitCountRd(int id) {
+
+		ResultData increaseHitCountRd = articleService.increaseHitCount(id);
+
+		if (increaseHitCountRd.isFail()) {
+			return increaseHitCountRd;
+		}
+
+		ResultData rd = ResultData.newData(increaseHitCountRd, "hitCount", articleService.getArticleHitCount(id));
+
+		rd.setData2("id", id);
+
+		return rd;
+	}
+
 }
