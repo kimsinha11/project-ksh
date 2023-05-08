@@ -7,6 +7,7 @@
 		<c:set var="pageTitle" value="${board.name}" />
 </c:if>
 <%@ page import="com.KoreaIT.ksh.demo.vo.Article"%>
+<%@ page import="com.KoreaIT.ksh.demo.vo.Board"%>
 <%@ page import="java.util.List"%>
 <c:set var="totalCount" value="${totalCount}" />
 <c:set var="totalPages" value="${totalPages}" />
@@ -19,6 +20,7 @@
 
 <%
 List<Article> commentsCount = (List<Article>) request.getAttribute("commentsCount");
+Board board = (Board) request.getAttribute("board");
 %>
 <%@ include file="../common/head.jspf"%>
 
@@ -55,7 +57,7 @@ List<Article> commentsCount = (List<Article>) request.getAttribute("commentsCoun
 						<th>${article.regDate.substring(0,10)}</th>
 						<th class="title">
 							<div class="title-text">
-								<a href="detail?id=${article.id}">${article.title}</a>
+								<a href="detail?id=${article.id}&boardId=${article.boardId}">${article.title}</a>
 							</div>
 							<div class="comment-count" style="color: red; font-size: 13px;">
 								<c:forEach var="commentsCount" items="${commentsCount}">

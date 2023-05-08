@@ -132,6 +132,12 @@ public class Rq {
 	public String getLoginUri() {
 		return "../member/login?afterLoginUri=" + getAfterLoginUri();
 	}
+	public String getLogoutUri() {
+		return "../member/logout?afterLogoutUri=" + getAfterLogoutUri();
+	}
+	public String getJoinUri() {
+		return "../member/join?afterLoginUri=" + getAfterLoginUri();
+	}
 	
 	//로그인 후 접근 불가 페이지 afterLoginUri 값이 유지되도록
 	private String getAfterLoginUri() {
@@ -139,25 +145,15 @@ public class Rq {
 		switch(requestUri) {
 		case "/usr/member/login":
 		case "/usr/member/join":
-			return Ut.getEncodedUri(Ut.getAttr(paramMap,"afterLoginUri","/usr/membr/profile"));
+			return Ut.getEncodedUri(paramMap.get("afterLoginUri"));
 		}
 		return getEncodedCurrentUri();
 	}
 	//로그인 후 접근 불가 페이지 afterLogoutUri 값이 유지되도록
-	private String getLogoutUri() {
-		String requestUri = req.getRequestURI();
-		switch(requestUri) {
-		case "/usr/article/write":
-		case "/usr/article/modify":
-			return "../member/doLogout?afterLogoutUri=" + "/";
-		}
-		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
-	}
-	
-	public String getAfterLogoutUri() {
+	private String getAfterLogoutUri() {
+	//	String requestUri = req.getRequestURI();
 		return getEncodedCurrentUri();
 	}
-	
 	
 	public String getEncodedCurrentUri() {
 		return Ut.getEncodedCurrentUri(getCurrentUri());

@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.KoreaIT.ksh.demo.vo.Article"%>
+<%@ page import="com.KoreaIT.ksh.demo.vo.Board"%>
 <c:set var="pageTitle" value="DETAIL" />
 <%@ include file="../common/head.jspf"%>
 <%@ page import="com.KoreaIT.ksh.demo.vo.Comment"%>
@@ -212,6 +213,8 @@ function doCommentBadReaction(commentId) {
 <%
 Article article = (Article) request.getAttribute("article");
 int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+
+Board board = (Board) request.getAttribute("board");
 %>
 <section class="mt-10 text-xl">
 	<div class="mx-auto overflow-x-auto">
@@ -223,6 +226,10 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 					<th>
 						<div class="badge badge-lg">${article.id }</div>
 					</th>
+				</tr>
+				<tr>
+				<th style="font-size: 15px">게시판</th>
+				<th>${board.name }</th>
 				</tr>
 				<tr>
 					<th style="font-size: 15px">작성날짜</th>
@@ -299,10 +306,10 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 				onclick="location.href='list'">뒤로가기</button>
 			<a class="btn-text-link btn btn-outline btn-xs"
 				onclick="if(confirm('정말 수정하시겠습니까?') == false) return false;"
-				href="modify?id=${article.id }">수정</a> <a
+				href="modify?id=${article.id }&boardId=${article.boardId}">수정</a> <a
 				class="btn-text-link btn btn-outline btn-xs"
 				onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-				href="delete?id=${article.id }">삭제</a>
+				href="delete?id=${article.id }&boardId=${article.boardId}">삭제</a>
 			<%
 			}
 			%>
@@ -372,11 +379,11 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 
 				<th><a class="btn-text-link btn btn-outline btn-xs"
 					onclick="if(confirm('정말 수정하시겠습니까?') == false) return false;"
-					href="../comment/cmodify?id=${comment.id }&relId=${comment.relId }">수정</a>
+					href="../comment/cmodify?id=${comment.id }&relId=${comment.relId }&boardId=${board.id}">수정</a>
 				</th>
 				<th><a class="btn-text-link btn btn-outline btn-xs"
 					onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-					href="../comment/cdelete?id=${comment.id }&relId=${comment.relId }">삭제</a>
+					href="../comment/cdelete?id=${comment.id }&relId=${comment.relId }&boardId=${board.id}">삭제</a>
 				</th>
 				<th>
 					<button id="commentlikeButton" class="btn btn-outline" type="button"

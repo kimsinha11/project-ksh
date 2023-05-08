@@ -39,16 +39,18 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/modify")
 
-	public String modify(Model model, int id, String title, String body) {
+	public String modify(Model model, int id, int boardId,  String title, String body) {
 
 		Article article = articleService.getArticle(id);
-
+		Board board = BoardService.getBoardById(boardId);
 		if (article == null) {
 			return rq.jsHistoryBackOnView(Ut.f("%d번 글은 존재하지 않습니다", id));
 		}
 		if (article.getMemberId() == rq.getLoginedMemberId()) {
 
-			model.addAttribute("article", article);
+			 model.addAttribute("article", article);
+			 model.addAttribute("board", board);
+			
 			return "usr/article/modify";
 		} else {
 			return rq.jsHistoryBackOnView(Ut.f("권한이없습니다."));
@@ -65,7 +67,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public String doModify(int id, int boardId, String title, String body) {
 
 		Article article = articleService.getArticle(id);
 
@@ -74,7 +76,7 @@ public class UsrArticleController {
 		}
 		articleService.modifyArticle(id, title, body);
 
-		return Ut.jsReplace("S-1", "수정완료", Ut.f("../article/detail?id=%d", id));
+		return Ut.jsReplace("S-1", "수정완료", Ut.f("../article/detail?id=%d&boardId=%d", id, boardId));
 
 	}
 
@@ -92,13 +94,13 @@ public class UsrArticleController {
 		Board board = BoardService.getBoardById(boardId);
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
 		int id = (int) writeArticleRd.getData1();
-		return Ut.jsReplace("S-1", "작성완료", Ut.f("../article/detail?id=%d", id));
+		return Ut.jsReplace("S-1", "작성완료", Ut.f("../article/detail?id=%d&boardId=%d", id, boardId));
 
 	}
 
 	@RequestMapping("/usr/article/delete")
 	@ResponseBody
-	public String doDelete(Model model, int id) {
+	public String doDelete(Model model, int id, int boardId) {
 
 		Article article = articleService.getArticle(id);
 		if (article == null) {
@@ -108,7 +110,7 @@ public class UsrArticleController {
 		if (article.getMemberId() == rq.getLoginedMemberId()) {
 			articleService.deleteArticle(id);
 			model.addAttribute("article", article);
-			return Ut.jsReplace("S-1", "삭제완료", "list");
+			return Ut.jsReplace("S-1", "삭제완료", Ut.f("../article/list?boardId=%d", boardId));
 		} else {
 			return Ut.jsHistoryBack("F-C", "권한이 없습니다.");
 		}
@@ -144,7 +146,7 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/detail")
-	public String getArticle(Model model, int id) {
+	public String getArticle(Model model, int id, int boardId) {
 
 		Article article = articleService.getArticle(id);
 
@@ -172,6 +174,9 @@ public class UsrArticleController {
 
 			model.addAttribute("comments", comments);
 
+			Board board = BoardService.getBoardById(boardId);
+			
+			model.addAttribute(board);
 			
 		return "usr/article/detail";
 	}

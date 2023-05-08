@@ -128,11 +128,12 @@ public class Ut {
 
 	}
 
-	public static String getAttr(Map map, String attrName, String defaultValue) {
-		if(map.containsKey(attrName)) {
-			return (String) map.get(attrName);
-		}
-		return defaultValue;
-	}
-
+//	public static String getAttr(Map map, String attrName, String defaultValue) {
+//
+//		if (map.containsKey(attrName)) {
+//			return (String) map.get(attrName);
+//		}
+//
+//		return defaultValue;
+//	}
 }

@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.KoreaIT.ksh.demo.vo.Article"%>
+<%@ page import="com.KoreaIT.ksh.demo.vo.Board"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Map"%>
 <c:set var="pageTitle" value="ARTICLE MODIFY" />
@@ -9,6 +10,7 @@
 <%@ include file="../common/toastUiEditorLib.jspf"%>
 <%
 Article article = (Article) request.getAttribute("article");
+Board board = (Board) request.getAttribute("board");
 %>
 <script type="text/javascript">
 let ArticleModify__submitFormDone = false;
@@ -49,6 +51,7 @@ function ArticleModify__submit(form) {
 	<div>
 		번호 : <input value="${article.id }" class="input input-bordered w-full max-w-xs"  type="hidden" name="id"
 			/>
+			<input value="${article.boardId }" type="hidden" name="boardId" />
 	</div>
 	<div>작성날짜 : ${article.regDate }</div>
 	<div>
