@@ -1,24 +1,32 @@
 @font-face {
-	font-family: 'KCCChassam';
+	font-family: 'Poppins';
 	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCCChassam.woff2')
-		format('woff2');
+		url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap')
+	;
 	font-weight: normal;
 	font-style: normal;
 }
 
 html>body {
-	font-family: 'KCCChassam', woff2;
+	font-family: 'Poppins', sans-serif;
+}
+
+html {
+	width: 1300px;
+	margin: 0 auto;
+
 }
 
 /* 라이브러리 */
 .table-box-type-1>thead th, .table-box-type-1 th {
 	border: 1px solid black;
+
 	padding: 5px;
 }
 
 .table-box-type-2>thead th, .table-box-type-2 th {
 	border: 1px solid black;
+		margin-top: 100%;
 	padding: 5px;
 }
 

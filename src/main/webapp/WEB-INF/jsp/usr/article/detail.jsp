@@ -216,6 +216,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 
 Board board = (Board) request.getAttribute("board");
 %>
+	<br /><br /><br />
 <section class="mt-10 text-xl">
 	<div class="mx-auto overflow-x-auto">
 		<table class=" table w-full table-box-type-1"

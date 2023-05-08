@@ -39,7 +39,7 @@ function ArticleModify__submit(form) {
 }
 </script>
 
-
+<br /><br /><br />
 <h1 style="text-align: center; padding: 70px 20px 0;">${article.id }번
 	게시물 수정</h1>
 

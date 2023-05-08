@@ -23,59 +23,220 @@ boolean isLogined = rq.isLogined();
 <link rel="shortcut icon" href="/resource/favicon.ico" />
 <script src="/resource/common.js" defer="defer"></script>
 </head>
+
 <body>
-		
+		<header id="header">
+				<a href="#" class="logo">Camping</a>
+				<ul>
+						<li>
+								<a href="../home/main" class="active">Home</a>
+						</li>
+						<li>
+								<a href="/usr/article/write">글쓰기</a>
+						</li>
+						<%
+						if (!isLogined) {
+						%>
+						<li>
+								<a href="/usr/member/login">로그인</a>
+						</li>
+						<li>
+								<a href="/usr/member/join">회원가입</a>
+						</li>
+						<%
+						}
+						%>
+						<%
+						if (isLogined) {
+						%>
+						<li>
+								<a href="/usr/member/logout">로그아웃</a>
+						</li>
+						<li>
+								<a href="/usr/member/profile?id=${rq.loginedMember.id }">${rq.loginedMember.nickname }</a>
+						</li>
+						<%
+						}
+						%>
 
-		<div class="h-10 flex mx-auto text-3xl ">
-	
-				<a href="/">로고</a>
-				<div class="flex-grow"></div>
-				<div style="display: inline-block; width: 6%; text-align: center;">
-						<a style="display: block;" href="../home/main">메인</a>
-				</div>
-				<div style="display: inline-block; width: 7%; text-align: center;">
-						<a style="display: block;" href="/usr/article/write">글쓰기</a>
-				</div>
-				<%
-				if (!isLogined) {
-				%>
-				<div style="border: display: inline-block; width: 7%; text-align: center;">
-						<a style="display: block;" href="/usr/member/login">로그인</a>
-				</div>
-				<div style="border: display: inline-block; width: 9%; text-align: center;">
-						<a style="display: block;" href="/usr/member/join">회원가입</a>
-				</div>
-				<%
-				}
-				%>
-				<div class="list" style="display: inline-block; width: 7%; text-align: center;">
-						<a style="display: block;" href="/usr/article/list">게시판</a>
-						<ul>
-								<li>
-										<a href="/usr/article/list?boardId=1">NOTICE</a>
-								</li>
-								<li>
-										<a href="/usr/article/list?boardId=2">FREE</a>
-								</li>
-								<li>
-										<a href="/usr/article/list?boardId=3">QnA</a>
-								</li>
-						</ul>
-				</div>
-				<%
-				if (isLogined) {
-				%>
-				<div style="display: inline-block; width: 9%; text-align: center;">
-						<a style="display: block;" href="/usr/member/logout">로그아웃</a>
-				</div>
-				<div style="display: inline-block; width: 7%; text-align: center;">
-						<a style="display: block;" href="/usr/member/profile?id=${rq.loginedMember.id }">${rq.loginedMember.nickname }</a>
-				</div>
-				<%
-				}
-				%>
+				</ul>
+		</header>
+		<hr />
+		<br />
+
+		<div class="items">
+				<ul class="menu-item">
+						<li class="first">
+								<a href="/usr/article/list">전체글보기</a>
+						<li>
+								<a href="/usr/article/list?boardId=1">공지사항</a>
+						</li>
+						<li>
+								<a href="/usr/article/list?boardId=2">자유게시판</a>
+						</li>
+						<li>
+								<a href="/usr/article/list?boardId=3">질문사항</a>
+						</li>
+				</ul>
 		</div>
-		<h1 style="text-align: center; font-size: 50px; background-color: #9ACD32">${pageTitle  }</h1>
+		<div class="items">
+				<ul class="menu-item">
+						<li class="first">
+								<a href="#">리뷰게시판</a>
+						<li>
+								<a href="#">캠핑 장비 리뷰</a>
+						</li>
+						<li>
+								<a href="#">캠핑 요리 리뷰</a>
+						</li>
+						
+				</ul>
+		</div>
+		<div class="items">
+				<ul class="menu-item">
+						<li class="first">
+								<a href="#">주변 볼거리</a>
+						<li>
+								<a href="#">문화 시설</a>
+						</li>
+						<li>
+								<a href="#">관광지</a>
+						</li>
+						<li>
+								<a href="#">오늘 날씨</a>
+						</li>
+				</ul>
+		</div>
+		<div class="items">
+				<ul class="menu-item">
+						<li class="first">
+								<a href="#">정보 공유</a>
+						<li>
+								<a href="#">주변 캠핑장</a>
+						</li>
+						<li>
+								<a href="#">주변 카라반</a>
+						</li>
+						<li>
+								<a href="#">주변 야영지</a>
+						</li>
+				</ul>
+		</div>
+		<div class="items">
+				<ul class="menu-item">
+						<li class="first">
+								<a href="#">실시간</a>
+						<li>
+								<a href="#">실시간 캠핑</a>
+						</li>
+						<li>
+								<a href="#">실시간 차박</a>
+						</li>
+						<li>
+								<a href="#">실시간 아영</a>
+						</li>
+				</ul>
+		</div>
+		<div class="items">
+				<ul class="menu-item">
+						<li class="first">
+								<a href="#">후기</a>
+								<li>
+								<a href="#">캠핑 후기</a>
+						</li>
+						<li>
+								<a href="#">차박 후기</a>
+						</li>
+						<li>
+								<a href="#">야영 후기</a>
+						</li>
+				</ul>
+		</div>
+		<div style="display:block;">
+		<br /><br /><br /><br /><br />
+<hr />
+</div>
+
+</body>
 
 
-		<main>
+<main>
+
+
+		<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap')
+	;
+
+@import
+	url('https://fonts.googleapis.com/css2?family=Rancho&display=swap');
+
+:root {
+	--primary: #094b65;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+
+body {
+	overflow-x: hidden;
+	background: #fff;
+	min-height: 100vh;
+
+}
+
+.items {
+	float: left;
+	width: 200px; /* div의 너비를 지정합니다. */
+	margin-right: 10px; /* 각각의 div 사이에 10px의 간격을 둡니다. */
+}
+
+.items > .menu-item > .first {
+	font-weight: bold;
+}
+
+#header {
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 30px 100px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 100;
+}
+
+#header .logo {
+	color: var(--primary);
+	font-weight: 700;
+	font-size: 2em;
+	text-decoration: none;
+}
+
+#header ul {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#header ul li {
+	list-style: none;
+	margin-left: 20px;
+}
+
+#header ul li a {
+	text-decoration: none;
+	padding: 6px 15px;
+	color: var(--primary);
+	border-radius: 20px;
+}
+
+#header ul li a:hover, #header ul li a.active {
+	background: var(--primary);
+	color: #fff;
+}
+</style>

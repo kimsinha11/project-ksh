@@ -37,11 +37,11 @@ function ArticleWrite__submit(form) {
 <%
 Article article = (Article) request.getAttribute("article");
 %>
-
+<br /><br /><br />
 <h1 style="text-align: center; padding: 70px 20px 0;">글작성</h1>
 
 
-
+	
 <form style="text-align: center;" method="post" onsubmit="ArticleWrite__submit(this); return false;" action="doWrite">
 <input type="hidden" name="body" />
   <div style="display: inline-block; border: 2px solid black; padding: 17px; text-align: left;">

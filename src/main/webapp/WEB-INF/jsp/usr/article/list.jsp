@@ -31,6 +31,7 @@ Board board = (Board) request.getAttribute("board");
 			<thead>
 
 				<tr>
+<br /><br /><br />
 					<div style="text-align: center; font-size: 19px">총게시물 :
 						${totalCount }개</div>
 

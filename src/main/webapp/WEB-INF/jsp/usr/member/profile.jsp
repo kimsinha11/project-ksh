@@ -8,13 +8,13 @@
 Member member = (Member) request.getAttribute("member");
 int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 %>
+	
 <section class="mt-10 text-xl">
+<br /><br /><br />
 		<div class="mx-auto overflow-x-auto">
+		
 				<table class=" table w-full table-box-type-1" style="width: 500px;">
 						<thead>
-
-
-
 								<tr>
 										<th style="font-size: 15px">회원번호</th>
 										<th>

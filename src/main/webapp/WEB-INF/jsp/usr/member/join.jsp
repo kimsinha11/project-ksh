@@ -7,7 +7,7 @@
 
 <h1 style="text-align: center; padding: 70px 20px 0;">회원가입</h1>
 
-
+	<br /><br /><br />
 <form style="text-align: center;" method="post" action="doJoin">
 		<div style="display: inline-block; border: 2px solid black; padding: 17px; text-align: left;">
 				<div>

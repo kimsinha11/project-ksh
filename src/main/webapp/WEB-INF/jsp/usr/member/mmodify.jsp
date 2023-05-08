@@ -57,7 +57,7 @@ function MemberModify__submit(form) {
 	form.submit();
 }
 </script>
-
+	<br /><br /><br />
 <form  action="domModify" style="text-align: center;" method="post" onsubmit="MemberModify__submit(this); return false;">
 <div  style="display: inline-block;  border: 2px solid black; padding: 17px; text-align:left;">
 	<div>
