@@ -25,7 +25,7 @@ boolean isLogined = rq.isLogined();
 </head>
 
 <body>
-		<header id="header">
+		<header id="header" style="background-color: white;">
 				<a href="#" class="logo">Camping</a>
 				<ul>
 						<li>
@@ -62,9 +62,10 @@ boolean isLogined = rq.isLogined();
 				</ul>
 		</header>
 		<hr />
-		<br />
 
-		<div class="items">
+		<nav style="background-color: white;">
+			<br />
+		<div class="items" >
 				<ul class="menu-item">
 						<li class="first">
 								<a href="/usr/article/list">전체글보기</a>
@@ -154,9 +155,10 @@ boolean isLogined = rq.isLogined();
 		</div>
 		<div style="display:block;">
 		<br /><br /><br /><br /><br />
+	
 <hr />
 </div>
-
+	</nav>
 </body>
 
 
