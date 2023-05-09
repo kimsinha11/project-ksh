@@ -85,7 +85,7 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
+	public String doJoin(String loginId, String loginPw, String loginPwConfirm, String name, String nickname, String cellphoneNum,
 			String email, @RequestParam(defaultValue = "/") String afterLoginUri) {
 
 		if (Ut.empty(loginId)) {
@@ -93,6 +93,9 @@ public class UsrMemberController {
 		}
 		if (Ut.empty(loginPw)) {
 			return rq.jsHistoryBack("F-N", "비밀번호를 입력해주세요.");
+		}
+		if (Ut.empty(loginPwConfirm)) {
+			return rq.jsHistoryBack("F-N", "비밀번호확인을 입력해주세요.");
 		}
 		if (Ut.empty(name)) {
 			return rq.jsHistoryBack("F-N", "이름을 입력해주세요.");
@@ -119,6 +122,39 @@ public class UsrMemberController {
 
 		return Ut.jsReplace("S-1", Ut.f("회원가입이 완료되었습니다"), afterJoinUri);
 	}
+	@RequestMapping("/usr/member/getLoginIdDup")
+	@ResponseBody
+	public ResultData getLoginIdDup(String loginId) {
+		
+		if (Ut.empty(loginId)) {
+			return ResultData.from("F-N", "아이디를 입력해주세요");
+		}
+		
+		Member existsMember = memberService.getMemberByLoginId(loginId);
+		
+		if (existsMember != null) {
+			return ResultData.from("F-1", "해당 아이디는 이미 사용중인 아이디입니다", "loginId", loginId);
+		}
+		
+		return ResultData.from("S-1", "사용 가능!", "loginId", loginId);
+	}
+	@RequestMapping("/usr/member/getNicknameDup")
+	@ResponseBody
+	public ResultData getNicknameDup(String nickname) {
+		
+		if (Ut.empty(nickname)) {
+			return ResultData.from("F-N", "닉네임를 입력해주세요");
+		}
+		
+		Member existsMember = memberService.getMemberByLoginId(nickname);
+		
+		if (existsMember != null) {
+			return ResultData.from("F-1", "해당 닉네임은 이미 사용중인 닉네임입니다", "nickname", nickname);
+		}
+		
+		return ResultData.from("S-1", "사용 가능!", "nickname", nickname);
+	}
+	
 
 	@RequestMapping("/usr/member/profile")
 	public String profile(Model model, int id) {

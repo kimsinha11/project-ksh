@@ -18,7 +18,7 @@
 	</div>
 	<div>
 		비밀번호 : <input class="input input-bordered input-sm w-full max-w-xl" type="text" name="loginPw"
-			placeholder="비밀번호를 입력해주세요" />
+			placeholder="비밀번호를 입력해주세요" autocomplete="off"/>
 	</div>
 
 <br />
