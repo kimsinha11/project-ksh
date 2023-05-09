@@ -96,15 +96,15 @@ boolean isLogined = rq.isLogined();
 		<div class="items">
 				<ul class="menu-item">
 						<li class="first">
-								<a href="#">주변 볼거리</a>
+								<a href="#">정보 제공</a>
 						<li>
-								<a href="#">문화 시설</a>
-						</li>
-						<li>
-								<a href="#">관광지</a>
+								<a href="/usr/home/APITest">주변 편의시설</a>
 						</li>
 						<li>
 								<a href="#">오늘 날씨</a>
+						</li>
+						<li>
+								<a href="/usr/home/APITest2">지도 서비스</a>
 						</li>
 				</ul>
 		</div>
