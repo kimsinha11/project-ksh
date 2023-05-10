@@ -8,7 +8,7 @@ boolean isLogined = rq.isLogined();
 
 <!DOCTYPE html>
 <html>
-<head>
+<head data-theme="light">
 <meta charset="UTF-8">
 <title>${pageTitle  }</title>
 <!-- 테일윈드 불러오기 -->
@@ -19,15 +19,59 @@ boolean isLogined = rq.isLogined();
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 <!-- 제이쿼리 불러오기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+function Theme__toggle() {
+	const theme = localStorage.getItem("theme") ?? "light";
+
+	if( theme == 'light'){
+		localStorage.setItem("theme","dark");
+		//Theme__applyTo('dark');
+	}
+	else {
+	    localStorage.setItem("theme", "light");
+	    //Theme__applyTo('light');
+	}
+
+	function Theme__applyTo(themeName) {
+		  $('html').attr('data-theme', themeName);
+	}
+
+
+	function Theme__init() {
+	  const theme = localStorage.getItem("theme") ?? "light";
+	  Theme__applyTo(theme);
+	}
+
+	//Theme__init();
+	location.reload();
+
+}
+function Theme__applyTo(themeName) {
+	  $('html').attr('data-theme', themeName);
+	}
+
+	function Theme__init() {
+	  const theme = localStorage.getItem("theme") ?? "light";
+	  Theme__applyTo(theme);
+	}
+
+	Theme__init();
+</script>
 <link rel="stylesheet" href="/resource/common.css" />
 <link rel="shortcut icon" href="/resource/favicon.ico" />
 <script src="/resource/common.js" defer="defer"></script>
 </head>
 
 <body>
-		<header id="header" style="background-color: white;">
+		<header id="header">
 				<a href="#" class="logo">Camping</a>
 				<ul>
+						<li class="">
+								<a class="h-full px-20 flex items-center btn-theme-toggle" href="javascript:Theme__toggle();">
+										<span >🌞</span>
+										<span>🌚</span>
+								</a>
+						</li>
 						<li>
 								<a href="../home/main" class="active">Home</a>
 						</li>
@@ -63,102 +107,106 @@ boolean isLogined = rq.isLogined();
 		</header>
 		<hr />
 
-		<nav style="background-color: white;">
-			<br />
-		<div class="items" >
-				<ul class="menu-item">
-						<li class="first">
-								<a href="/usr/article/list">전체글보기</a>
-						<li>
-								<a href="/usr/article/list?boardId=1">공지사항</a>
-						</li>
-						<li>
-								<a href="/usr/article/list?boardId=2">자유게시판</a>
-						</li>
-						<li>
-								<a href="/usr/article/list?boardId=3">질문사항</a>
-						</li>
-				</ul>
-		</div>
-		<div class="items">
-				<ul class="menu-item">
-						<li class="first">
-								<a href="#">리뷰게시판</a>
-						<li>
-								<a href="#">캠핑 장비 리뷰</a>
-						</li>
-						<li>
-								<a href="#">캠핑 요리 리뷰</a>
-						</li>
-						
-				</ul>
-		</div>
-		<div class="items">
-				<ul class="menu-item">
-						<li class="first">
-								<a href="#">정보 제공</a>
-						<li>
-								<a href="/usr/home/APITest">주변 편의시설</a>
-						</li>
-						<li>
-								<a href="#">오늘 날씨</a>
-						</li>
-						<li>
-								<a href="/usr/home/APITest2">지도 서비스</a>
-						</li>
-				</ul>
-		</div>
-		<div class="items">
-				<ul class="menu-item">
-						<li class="first">
-								<a href="#">정보 공유</a>
-						<li>
-								<a href="#">주변 캠핑장</a>
-						</li>
-						<li>
-								<a href="#">주변 카라반</a>
-						</li>
-						<li>
-								<a href="#">주변 야영지</a>
-						</li>
-				</ul>
-		</div>
-		<div class="items">
-				<ul class="menu-item">
-						<li class="first">
-								<a href="#">실시간</a>
-						<li>
-								<a href="#">실시간 캠핑</a>
-						</li>
-						<li>
-								<a href="#">실시간 차박</a>
-						</li>
-						<li>
-								<a href="#">실시간 아영</a>
-						</li>
-				</ul>
-		</div>
-		<div class="items">
-				<ul class="menu-item">
-						<li class="first">
-								<a href="#">후기</a>
+		<nav>
+				<br />
+				<div class="items">
+						<ul class="menu-item">
+								<li class="first">
+										<a href="/usr/article/list">전체글보기</a>
 								<li>
-								<a href="#">캠핑 후기</a>
-						</li>
-						<li>
-								<a href="#">차박 후기</a>
-						</li>
-						<li>
-								<a href="#">야영 후기</a>
-						</li>
-				</ul>
-		</div>
-		<div style="display:block;">
-		<br /><br /><br /><br /><br />
-	
-<hr />
-</div>
-	</nav>
+										<a href="/usr/article/list?boardId=1">공지사항</a>
+								</li>
+								<li>
+										<a href="/usr/article/list?boardId=2">자유게시판</a>
+								</li>
+								<li>
+										<a href="/usr/article/list?boardId=3">질문사항</a>
+								</li>
+						</ul>
+				</div>
+				<div class="items">
+						<ul class="menu-item">
+								<li class="first">
+										<a href="#">리뷰게시판</a>
+								<li>
+										<a href="#">캠핑 장비 리뷰</a>
+								</li>
+								<li>
+										<a href="#">캠핑 요리 리뷰</a>
+								</li>
+
+						</ul>
+				</div>
+				<div class="items">
+						<ul class="menu-item">
+								<li class="first">
+										<a href="#">정보 제공</a>
+								<li>
+										<a href="/usr/home/APITest">주변 편의시설</a>
+								</li>
+								<li>
+										<a href="#">오늘 날씨</a>
+								</li>
+								<li>
+										<a href="/usr/home/APITest2">지도 서비스</a>
+								</li>
+						</ul>
+				</div>
+				<div class="items">
+						<ul class="menu-item">
+								<li class="first">
+										<a href="#">정보 공유</a>
+								<li>
+										<a href="#">주변 캠핑장</a>
+								</li>
+								<li>
+										<a href="#">주변 카라반</a>
+								</li>
+								<li>
+										<a href="#">주변 야영지</a>
+								</li>
+						</ul>
+				</div>
+				<div class="items">
+						<ul class="menu-item">
+								<li class="first">
+										<a href="#">실시간</a>
+								<li>
+										<a href="#">실시간 캠핑</a>
+								</li>
+								<li>
+										<a href="#">실시간 차박</a>
+								</li>
+								<li>
+										<a href="#">실시간 아영</a>
+								</li>
+						</ul>
+				</div>
+				<div class="items">
+						<ul class="menu-item">
+								<li class="first">
+										<a href="#">후기</a>
+								<li>
+										<a href="#">캠핑 후기</a>
+								</li>
+								<li>
+										<a href="#">차박 후기</a>
+								</li>
+								<li>
+										<a href="#">야영 후기</a>
+								</li>
+						</ul>
+				</div>
+				<div style="display: block;">
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+
+						<hr />
+				</div>
+		</nav>
 </body>
 
 
@@ -186,9 +234,7 @@ boolean isLogined = rq.isLogined();
 
 body {
 	overflow-x: hidden;
-	background: #fff;
 	min-height: 100vh;
-
 }
 
 .items {
@@ -197,7 +243,7 @@ body {
 	margin-right: 10px; /* 각각의 div 사이에 10px의 간격을 둡니다. */
 }
 
-.items > .menu-item > .first {
+.items>.menu-item>.first {
 	font-weight: bold;
 }
 
