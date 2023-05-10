@@ -113,7 +113,7 @@ function Theme__applyTo(themeName) {
 						
 						<ul class="menu-item">
 								<li class="first">
-										<a href="/usr/article/list">전체글보기</a>
+										<a href="/usr/article/list">⛺전체글보기⛺</a>
 								<li>
 										<a href="/usr/article/list?boardId=1">공지사항</a>
 								</li>
@@ -128,7 +128,7 @@ function Theme__applyTo(themeName) {
 				<div class="items">
 						<ul class="menu-item">
 								<li class="first">
-										<a href="#">리뷰게시판</a>
+										<a href="#">⛺리뷰게시판⛺</a>
 								<li>
 										<a href="#">캠핑 장비 리뷰</a>
 								</li>
@@ -141,15 +141,15 @@ function Theme__applyTo(themeName) {
 				<div class="items">
 						<ul class="menu-item">
 								<li class="first">
-										<a href="#">정보 공유</a>
+										<a href="#">⛺정보 공유⛺</a>
 								<li>
-										<a href="#">주변 캠핑장</a>
+										<a href="#">캠핑장</a>
 								</li>
 								<li>
-										<a href="#">주변 카라반</a>
+										<a href="#">카라반</a>
 								</li>
 								<li>
-										<a href="#">주변 야영지</a>
+										<a href="#">야영지</a>
 								</li>
 								<li>
 										<a href="/usr/home/APITest2">지도 서비스</a>
@@ -159,7 +159,7 @@ function Theme__applyTo(themeName) {
 				<div class="items">
 						<ul class="menu-item">
 								<li class="first">
-										<a href="#">실시간</a>
+										<a href="#">⛺실시간⛺</a>
 								<li>
 										<a href="#">실시간 캠핑</a>
 								</li>
@@ -174,7 +174,7 @@ function Theme__applyTo(themeName) {
 				<div class="items">
 						<ul class="menu-item">
 								<li class="first">
-										<a href="#">후기</a>
+										<a href="#">⛺후기⛺</a>
 								<li>
 										<a href="#">캠핑 후기</a>
 								</li>

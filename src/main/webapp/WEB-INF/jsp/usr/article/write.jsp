@@ -42,7 +42,7 @@ Article article = (Article) request.getAttribute("article");
 
 
 	
-<form style="text-align: center;" method="post" onsubmit="ArticleWrite__submit(this); return false;" action="doWrite">
+<form style="text-align: center;" enctype="multipart/form-data" method="post" onsubmit="ArticleWrite__submit(this); return false;" action="doWrite">
 <input type="hidden" name="body" />
   <div style="display: inline-block; border: 2px solid black; padding: 17px; text-align: left;">
   <div style="text-align: right;">${rq.loginedMember.nickname }</div>
