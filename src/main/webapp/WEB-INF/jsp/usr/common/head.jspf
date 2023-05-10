@@ -68,7 +68,7 @@ function Theme__applyTo(themeName) {
 				<ul>
 						<li class="">
 								<a class="h-full px-20 flex items-center btn-theme-toggle" href="javascript:Theme__toggle();">
-										<span >🌞</span>
+										<span>🌞</span>
 										<span>🌚</span>
 								</a>
 						</li>
@@ -110,6 +110,7 @@ function Theme__applyTo(themeName) {
 		<nav>
 				<br />
 				<div class="items">
+						
 						<ul class="menu-item">
 								<li class="first">
 										<a href="/usr/article/list">전체글보기</a>
@@ -140,21 +141,6 @@ function Theme__applyTo(themeName) {
 				<div class="items">
 						<ul class="menu-item">
 								<li class="first">
-										<a href="#">정보 제공</a>
-								<li>
-										<a href="/usr/home/APITest">주변 편의시설</a>
-								</li>
-								<li>
-										<a href="/usr/home/APITest3">거리 구하기</a>
-								</li>
-								<li>
-										<a href="/usr/home/APITest2">지도 서비스</a>
-								</li>
-						</ul>
-				</div>
-				<div class="items">
-						<ul class="menu-item">
-								<li class="first">
 										<a href="#">정보 공유</a>
 								<li>
 										<a href="#">주변 캠핑장</a>
@@ -164,6 +150,9 @@ function Theme__applyTo(themeName) {
 								</li>
 								<li>
 										<a href="#">주변 야영지</a>
+								</li>
+								<li>
+										<a href="/usr/home/APITest2">지도 서비스</a>
 								</li>
 						</ul>
 				</div>
@@ -197,6 +186,19 @@ function Theme__applyTo(themeName) {
 								</li>
 						</ul>
 				</div>
+				<div class="popup text-2xl">❤️게시판 꿀팁❤️</div>
+						<div class="layer-bg"></div>
+						<div class="layer">
+								<div class="flex justify-between">
+										<div class="text-2xl">POPUP</div>
+										<div class="close-btn">
+												<div></div>
+												<div></div>
+										</div>
+								</div>
+								<div>정보 공유 게시판에서 원하는 조건의 캠핑장 검색 후 지도 서비스에서 주변 볼거리를 검색해보세요!</div>
+
+						</div>
 				<div style="display: block;">
 						<br />
 						<br />

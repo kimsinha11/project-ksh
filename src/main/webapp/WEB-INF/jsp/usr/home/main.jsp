@@ -2,84 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <c:set var="pageTitle" value="MAIN" />
 <%@ include file="../common/head.jspf"%>
- <div class="popup text-2xl">Popup Test</div>
-<div class="layer-bg"></div>
-<div class="layer">
-	<div class="flex justify-between">
-		<div class="text-2xl">POPUP</div>
-		<div class="close-btn">
-			<div></div>
-			<div></div>
-		</div>
-	</div>
-	<div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi repudiandae expedita vero nihil architecto
-		nostrum blanditiis unde beatae! Id iusto ducimus minima. Libero quam voluptas velit eius consequatur delectus
-		quisquam.</div>
 
-</div>
-<style>
-/*팝업*/
-.layer {
-	display: none;
-	width: 500px;
-	height: 500px;
-	background-color: black;
-	color: white;
-	border: 4px solid red;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translateX(-50%) translateY(-50%);
-	z-index: 11;
-	width: 500px;
-}
 
-.layer-bg {
-	display: none;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, .4);
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 10;
-}
-
-.layer>div {
-	padding: 20px;
-}
-
-.close-btn {
-	width: 70px;
-	height: 70px;
-	border: 4px solid white;
-	position: relative;
-}
-
-.close-btn>div {
-	background-color: red;
-	height: 10%;
-	width: 100%;
-	position: absolute;
-	top: 30%;
-	left: 50%;
-	transition: transform .2s cubic-bezier(1, .48, 0, .96), top .2s;
-	transform: translateX(-50%) translateY(-50%) rotate(0);
-}
-
-.close-btn>div:last-child {
-	top: 70%;
-}
-
-.close-btn:hover>div {
-	top: 50%;
-	transform: translateX(-50%) translateY(-50%) rotate(45deg);
-}
-
-.close-btn:hover>div:last-child {
-	transform: translateX(-50%) translateY(-50%) rotate(-45deg);
-}
-</style>
 <Section>
 				<h2 id="text">
 						<span>It's time for a new</span>
