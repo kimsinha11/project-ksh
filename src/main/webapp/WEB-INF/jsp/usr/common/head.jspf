@@ -145,7 +145,7 @@ function Theme__applyTo(themeName) {
 										<a href="/usr/home/APITest">주변 편의시설</a>
 								</li>
 								<li>
-										<a href="#">오늘 날씨</a>
+										<a href="/usr/home/APITest3">거리 구하기</a>
 								</li>
 								<li>
 										<a href="/usr/home/APITest2">지도 서비스</a>
