@@ -139,7 +139,7 @@ function Theme__applyTo(themeName) {
 										<a href="#">캠핑 장비 리뷰</a>
 								</li>
 								<li>
-										<a href="#">캠핑 요리 리뷰</a>
+										<a href="/usr/review/list">캠핑 요리 리뷰</a>
 								</li>
 
 						</ul>

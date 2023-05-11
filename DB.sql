@@ -36,7 +36,7 @@ CREATE TABLE `member`(
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
     loginId CHAR(20) NOT NULL,
-    loginPw CHAR(60) NOT NULL,
+    loginPw CHAR(255) NOT NULL,
     `authLevel` SMALLINT(2) UNSIGNED DEFAULT 3 COMMENT '권한 레벨 (3=일반,7=관리자)',
     `name` CHAR(20) NOT NULL,
     nickname CHAR(20) NOT NULL,
@@ -62,12 +62,12 @@ email = 'abcdef@gmail.com';
 INSERT INTO `member` 
 SET regDate = NOW(),
 updateDate = NOW(),
-loginId = 'test1',
-loginPw = 'test1',
-`name` = '회원1',
-`nickname` = '회원1',
+loginId = 'sinha',
+loginPw = 'sinha',
+`name` = '신하',
+`nickname` = '신하',
 cellphoneNum = '01043214321',
-email = 'abcd@gmail.com';
+email = 'kimsinah5@gmail.com';
 
 INSERT INTO `member` 
 SET regDate = NOW(),
@@ -206,6 +206,37 @@ ON A.id = RP_SUM.relId
 SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
 A.badReactionPoint = RP_SUM.badReactionPoint;
 
+
+# 댓글 테이블 생성
+CREATE TABLE `COMMENT`(
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `body` TEXT NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    boardId INT(10) UNSIGNED NOT NULL,
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
+    relId INT(10) UNSIGNED NOT NULL,
+    goodReactionPoint INT(10) UNSIGNED NOT NULL,
+    badReactionPoint INT(10) UNSIGNED NOT NULL
+);
+
+
+# 리뷰 테이블 생성
+CREATE TABLE `review` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) NOT NULL,
+	boardId INT(10) NOT NULL,
+    title CHAR(100) NOT NULL,
+    `body` TEXT NOT NULL,
+    hitCount INT(10) UNSIGNED NOT NULL,
+	goodReactionPoint INT(10) UNSIGNED NOT NULL,
+	badReactionPoint INT(10) UNSIGNED NOT NULL
+);
+
+
 ###################################################################
 SELECT * FROM article;
 SELECT * FROM `member`;
@@ -248,20 +279,6 @@ UPDATE article
 SET `body` = '내용6'
 WHERE id= 3;
 
-
-# 댓글 테이블 생성
-CREATE TABLE COMMENT(
-    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    regDate DATETIME NOT NULL,
-    updateDate DATETIME NOT NULL,
-    `body` TEXT NOT NULL,
-    memberId INT(10) UNSIGNED NOT NULL,
-    boardId INT(10) UNSIGNED NOT NULL,
-    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
-    relId INT(10) UNSIGNED NOT NULL,
-    goodReactionPoint INT(10) UNSIGNED NOT NULL,
-    badReactionPoint INT(10) UNSIGNED NOT NULL
-);
 
 # 게시물 테스트데이터 생성
 INSERT INTO article 
