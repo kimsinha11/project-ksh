@@ -78,6 +78,7 @@ public class UsrReviewController {
 		model.addAttribute("lastPageInGroup", lastPageInGroup);
 
 		return "usr/review/list";
+		
 	}
 	
 	@RequestMapping("/usr/review/detail")
