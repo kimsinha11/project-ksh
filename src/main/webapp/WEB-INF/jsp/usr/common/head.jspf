@@ -97,12 +97,18 @@ function Theme__applyTo(themeName) {
 								<a href="/usr/member/logout">로그아웃</a>
 						</li>
 						<li>
-								<a href="/usr/member/profile?id=${rq.loginedMember.id }">${rq.loginedMember.nickname }</a>
+								<a href="/usr/member/profile?id=${rq.loginedMember.id }">My</a>
 						</li>
 						<%
 						}
 						%>
-
+						<c:if test="${rq.admin}">
+								<li class="hover:underline">
+										<a class="h-full px-3 flex items-center" href="/adm/memberAndArticle/list">
+												<span>관리자</span>
+										</a>
+								</li>
+						</c:if>
 				</ul>
 		</header>
 		<hr />
@@ -110,7 +116,7 @@ function Theme__applyTo(themeName) {
 		<nav>
 				<br />
 				<div class="items">
-						
+
 						<ul class="menu-item">
 								<li class="first">
 										<a href="/usr/article/list">⛺전체글보기⛺</a>
@@ -187,18 +193,18 @@ function Theme__applyTo(themeName) {
 						</ul>
 				</div>
 				<div class="popup text-2xl">❤️게시판 꿀팁❤️</div>
-						<div class="layer-bg"></div>
-						<div class="layer">
-								<div class="flex justify-between">
-										<div class="text-2xl">POPUP</div>
-										<div class="close-btn">
-												<div></div>
-												<div></div>
-										</div>
+				<div class="layer-bg"></div>
+				<div class="layer">
+						<div class="flex justify-between">
+								<div class="text-2xl">POPUP</div>
+								<div class="close-btn">
+										<div></div>
+										<div></div>
 								</div>
-								<div>정보 공유 게시판에서 원하는 조건의 캠핑장 검색 후 지도 서비스에서 주변 볼거리를 검색해보세요!</div>
-
 						</div>
+						<div>정보 공유 게시판에서 원하는 조건의 캠핑장 검색 후 지도 서비스에서 주변 볼거리를 검색해보세요!</div>
+
+				</div>
 				<div style="display: block;">
 						<br />
 						<br />
