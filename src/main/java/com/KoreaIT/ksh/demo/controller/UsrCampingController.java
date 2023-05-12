@@ -10,12 +10,16 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UsrCampingController {
 
 	@GetMapping("/usr/camping/list")
-	public String index(Model model) {
+	public String index(Model model,
+	                    @RequestParam(required = false, defaultValue = "") String searchKeyword,
+	                    @RequestParam(required = false, defaultValue = "0") int searchType) {
+
 	    List<String[]> data = new ArrayList<>();
 
 	    try (InputStream inputStream = getClass().getResourceAsStream("/camping/camping.csv");
@@ -29,7 +33,24 @@ public class UsrCampingController {
 	        e.printStackTrace();
 	    }
 
-	    model.addAttribute("data", data);
+	    List<String[]> filteredData = new ArrayList<>();
+
+	    if (!searchKeyword.isEmpty()) {
+	        for (String[] row : data) {
+	            String searchTarget = row[4]; // 주소 정보
+	            if (searchTarget.contains(searchKeyword)) {
+	                filteredData.add(row);
+	            }
+	        }
+	    } else {
+	        filteredData = data;
+	    }
+
+	    model.addAttribute("data", filteredData);
+	    model.addAttribute("searchKeyword", searchKeyword);
+	    model.addAttribute("searchType", searchType);
+
 	    return "usr/camping/list";
 	}
+
 }
