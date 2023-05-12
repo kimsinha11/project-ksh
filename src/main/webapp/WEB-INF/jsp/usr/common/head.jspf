@@ -149,13 +149,10 @@ function Theme__applyTo(themeName) {
 								<li class="first">
 										<a href="#">⛺정보 공유⛺</a>
 								<li>
-										<a href="#">캠핑장</a>
+										<a href="/usr/camping/list">캠핑장 검색</a>
 								</li>
 								<li>
-										<a href="#">카라반</a>
-								</li>
-								<li>
-										<a href="#">야영지</a>
+										<a href="#">오늘 날씨</a>
 								</li>
 								<li>
 										<a href="/usr/home/APITest2">지도 서비스</a>
