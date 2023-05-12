@@ -14,7 +14,7 @@ int searchType = (int) request.getAttribute("searchType");
 <div>
 		<form class="flex">
 				<select name="searchType" class="select select-bordered" style="width: 150px;">
-						<option value="0" ${searchType == 0 ? 'selected' : ''}>주소</option>
+						<option value="0" ${searchType == 0 ? 'selected' : ''}>지역</option>
 						<option value="1" ${searchType == 1 ? 'selected' : ''}>종류</option>
 				</select>
 				<input name="searchKeyword" type="text" class="ml-2 w-96 input input-borderd" placeholder="검색어를 입력해주세요"
@@ -24,14 +24,14 @@ int searchType = (int) request.getAttribute("searchType");
 
 </div>
 
-<h1>Camping List</h1>
+
 <table class="table-box-type-1 table w-full" style="border-collaspe: collaspe; width: 700px;">
 		<thead>
 				<tr>
 						<th>번호</th>
 						<th>캠핑(야영)장명</th>
 						<th>종류</th>
-						<th>주소</th>
+						<th>지역</th>
 						<th>상세보기</th>
 				</tr>
 		</thead>
