@@ -15,42 +15,67 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class UsrCampingController {
 
-	@GetMapping("/usr/camping/list")
-	public String index(Model model,
-	                    @RequestParam(required = false, defaultValue = "") String searchKeyword,
-	                    @RequestParam(required = false, defaultValue = "0") int searchType) {
+    @GetMapping("/usr/camping/list")
+    public String index(Model model,
+                        @RequestParam(required = false, defaultValue = "") String searchKeyword,
+                        @RequestParam(required = false, defaultValue = "0") int searchType) {
 
-	    List<String[]> data = new ArrayList<>();
+        List<String[]> data = new ArrayList<>();
 
-	    try (InputStream inputStream = getClass().getResourceAsStream("/camping/camping.csv");
-	         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
-	        String line;
-	        while ((line = br.readLine()) != null) {
-	            String[] row = line.split(",");
-	            data.add(row);
-	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+        try (InputStream inputStream = getClass().getResourceAsStream("/camping/camping.csv");
+             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] row = line.split(",");
+                data.add(row);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	    List<String[]> filteredData = new ArrayList<>();
+        List<String[]> filteredData = new ArrayList<>();
 
-	    if (!searchKeyword.isEmpty()) {
-	        for (String[] row : data) {
-	            String searchTarget = row[4]; // 주소 정보
-	            if (searchTarget.contains(searchKeyword)) {
-	                filteredData.add(row);
-	            }
-	        }
-	    } else {
-	        filteredData = data;
-	    }
+        if (!searchKeyword.isEmpty()) {
+            for (String[] row : data) {
+                String searchTarget;
+                if (searchType == 0) {
+                    searchTarget = row[3]; // 주소 정보
+                } else {
+                    searchTarget = row[2]; // 종류 정보
+                }
+                if (searchTarget.contains(searchKeyword)) {
+                    filteredData.add(row);
+                }
+            }
+        } else {
+            filteredData = data;
+        }
 
-	    model.addAttribute("data", filteredData);
-	    model.addAttribute("searchKeyword", searchKeyword);
-	    model.addAttribute("searchType", searchType);
+        model.addAttribute("data", filteredData);
+        model.addAttribute("searchKeyword", searchKeyword);
+        model.addAttribute("searchType", searchType);
 
-	    return "usr/camping/list";
+        return "usr/camping/list";
+    }
+
+
+	@GetMapping("/usr/camping/detail")
+	public String detail(Model model) {
+
+		 List<String[]> data = new ArrayList<>();
+
+		    try (InputStream inputStream = getClass().getResourceAsStream("/camping/camping.csv");
+		         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+		        String line;
+		        while ((line = br.readLine()) != null) {
+		            String[] row = line.split(",");
+		            data.add(row);
+		        }
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+
+		    model.addAttribute("data", data);
+		    return "usr/camping/detail";
 	}
-
 }
