@@ -64,8 +64,10 @@ function Theme__applyTo(themeName) {
 
 <body>
 		<header id="header">
-				<a href="#" class="logo">Camping</a>
-				<ul>
+		<div>
+				<a href="../home/main" class="logo">DDNJ</a><a href="../home/main"style="font-size:5px;">ddeonoja</a>
+		</div>		
+				<ul> 
 						<li class="">
 								<a class="h-full px-20 flex items-center btn-theme-toggle" href="javascript:Theme__toggle();">
 										<span>🌞</span>
@@ -204,7 +206,7 @@ function Theme__applyTo(themeName) {
 				</div>
 				<div class="text-xl">❤️출석 체크❤️</div>
 			
-<br></br>
+<br></br><br />
 						<hr />
 				
 		</nav>

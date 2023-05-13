@@ -14,7 +14,7 @@ List<String[]> data = (List<String[]>) request.getAttribute("data");
 <h1>Detail</h1>
 <section class="mt-10 text-xl">
 		<div class="mx-auto overflow-x-auto">
-				<table class="table w-full table-box-type-1" style="width: 700px;">
+				<table class="table w-full table-box-type-3" style="width: 700px;">
 
 						<thead>
 								<%

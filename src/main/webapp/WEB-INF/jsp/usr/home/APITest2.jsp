@@ -53,7 +53,7 @@
         <div class="option">
             <div style="height:60px;">
                 <form onsubmit="searchPlaces(); return false;" style="font-size: 20px;">
-                    키워드 : <input type="text" value="이태원 맛집" id="keyword" size="10" style="font-size: 20px;"> 
+                    키워드 : <input type="text" value="대전 맛집" id="keyword" size="10" style="font-size: 20px;"> 
                     <button style="font-size: 15px;" type="submit">검색</button> 
                 </form>
             </div>
