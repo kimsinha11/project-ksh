@@ -154,7 +154,7 @@ function Theme__applyTo(themeName) {
 										<a href="/usr/camping/list">캠핑장 검색</a>
 								</li>
 								<li>
-										<a href="#">오늘 날씨</a>
+										<a href="/usr/camping/weather">오늘 날씨</a>
 								</li>
 								<li>
 										<a href="/usr/camping/map">지도 서비스</a>
