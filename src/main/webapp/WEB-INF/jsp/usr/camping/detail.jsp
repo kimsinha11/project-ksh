@@ -14,7 +14,7 @@ List<String[]> data = (List<String[]>) request.getAttribute("data");
 <h1>Detail</h1>
 <section class="mt-10 text-xl">
 		<div class="mx-auto overflow-x-auto">
-				<table class="table w-full table-box-type-1" style="width: 700px; height: 300px;">
+				<table class="table w-full table-box-type-1" style="width: 700px;">
 
 						<thead>
 								<%
@@ -35,11 +35,15 @@ List<String[]> data = (List<String[]>) request.getAttribute("data");
 
 										</th>
 								</tr>
-								<tr>
+								<tr style="height: 50px;">
+										<th style="font-size: 20px">종류</th>
+										<th  style="font-size: 20px"><%=row[2]%></th>
+								</tr>
+								<tr style="height: 50px;">
 										<th  style="font-size: 20px">부대시설1</th>
 										<th  style="font-size: 20px"><%=row[10]%></th>
 								</tr>
-								<tr>
+								<tr style="height: 50px;">
 								<th  style="font-size: 20px">부대시설2</th>
 								<th  style="font-size: 20px"><%=row[11]%></th>
 								</tr>

@@ -189,7 +189,7 @@ function Theme__applyTo(themeName) {
 								</li>
 						</ul>
 				</div>
-				<div class="popup text-2xl">❤️게시판 꿀팁❤️</div>
+				<div class="popup text-xl">❤️게시판 꿀팁❤️</div>
 				<div class="layer-bg"></div>
 				<div class="layer">
 						<div class="flex justify-between">
@@ -202,15 +202,11 @@ function Theme__applyTo(themeName) {
 						<div>정보 공유 게시판에서 원하는 조건의 캠핑장 검색 후 지도 서비스에서 주변 볼거리를 검색해보세요!</div>
 
 				</div>
-				<div style="display: block;">
-						<br />
-						<br />
-						<br />
-						<br />
-						<br />
-
+				<div class="text-xl">❤️출석 체크❤️</div>
+			
+<br></br>
 						<hr />
-				</div>
+				
 		</nav>
 </body>
 
