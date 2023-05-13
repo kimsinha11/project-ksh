@@ -157,7 +157,7 @@ function Theme__applyTo(themeName) {
 										<a href="#">오늘 날씨</a>
 								</li>
 								<li>
-										<a href="/usr/home/APITest2">지도 서비스</a>
+										<a href="/usr/camping/map">지도 서비스</a>
 								</li>
 						</ul>
 				</div>
