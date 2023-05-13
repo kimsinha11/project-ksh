@@ -1,8 +1,7 @@
 @font-face {
 	font-family: 'Poppins';
 	src:
-		url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap')
-	;
+		url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -12,22 +11,27 @@ html>body {
 }
 
 html {
-	width: 1300px;
+	width: 1230px;
 	margin: 0 auto;
-
 }
 
 /* 라이브러리 */
 .table-box-type-1>thead th, .table-box-type-1 th {
 	border: 1px solid black;
-
+	margin-top: 100%;
 	padding: 5px;
 }
 
 .table-box-type-2>thead th, .table-box-type-2 th {
 	border: 1px solid black;
-		margin-top: 100%;
+	margin-top: 100%;
 	padding: 5px;
+}
+
+.table-box-type-3>thead th, .table-box-type-3 th {
+	border: 1px solid black;
+	margin-top: 100%;
+	padding: 5px 0 ;
 }
 
 .title-text, .comment-count {
@@ -59,6 +63,7 @@ th {
 	text-align: center;
 	font-size: 17px;
 	font-weight: light;
+
 }
 
 .btns {

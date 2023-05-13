@@ -60,7 +60,7 @@ public class UsrCampingController {
 
 
 	@GetMapping("/usr/camping/detail")
-	public String detail(Model model) {
+	public String detail(Model model, String id) {
 
 		 List<String[]> data = new ArrayList<>();
 
@@ -74,7 +74,7 @@ public class UsrCampingController {
 		    } catch (IOException e) {
 		        e.printStackTrace();
 		    }
-
+		    model.addAttribute("id", id);
 		    model.addAttribute("data", data);
 		    return "usr/camping/detail";
 	}

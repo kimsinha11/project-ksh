@@ -25,14 +25,12 @@ int searchType = (int) request.getAttribute("searchType");
 </div>
 
 
-<table class="table-box-type-1 table w-full" style="border-collaspe: collaspe; width: 700px;">
+<table class="table-box-type-3 table w-full" style="width: 100px;">
 		<thead>
 				<tr>
 						<th>번호</th>
 						<th>캠핑(야영)장명</th>
-						<th>종류</th>
 						<th>지역</th>
-						<th>상세보기</th>
 				</tr>
 		</thead>
 		<tbody>
@@ -41,12 +39,12 @@ int searchType = (int) request.getAttribute("searchType");
 				%>
 				<tr>
 						<th><%=row[0]%></th>
-						<th><%=row[1]%></th>
-						<th><%=row[2]%></th>
-						<th><%=row[3]%></th>
-						<th>
-								<a href="/usr/camping/detail">클릭</a>
+						<th class="title">
+							<div class="title-text">
+								<a href="detail?id=<%=row[0]%>"><%=row[1]%></a>
+							</div>
 						</th>
+						<th><%=row[3]%></th>
 				</tr>
 				<%
 				}
