@@ -33,15 +33,15 @@ public class WeatherApiController {
 		 * getUltraSrtNcst 초단기실황조회 getUltraSrtFcst 초단기예보조회 getVilageFcst 동네예보조회
 		 * getFcstVersion 예보버전조회
 		 */
-		String url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
+		String url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst"
 				+ "?serviceKey=qYUvGhdyJWZABB1We4OO2lxkBstL%2Bk%2FlyLyoPB3KiyqDueGZfsol43bZsi5gf3zfIRtD%2Ftws%2BnFFPVdP85ZAKA%3D%3D"
 				+ "&dataType=JSON" // JSON, XML
 				+ "&numOfRows=10" // 페이지 ROWS
-				+ "&pageNo=1" // 페이지 번호
-				+ "&base_date=20230513" // 발표일자
-				+ "&base_time=0800" // 발표시각
-				+ "&nx=60" // 예보지점 X 좌표
-				+ "&ny=127"; // 예보지점 Y 좌표
+				+ "&pageNo=2" // 페이지 번호
+				+ "&base_date=20230514" // 발표일자
+				+ "&base_time=0430" // 발표시각
+				+ "&nx=59" // 예보지점 X 좌표
+				+ "&ny=126"; // 예보지점 Y 좌표
 
 		HashMap<String, Object> resultMap = getDataFromJson(url, "UTF-8", "get", "");
 
@@ -56,7 +56,7 @@ public class WeatherApiController {
 			model.addAttribute("responseBody", ""); // responseBody가 null일 경우 빈 문자열을 넘겨줌
 		}
 
-		return "/usr/home/APITest2";
+		return "/usr/camping/weather";
 
 	}
 
