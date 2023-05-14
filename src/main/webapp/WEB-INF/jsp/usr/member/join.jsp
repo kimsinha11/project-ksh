@@ -9,12 +9,14 @@
 <br />
 <br />
 <br />
+
 <script>
 	let submitJoinFormDone = false;
 	let validLoginId ="";
 	let validNickname ="";
 	let validEmail ="";
-	
+	let validcellphoneNum ="";
+
 	function submitJoinForm(form) {
 		if (submitJoinFormDone) {
 			alert('처리중입니다');
@@ -37,6 +39,7 @@
 			form.loginPw.focus();
 			return;
 		}
+		
 		form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
 		if (form.loginPwConfirm.value == 0) {
 			alert('비밀번호 확인을 입력해주세요');
@@ -63,11 +66,12 @@
 			alert('이메일을 입력해주세요');
 			return;
 		}
-		form.cellphoneNum.value = form.cellphoneNum.value.trim();
+		form.cellphoneNum.value = form.validcellphoneNum.value.trim();
 		if (form.cellphoneNum.value == 0) {
 			alert('전화번호를 입력해주세요');
 			return;
 		}
+	
 		submitJoinFormDone = true;
 		form.submit();
 	}
@@ -215,21 +219,24 @@
 			}
 
 			const checkPasswordMatch = _.debounce(checkPassword, 500);
-			
+
 			function checkPhoneNumber(el) {
 			    const phoneNumber = el.value.trim();
 			    $('.checkDup-msg6').empty();
-
+			    
 			    if(phoneNumber.length == 0) {
+			    	validcellphoneNum='';
 			    	$('.checkDup-msg6').html('<div>전화번호를 입력해주세요.</div>');
 			        return;
 			    }
 
 			    if (!/^\d{3}-\d{3,4}-\d{4}$/.test(phoneNumber)) {
 			        $('.checkDup-msg6').html('<div>올바른 전화번호 형식이 아닙니다.(000-0000-0000)</div>');
+			        
+			        return;
 			    }
+			
 			}
-
 			const checkPhoneNumberFormat = _.debounce(checkPhoneNumber, 500);
 
 
@@ -247,14 +254,14 @@
 				<div>
 						비밀번호 :
 						<input onkeyup="checkPassword(this);" class="input input-bordered input-sm w-full max-w-xs" type="password"
-								name="loginPw" placeholder="비밀번호를 입력해주세요" autocomplete="off" />
+								name="loginPw" placeholder="비밀번호를 입력해주세요" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$"autocomplete="off" />
 				</div>
 				<div style="font-size: 15px; color: red;" class="checkDup-msg5"></div>
 				<br />
 				<div>
 						비밀번호 확인:
 						<input onkeyup="checkPassword(this);" class="input input-bordered input-sm w-full max-w-xs" type="password"
-								name="loginPwConfirm" placeholder="비밀번호를 입력해주세요" autocomplete="off" />
+								name="loginPwConfirm" placeholder="비밀번호를 입력해주세요"autocomplete="off" />
 				</div>
 				<div style="font-size: 15px; color: red;" class="checkDup-msg4"></div>
 				<br />
@@ -266,7 +273,7 @@
 				<div>
 						닉네임 :
 						<input onkeyup="checkNicknameDuplication(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
-								name="nickname" placeholder="닉네임을 입력해주세요" id="nickname" />
+								name="nickname" placeholder="닉네임을 입력해주세요"  id="nickname" />
 
 				</div>
 				<div style="font-size: 15px; color: red;" class="checkDup-msg2"></div>
@@ -274,14 +281,14 @@
 				<div>
 						전화번호 :
 						<input onkeyup="checkPhoneNumber(this);" class="input input-bordered input-sm w-full max-w-xs" value="" type="text" name="cellphoneNum"
-								placeholder="전화번호를 입력해주세요" autocomplete="off" />
+								placeholder="전화번호를 입력해주세요" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" autocomplete="off" />
 				</div>
 				<div style="font-size: 15px; color: red;" class="checkDup-msg6"></div>
 				<br />
 				<div>
 						이메일 :
 						<input onkeyup="checkEmailDuplication(this);" class="input input-bordered input-sm w-full max-w-xs"
-								style="border: 1px solid black;" value="" type="text" name="email" placeholder="이메일을 입력해주세요" />
+								style="border: 1px solid black;" value="" type="text" name="email" placeholder="이메일을 입력해주세요" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
 				</div>
 				<div style="font-size: 15px; color: red;" class="checkDup-msg3"></div>
 				<br />
