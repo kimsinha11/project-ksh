@@ -125,7 +125,10 @@ function Theme__applyTo(themeName) {
 
 						<ul class="menu-item">
 								<li class="first">
-										<a href="#">⛺전체글보기⛺</a>
+										<a href="#">⛺도란도란⛺</a>
+								<li>
+										<a href="/usr/article/list">전체글보기</a>
+								</li>
 								<li>
 										<a href="/usr/article/list?boardId=1">공지사항</a>
 								</li>
@@ -195,8 +198,10 @@ function Theme__applyTo(themeName) {
 								</li>
 						</ul>
 				</div>
-<br><br /></br><br></br>
+<br><br /></br><br><br /></br>
+
 <hr />
+
 		
 
 		</nav>
