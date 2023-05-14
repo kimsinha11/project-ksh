@@ -20,8 +20,9 @@ int searchType = (int) request.getAttribute("searchType");
 				<input name="searchKeyword" type="text" class="ml-2 w-96 input input-borderd" placeholder="검색어를 입력해주세요"
 						maxlength="20" value="${searchKeyword}" />
 				<button type="submit" class="ml-2 btn btn-ghost">검색</button>
+				<a class="ml-2 btn btn-ghost" href="/usr/camping/map" type="button">지도</a>
 		</form>
-
+		
 </div>
 
 
