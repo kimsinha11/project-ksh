@@ -184,25 +184,25 @@
 			
 			
 			function checkPassword(el) {
-			    $('.checkDup-msg4').empty();
-			    const form = $(el).closest('form').get(0);
-			    const password = form.loginPw.value.trim();
-			    const confirmPassword = form.loginPwConfirm.value.trim();
+				  $('.checkDup-msg4').empty();
+				  const form = $(el).closest('form').get(0);
+				  const password = form.loginPw.value.trim();
+				  const confirmPassword = form.loginPwConfirm.value.trim();
 
-			    if(confirmPassword.length == 0) {
-			        return;
-			    }
-
-			    if (!/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/.test(password)) {
-			        $('.checkDup-msg4').html('<div>숫자, 영어, 특수문자(!@#$%^&*)가 최소한 1개씩 포함된 8글자 이상</div>');
-			    } else if(password !== confirmPassword) {
-			        $('.checkDup-msg4').html('<div>비밀번호가 일치하지 않습니다.</div>');
-			    }
-			}
-			const checkPasswordDuplication = _.debounce(checkPassword, 1000);
+				  if(confirmPassword.length == 0) {
+				    return;
+				  }
+				  if(password !== confirmPassword) {
+				    $('.checkDup-msg4').html('<div>비밀번호가 일치하지 않습니다.</div>');
+				  }
+				  if(!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/.test(password)) {
+				    $('.checkDup-msg5').html('<div>비밀번호는 8글자 이내의 영어, 숫자, 특수문자를 한 개 이상 사용해야 합니다.</div>');
+				  }
+				}
+				const checkPasswordDuplication = _.debounce(checkPassword, 500);
 </script>
 <form style="text-align: center;" method="post" onsubmit="submitJoinForm(this); return false;" action="doJoin">
-		<div style="display: inline-block; border: 2px solid black; padding: 50px; width: 700px;text-align: left;">
+		<div style="display: inline-block; border: 2px solid black; padding: 50px; width: 700px; text-align: left;">
 				<div>
 						아이디 :
 						<input onkeyup="checkLoginIdDuplication(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
@@ -216,7 +216,7 @@
 						<input onkeyup="checkPassword(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
 								name="loginPw" placeholder="비밀번호를 입력해주세요" autocomplete="off" />
 				</div>
-	
+				<div style="font-size: 15px; color: red;" class="checkDup-msg5"></div>
 				<br />
 				<div>
 						비밀번호 확인:
