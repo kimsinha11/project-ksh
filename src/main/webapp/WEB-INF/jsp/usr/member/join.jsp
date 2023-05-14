@@ -184,25 +184,54 @@
 			
 			
 			function checkPassword(el) {
-			    $('.checkDup-msg4').empty();
 			    const form = $(el).closest('form').get(0);
 			    const password = form.loginPw.value.trim();
 			    const confirmPassword = form.loginPwConfirm.value.trim();
 
+			    $('.checkDup-msg5').empty();
+			    $('.checkDup-msg4').empty();
+			    
+			    if(password.length == 0) {
+			        $('.checkDup-msg5').html('<div>비밀번호를 입력해주세요.</div>');
+			        return;
+			    }
 			    if(confirmPassword.length == 0) {
+			        $('.checkDup-msg4').html('<div>비밀번호를 입력해주세요.</div>');
+			        return;
+			    }
+			    
+			    if (!/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/.test(password)) {
+			        $('.checkDup-msg5').html('<div>숫자, 영어, 특수문자(!@#$%^&*)가 최소한 1개씩 포함된 8글자 이상이어야 합니다.</div>');
 			        return;
 			    }
 
-			    if (!/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/.test(password)) {
-			        $('.checkDup-msg4').html('<div>숫자, 영어, 특수문자(!@#$%^&*)가 최소한 1개씩 포함된 8글자 이상</div>');
-			    } else if(password !== confirmPassword) {
+			    if(password !== confirmPassword) {
 			        $('.checkDup-msg4').html('<div>비밀번호가 일치하지 않습니다.</div>');
+			        return;
+			    }   
+			}
+
+			const checkPasswordMatch = _.debounce(checkPassword, 500);
+			
+			function checkPhoneNumber(el) {
+			    const phoneNumber = el.value.trim();
+			    $('.checkDup-msg6').empty();
+
+			    if(phoneNumber.length == 0) {
+			        return;
+			    }
+
+			    if (!/^\d{3}-\d{3,4}-\d{4}$/.test(phoneNumber)) {
+			        $('.checkDup-msg6').html('<div>올바른 전화번호 형식이 아닙니다.</div>');
 			    }
 			}
-			const checkPasswordDuplication = _.debounce(checkPassword, 1000);
+
+			const checkPhoneNumberFormat = _.debounce(checkPhoneNumber, 500);
+
+
 </script>
 <form style="text-align: center;" method="post" onsubmit="submitJoinForm(this); return false;" action="doJoin">
-		<div style="display: inline-block; border: 2px solid black; padding: 50px; width: 700px;text-align: left;">
+		<div style="display: inline-block; border: 2px solid black; padding: 50px; width: 700px; text-align: left;">
 				<div>
 						아이디 :
 						<input onkeyup="checkLoginIdDuplication(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
@@ -213,14 +242,14 @@
 				<br />
 				<div>
 						비밀번호 :
-						<input onkeyup="checkPassword(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
+						<input onkeyup="checkPassword(this);" class="input input-bordered input-sm w-full max-w-xs" type="password"
 								name="loginPw" placeholder="비밀번호를 입력해주세요" autocomplete="off" />
 				</div>
-	
+				<div style="font-size: 15px; color: red;" class="checkDup-msg5"></div>
 				<br />
 				<div>
 						비밀번호 확인:
-						<input onkeyup="checkPassword(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
+						<input onkeyup="checkPassword(this);" class="input input-bordered input-sm w-full max-w-xs" type="password"
 								name="loginPwConfirm" placeholder="비밀번호를 입력해주세요" autocomplete="off" />
 				</div>
 				<div style="font-size: 15px; color: red;" class="checkDup-msg4"></div>
@@ -240,9 +269,10 @@
 				<br />
 				<div>
 						전화번호 :
-						<input class="input input-bordered input-sm w-full max-w-xs" value="" type="text" name="cellphoneNum"
+						<input onkeyup="checkPhoneNumber(this);" class="input input-bordered input-sm w-full max-w-xs" value="" type="text" name="cellphoneNum"
 								placeholder="전화번호를 입력해주세요" autocomplete="off" />
 				</div>
+				<div style="font-size: 15px; color: red;" class="checkDup-msg6"></div>
 				<br />
 				<div>
 						이메일 :
