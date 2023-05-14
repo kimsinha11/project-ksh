@@ -6,13 +6,15 @@
 
 <!--  lodash debounce -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
-<br /><br /><br />
+<br />
+<br />
+<br />
 <script>
 	let submitJoinFormDone = false;
 	let validLoginId ="";
 	let validNickname ="";
 	let validEmail ="";
-	let validPwConfirm ="";
+	
 	function submitJoinForm(form) {
 		if (submitJoinFormDone) {
 			alert('처리중입니다');
@@ -106,40 +108,40 @@
 		const checkLoginIdDuplication = _.debounce(checkLoginIdDup,500);
 	
 
-	function checkNicknameDup(el) {
-		$('.checkDup-msg2').empty();
-		const form = $(el).closest('form').get(0);
-		const nickname = form.nickname.value.trim();
-		if(form.nickname.value.length == 0) {
-			validNickname ='';
-			return;
-		}
-		if(validNickname == form.nickname.value) {
-			return;
-		}
-		if(nickname.length < 5 || nickname.length > 20) {
-			$('.checkDup-msg2').html('<div>5글자 ~ 20글자 사이로 입력해주세요</div>');
-			return;
-		} 
-		
-		$.get('../member/getNicknameDup', {
-			isAjax : 'Y',
-			nickname : nickname
-		}, function(data) {
-			if (form.nickname.value.trim() !== nickname) {
-				// 검사 중 입력 값이 바뀌었을 때
+		function checkNicknameDup(el) {
+			$('.checkDup-msg2').empty();
+			const form = $(el).closest('form').get(0);
+			const nickname = form.nickname.value.trim();
+			if(form.nickname.value.length == 0) {
+				validNickname ='';
 				return;
 			}
-			
-			$('.checkDup-msg2').html('<div>' + data.msg + '</div>')
-			if(data.success){
-				validNickname = data.data1;
-			} else {
-				validNickname = '';
+			if(validNickname == form.nickname.value) {
+				return;
 			}
-		}, 'json');
-	}
-		const checkNicknameDuplication = _.debounce(checkNicknameDup,500);
+			if(nickname.length < 3 || nickname.length > 20) {
+				$('.checkDup-msg2').html('<div>3글자 ~ 20글자 사이로 입력해주세요</div>');
+				return;
+			} 
+				
+			$.get('../member/getNicknameDup', {
+				isAjax : 'Y',
+				nickname : nickname
+			}, function(data) {
+				if (form.nickname.value.trim() !== nickname) {
+					// 검사 중 입력 값이 바뀌었을 때
+					return;
+				}
+					
+				$('.checkDup-msg2').html('<div>' + data.msg + '</div>')
+				if(data.success){
+					validNickname = data.data1;
+				} else {
+					validNickname = '';
+				}
+			}, 'json');
+		}
+		const checkNicknameDuplication = _.debounce(checkNicknameDup,500); 
 		
 		function checkEmailDup(el) {
 			  $('.checkDup-msg3').empty();
@@ -179,54 +181,77 @@
 			}
 			const checkEmailDuplication = _.debounce(checkEmailDup, 500);
 	  
+			
+			
+			function checkPassword(el) {
+			    $('.checkDup-msg4').empty();
+			    const form = $(el).closest('form').get(0);
+			    const password = form.loginPw.value.trim();
+			    const confirmPassword = form.loginPwConfirm.value.trim();
+
+			    if(confirmPassword.length == 0) {
+			        return;
+			    }
+			    if(password !== confirmPassword) {
+			        $('.checkDup-msg4').html('<div>비밀번호가 일치하지 않습니다.</div>');
+			    }
+			}
+			const checkPasswordDuplication = _.debounce(checkPasswordDup, 500);
 </script>
 <form style="text-align: center;" method="post" onsubmit="submitJoinForm(this); return false;" action="doJoin">
-	<div style="display: inline-block; border: 2px solid black; padding: 50px; text-align: left;">
-		<div>
-			아이디 :
-			<input onkeyup="checkLoginIdDuplication(this);"class="input input-bordered input-sm w-full max-w-xs" type="text" name="loginId" placeholder="아이디를 입력해주세요"  id="loginId" />
-			
+		<div style="display: inline-block; border: 2px solid black; padding: 50px; text-align: left;">
+				<div>
+						아이디 :
+						<input onkeyup="checkLoginIdDuplication(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
+								name="loginId" placeholder="아이디를 입력해주세요" id="loginId" />
+
+				</div>
+				<div style="font-size: 15px; color: red;" class="checkDup-msg"></div>
+				<br />
+				<div>
+						비밀번호 :
+						<input onkeyup="checkPassword(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
+								name="loginPw" placeholder="비밀번호를 입력해주세요" autocomplete="off" />
+				</div>
+				<br />
+				<div>
+						비밀번호 확인:
+						<input onkeyup="checkPassword(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
+								name="loginPwConfirm" placeholder="비밀번호를 입력해주세요" autocomplete="off" />
+				</div>
+				<div style="font-size: 15px; color: red;" class="checkDup-msg4"></div>
+				<br />
+				<div>
+						이름 :
+						<input class="input input-bordered input-sm w-full max-w-xs" type="text" name="name" placeholder="이름을 입력해주세요" />
+				</div>
+				<br />
+				<div>
+						닉네임 :
+						<input onkeyup="checkNicknameDuplication(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
+								name="nickname" placeholder="닉네임을 입력해주세요" id="nickname" />
+
+				</div>
+				<div style="font-size: 15px; color: red;" class="checkDup-msg2"></div>
+				<br />
+				<div>
+						전화번호 :
+						<input class="input input-bordered input-sm w-full max-w-xs" value="" type="text" name="cellphoneNum"
+								placeholder="전화번호를 입력해주세요" autocomplete="off" />
+				</div>
+				<br />
+				<div>
+						이메일 :
+						<input onkeyup="checkEmailDuplication(this);" class="input input-bordered input-sm w-full max-w-xs"
+								style="border: 1px solid black;" value="" type="text" name="email" placeholder="이메일을 입력해주세요" />
+				</div>
+				<div style="font-size: 15px; color: red;" class="checkDup-msg3"></div>
+				<br />
+				<div style="text-align: center">
+						<button class="btn-text-link btn btn-outline btn-xs" style="display: inline;" type="submit">회원가입</button>
+						<a class="btn-text-link btn btn-outline btn-xs" href="/usr/member/login">로그인</a>
+				</div>
 		</div>
-		<div style="font-size:15px; color:red;"class="checkDup-msg"></div>
-		<br />
-		<div>
-			비밀번호 :
-			<input class="input input-bordered input-sm w-full max-w-xs" type="text" name="loginPw" placeholder="비밀번호를 입력해주세요" autocomplete="off"/>
-		</div>
-		<br />
-		<div>
-			비밀번호 확인:
-			<input class="input input-bordered input-sm w-full max-w-xs" type="text" name="loginPwConfirm" placeholder="비밀번호를 입력해주세요" autocomplete="off"/>
-		</div>
-		<br />
-		<div>
-			이름 :
-			<input class="input input-bordered input-sm w-full max-w-xs" type="text" name="name" placeholder="이름을 입력해주세요" />
-		</div>
-		<br />
-		<div>
-			닉네임 :
-			<input onkeyup="checkNicknameDuplication(this);"class="input input-bordered input-sm w-full max-w-xs" type="text" name="nickname" placeholder="닉네임을 입력해주세요" id="nickname"/>
-		
-		</div>
-		<div style="font-size:15px; color:red;"class="checkDup-msg2"></div>
-		<br />
-		<div>
-			전화번호 :
-			<input class="input input-bordered input-sm w-full max-w-xs" value="" type="text" name="cellphoneNum" placeholder="전화번호를 입력해주세요" autocomplete="off"/>
-		</div>
-		<br />
-		<div>
-			이메일 :
-			<input onkeyup="checkEmailDuplication(this);" class="input input-bordered input-sm w-full max-w-xs"style="border:1px solid black;" value="" type="text" name="email" placeholder="이메일을 입력해주세요" />
-		</div>
-		<div style="font-size:15px; color:red;"class="checkDup-msg3"></div>
-		<br />
-		<div style="text-align: center">
-			<button class="btn-text-link btn btn-outline btn-xs" style="display: inline;" type="submit">회원가입</button>
-			<a class="btn-text-link btn btn-outline btn-xs" href="/usr/member/login">로그인</a>
-		</div>
-	</div>
 </form>
 
 <%@ include file="../common/foot.jspf"%>
