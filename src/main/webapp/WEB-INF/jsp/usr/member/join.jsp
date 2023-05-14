@@ -192,14 +192,17 @@
 			    if(confirmPassword.length == 0) {
 			        return;
 			    }
-			    if(password !== confirmPassword) {
+
+			    if (!/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/.test(password)) {
+			        $('.checkDup-msg4').html('<div>숫자, 영어, 특수문자(!@#$%^&*)가 최소한 1개씩 포함된 8글자 이상</div>');
+			    } else if(password !== confirmPassword) {
 			        $('.checkDup-msg4').html('<div>비밀번호가 일치하지 않습니다.</div>');
 			    }
 			}
-			const checkPasswordDuplication = _.debounce(checkPasswordDup, 500);
+			const checkPasswordDuplication = _.debounce(checkPassword, 1000);
 </script>
 <form style="text-align: center;" method="post" onsubmit="submitJoinForm(this); return false;" action="doJoin">
-		<div style="display: inline-block; border: 2px solid black; padding: 50px; text-align: left;">
+		<div style="display: inline-block; border: 2px solid black; padding: 50px; width: 700px;text-align: left;">
 				<div>
 						아이디 :
 						<input onkeyup="checkLoginIdDuplication(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
@@ -213,6 +216,7 @@
 						<input onkeyup="checkPassword(this);" class="input input-bordered input-sm w-full max-w-xs" type="text"
 								name="loginPw" placeholder="비밀번호를 입력해주세요" autocomplete="off" />
 				</div>
+	
 				<br />
 				<div>
 						비밀번호 확인:

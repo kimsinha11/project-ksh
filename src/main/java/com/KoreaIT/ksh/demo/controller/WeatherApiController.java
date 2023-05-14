@@ -36,8 +36,8 @@ public class WeatherApiController {
 		String url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst"
 				+ "?serviceKey=qYUvGhdyJWZABB1We4OO2lxkBstL%2Bk%2FlyLyoPB3KiyqDueGZfsol43bZsi5gf3zfIRtD%2Ftws%2BnFFPVdP85ZAKA%3D%3D"
 				+ "&dataType=JSON" // JSON, XML
-				+ "&numOfRows=10" // 페이지 ROWS
-				+ "&pageNo=2" // 페이지 번호
+				+ "&numOfRows=110" // 페이지 ROWS
+				+ "&pageNo=1" // 페이지 번호
 				+ "&base_date=20230514" // 발표일자
 				+ "&base_time=0430" // 발표시각
 				+ "&nx=59" // 예보지점 X 좌표
