@@ -42,7 +42,9 @@ Article article = (Article) request.getAttribute("article");
 <br />
 <br />
 
-
+<h1>글작성하기</h1>
+<hr />
+<br />
 
 <form style="text-align: left;" enctype="multipart/form-data" method="post"
 		onsubmit="ArticleWrite__submit(this); return false;" action="doWrite">
@@ -90,7 +92,7 @@ Article article = (Article) request.getAttribute("article");
 		</div>
 
 		<button class="btn-text-link btn btn-outline btn-xs" style="display: inline" type="submit">작성하기</button>
-		</div>
+		
 
 		<script>
 			const boardSelect = document.getElementsByName("boardId")[0];
