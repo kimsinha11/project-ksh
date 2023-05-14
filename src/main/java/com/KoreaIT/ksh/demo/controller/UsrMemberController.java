@@ -152,13 +152,29 @@ public class UsrMemberController {
 			return ResultData.from("F-N", "닉네임를 입력해주세요");
 		}
 		
-		Member existsMember = memberService.getMemberByLoginId(nickname);
+		Member existsMember = memberService.getMemberByNickname(nickname);
 		
 		if (existsMember != null) {
 			return ResultData.from("F-1", "해당 닉네임은 이미 사용중인 닉네임입니다", "nickname", nickname);
 		}
 		
 		return ResultData.from("S-1", "사용 가능!", "nickname", nickname);
+	}
+	@RequestMapping("/usr/member/getEmailDup")
+	@ResponseBody
+	public ResultData getEmailDup(String email) {
+		
+		if (Ut.empty(email)) {
+			return ResultData.from("F-N", "이메일을 입력해주세요");
+		}
+		
+		Member existsMember = memberService.getMemberByEmail(email);
+		
+		if (existsMember != null) {
+			return ResultData.from("F-1", "해당 이메일은 이미 사용중인 닉네임입니다", "email", email);
+		}
+		
+		return ResultData.from("S-1", "사용 가능!", "email", email);
 	}
 	
 

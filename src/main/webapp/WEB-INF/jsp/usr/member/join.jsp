@@ -11,6 +11,7 @@
 	let submitJoinFormDone = false;
 	let validLoginId ="";
 	let validNickname ="";
+	let validEmail ="";
 	let validPwConfirm ="";
 	function submitJoinForm(form) {
 		if (submitJoinFormDone) {
@@ -50,12 +51,12 @@
 			alert('이름을 입력해주세요');
 			return;
 		}
-		form.nickname.value = form.nickname.value.trim();
+		form.nickname.value = validNickname;
 		if (form.nickname.value == 0) {
 			alert('닉네임을 입력해주세요');
 			return;
 		}
-		form.email.value = form.email.value.trim();
+		form.email.value = validEmail;
 		if (form.email.value == 0) {
 			alert('이메일을 입력해주세요');
 			return;
@@ -139,6 +140,44 @@
 		}, 'json');
 	}
 		const checkNicknameDuplication = _.debounce(checkNicknameDup,500);
+		
+		function checkEmailDup(el) {
+			  $('.checkDup-msg3').empty();
+			  const form = $(el).closest('form').get(0);
+			  const email = form.email.value.trim();
+			  if (form.email.value.length == 0) {
+			    validEmail ='';
+			    return;
+			  }
+			  if (validEmail == form.email.value) {
+			    return;
+			  }
+			  if (email.length < 5 || email.length > 20) {
+			    $('.checkDup-msg3').html('<div>5글자 ~ 20글자 사이로 입력해주세요</div>');
+			    return;
+			  }
+			  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+			  if (!emailPattern.test(email)) {
+			    $('.checkDup-msg3').html('<div>이메일 형식이 올바르지 않습니다.</div>');
+			    return;
+			  }
+			  $.get('../member/getEmailDup', {
+			    isAjax : 'Y',
+			    email : email
+			  }, function(data) {
+			    if (form.email.value.trim() !== email) {
+			      // 검사 중 입력 값이 바뀌었을 때
+			      return;
+			    }
+			    $('.checkDup-msg3').html('<div>' + data.msg + '</div>');
+			    if (data.success) {
+			      validEmail = data.data1;
+			    } else {
+			      validEmail = '';
+			    }
+			  }, 'json');
+			}
+			const checkEmailDuplication = _.debounce(checkEmailDup, 500);
 	  
 </script>
 <form style="text-align: center;" method="post" onsubmit="submitJoinForm(this); return false;" action="doJoin">
@@ -148,7 +187,7 @@
 			<input onkeyup="checkLoginIdDuplication(this);"class="input input-bordered input-sm w-full max-w-xs" type="text" name="loginId" placeholder="아이디를 입력해주세요"  id="loginId" />
 			
 		</div>
-		<div style="font-size:12px; color:blue;"class="checkDup-msg"></div>
+		<div style="font-size:15px; color:red;"class="checkDup-msg"></div>
 		<br />
 		<div>
 			비밀번호 :
@@ -170,7 +209,7 @@
 			<input onkeyup="checkNicknameDuplication(this);"class="input input-bordered input-sm w-full max-w-xs" type="text" name="nickname" placeholder="닉네임을 입력해주세요" id="nickname"/>
 		
 		</div>
-		<div style="font-size:12px; color:blue;"class="checkDup-msg2"></div>
+		<div style="font-size:15px; color:red;"class="checkDup-msg2"></div>
 		<br />
 		<div>
 			전화번호 :
@@ -179,8 +218,9 @@
 		<br />
 		<div>
 			이메일 :
-			<input class="input input-bordered input-sm w-full max-w-xs" value="" type="text" name="email" placeholder="이메일을 입력해주세요" />
+			<input onkeyup="checkEmailDuplication(this);" class="input input-bordered input-sm w-full max-w-xs"style="border:1px solid black;" value="" type="text" name="email" placeholder="이메일을 입력해주세요" />
 		</div>
+		<div style="font-size:15px; color:red;"class="checkDup-msg3"></div>
 		<br />
 		<div style="text-align: center">
 			<button class="btn-text-link btn btn-outline btn-xs" style="display: inline;" type="submit">회원가입</button>
