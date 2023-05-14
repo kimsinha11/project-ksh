@@ -78,6 +78,7 @@
 		const loginId = form.loginId.value.trim();
 		if(form.loginId.value.length == 0) {
 			validLoginId ='';
+			$('.checkDup-msg').html('<div>아이디를 입력해주세요.</div>');
 			return;
 		}
 		if(validLoginId == form.loginId.value) {
@@ -114,6 +115,7 @@
 			const nickname = form.nickname.value.trim();
 			if(form.nickname.value.length == 0) {
 				validNickname ='';
+				$('.checkDup-msg2').html('<div>닉네임을 입력해주세요.</div>');
 				return;
 			}
 			if(validNickname == form.nickname.value) {
@@ -149,6 +151,7 @@
 			  const email = form.email.value.trim();
 			  if (form.email.value.length == 0) {
 			    validEmail ='';
+			    $('.checkDup-msg3').html('<div>이메일을 입력해주세요.</div>');
 			    return;
 			  }
 			  if (validEmail == form.email.value) {
@@ -196,7 +199,7 @@
 			        return;
 			    }
 			    if(confirmPassword.length == 0) {
-			        $('.checkDup-msg4').html('<div>비밀번호를 입력해주세요.</div>');
+			        $('.checkDup-msg4').html('<div>비밀번호확인을 입력해주세요.</div>');
 			        return;
 			    }
 			    
@@ -218,11 +221,12 @@
 			    $('.checkDup-msg6').empty();
 
 			    if(phoneNumber.length == 0) {
+			    	$('.checkDup-msg6').html('<div>전화번호를 입력해주세요.</div>');
 			        return;
 			    }
 
 			    if (!/^\d{3}-\d{3,4}-\d{4}$/.test(phoneNumber)) {
-			        $('.checkDup-msg6').html('<div>올바른 전화번호 형식이 아닙니다.</div>');
+			        $('.checkDup-msg6').html('<div>올바른 전화번호 형식이 아닙니다.(000-0000-0000)</div>');
 			    }
 			}
 
