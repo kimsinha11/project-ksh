@@ -64,10 +64,11 @@ function Theme__applyTo(themeName) {
 
 <body>
 		<header id="header">
-		<div>
-				<a href="../home/main" class="logo">DDNJ</a><a href="../home/main"style="font-size:5px;">ddeonoja</a>
-		</div>		
-				<ul> 
+				<div>
+						<a href="../home/main" class="logo">DDNJ</a>
+						<a href="../home/main" style="font-size: 5px;">ddeonoja</a>
+				</div>
+				<ul>
 						<li class="">
 								<a class="h-full px-20 flex items-center btn-theme-toggle" href="javascript:Theme__toggle();">
 										<span>🌞</span>
@@ -117,11 +118,14 @@ function Theme__applyTo(themeName) {
 
 		<nav>
 				<br />
+			
+				
+
 				<div class="items">
 
 						<ul class="menu-item">
 								<li class="first">
-										<a href="/usr/article/list">⛺전체글보기⛺</a>
+										<a href="#">⛺전체글보기⛺</a>
 								<li>
 										<a href="/usr/article/list?boardId=1">공지사항</a>
 								</li>
@@ -138,10 +142,10 @@ function Theme__applyTo(themeName) {
 								<li class="first">
 										<a href="#">⛺리뷰게시판⛺</a>
 								<li>
-										<a href="#">캠핑 장비 리뷰</a>
+										<a href="/usr/article/list?boardId=4">캠핑 장비 리뷰</a>
 								</li>
 								<li>
-										<a href="/usr/review/list">캠핑 요리 리뷰</a>
+										<a href="/usr/article/list?boardId=5">캠핑 요리 리뷰</a>
 								</li>
 
 						</ul>
@@ -191,24 +195,10 @@ function Theme__applyTo(themeName) {
 								</li>
 						</ul>
 				</div>
-				<div class="popup text-xl">❤️게시판 꿀팁❤️</div>
-				<div class="layer-bg"></div>
-				<div class="layer">
-						<div class="flex justify-between">
-								<div class="text-2xl">POPUP</div>
-								<div class="close-btn">
-										<div></div>
-										<div></div>
-								</div>
-						</div>
-						<div>정보 공유 게시판에서 원하는 조건의 캠핑장 검색 후 지도 서비스에서 주변 볼거리를 검색해보세요!</div>
+<br><br /></br><br></br>
+<hr />
+		
 
-				</div>
-				<div class="text-xl">❤️출석 체크❤️</div>
-			
-<br></br><br />
-						<hr />
-				
 		</nav>
 </body>
 
@@ -241,9 +231,10 @@ body {
 }
 
 .items {
-	float: left;
+	float: right;
 	width: 200px; /* div의 너비를 지정합니다. */
-	margin-right: 10px; /* 각각의 div 사이에 10px의 간격을 둡니다. */
+	margin-right: 30px; /* 각각의 div 사이에 10px의 간격을 둡니다. */
+	
 }
 
 .items>.menu-item>.first {
