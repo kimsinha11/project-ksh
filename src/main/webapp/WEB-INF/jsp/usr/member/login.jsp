@@ -24,12 +24,9 @@
 				</div>
 
 				<br />
-				<div style="text-align: center">
-						<a class="btn btn-active btn-ghost" href="${rq.findLoginIdUri }">아이디 찾기</a>
-						<a class="btn btn-ghost btn-active" href="${rq.findLoginPwUri }">비밀번호찾기</a>
 
-				</div>
 				<div style="text-align: center">
+						<a class="btn-text-link btn btn-outline btn-xs" href="${rq.findLoginIdUri }">아이디 찾기</a>
 						<button class="btn-text-link btn btn-outline btn-xs" style="display: inline;" type="submit">로그인</button>
 						<a class="btn-text-link btn btn-outline btn-xs" href="/usr/member/join">회원가입</a>
 

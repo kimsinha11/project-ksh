@@ -19,11 +19,10 @@ public class MemberService {
 	private String siteName;
 	
 	private MemberRepository memberRepository;
-	private MailService mailService;
+
 	
-	public MemberService(MailService mailService, MemberRepository memberRepository) {
+	public MemberService(MemberRepository memberRepository) {
 		this.memberRepository = memberRepository;
-		this.mailService = mailService;
 	}
 
 	public ResultData<Integer> join(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
@@ -73,26 +72,7 @@ public class MemberService {
 		return ResultData.from("S-1", Ut.f("%d번 회원을 수정 했습니다", id), "member", member);
 	}
 
-	public ResultData notifyTempLoginPwByEmail(Member actor) {
-		String title = "[" + siteName + "] 임시 패스워드 발송";
-		String tempPassword = Ut.getTempPassword(6);
-		String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
-		body += "<a href=\"" + siteMainUri + "/usr/member/login\" target=\"_blank\">로그인 하러가기</a>";
 
-		ResultData sendResultData = mailService.send(actor.getEmail(), title, body);
-
-		if (sendResultData.isFail()) {
-			return sendResultData;
-		}
-
-		setTempPassword(actor, tempPassword);
-
-		return ResultData.from("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
-	}
-
-	private void setTempPassword(Member actor, String tempPassword) {
-		memberRepository.modifyMember(actor.getId(), tempPassword, null, null, null, null);
-	}
 
 	public int getMembersCount(String authLevel, String searchKeywordTypeCode, String searchKeyword) {
 		return memberRepository.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);

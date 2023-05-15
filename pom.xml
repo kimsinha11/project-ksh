@@ -21,6 +21,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>2.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -73,18 +74,7 @@
 			<artifactId>jstl</artifactId>
 		</dependency>
 		
-		<!-- 메일 보내기 위한 -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-		</dependency>
-
-		<!-- 메일을 보내기 위한 -->
-		<dependency>
-			<groupId>com.sun.mail</groupId>
-			<artifactId>javax.mail</artifactId>
-			<version>1.6.2</version>
-		</dependency>
+		
 		
 		 <dependency>
     		<groupId>javax.persistence</groupId>
@@ -97,10 +87,13 @@
   			<version>1.1</version>
 		</dependency>
 		<dependency>
-    <groupId>org.json</groupId>
-    <artifactId>json</artifactId>
-    <version>20210307</version>
-  </dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20210307</version>
+		  </dependency>
+		<!-- 날씨를 보내기 위한 -->
+		  
+
 	</dependencies>
 
 	<build>

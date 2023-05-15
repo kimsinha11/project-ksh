@@ -188,13 +188,7 @@ public class Rq {
 		return getEncodedCurrentUri();
 	}
 
-	public String getFindLoginPwUri() {
-		return "../member/findLoginPw?afterFindLoginPwUri=" + getAfterFindLoginPwUri();
-	}
-
-	private String getAfterFindLoginPwUri() {
-		return getEncodedCurrentUri();
-	}
+	
 	
 
 	public boolean isAdmin() {
