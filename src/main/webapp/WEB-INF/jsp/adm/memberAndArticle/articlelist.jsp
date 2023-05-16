@@ -15,7 +15,7 @@
 <c:set var="beginPage" value="${(pageNum - 5 > 0) ? pageNum - 5 : 1}" />
 <c:set var="endPage" value="${(pageNum + 4 < totalPages) ? pageNum + 4 : totalPages}" />
 <c:set var="itemsPerPage" value="${itemsPerPage}" />
-
+   
 <%
 List<Article> commentsCount = (List<Article>) request.getAttribute("commentsCount");
 Board board = (Board) request.getAttribute("board");
@@ -31,7 +31,7 @@ Board board = (Board) request.getAttribute("board");
     <option disabled selected>게시판 선택</option>
   </select>
 </div>
-
+<!-- 게시판 검색조건 추가 -->
 <script>
   function categoryChange(select) {
     var boardSelect = document.getElementById("board-select");
