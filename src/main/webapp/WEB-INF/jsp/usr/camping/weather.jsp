@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<c:set var="pageTitle" value="날씨"></c:set>
 <%@ include file="../common/head.jspf"%>
 <%@ page import="org.json.JSONObject"%>
 <%@ page import="org.json.JSONArray"%>
@@ -11,17 +12,16 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 
 
-<c:set var="pageTitle" value="weather"></c:set>
-
 <layout:fragment name="title">
 	<title>Weather</title>
 </layout:fragment>
 
 <layout:fragment name="content">
+<br />
 
-
-	<label>날씨</label>
-
+	<label>[PTY:강수형태/REH:습도(%)/RN1:1시간강수량(mm)/T1H:기온(℃)/UUU:동서바람성분(%)/VEC:풍향(deg)/VVV:남북바람성분(%)/WSD:풍속(m/s)]</label>
+<hr />
+<br />
 	<form class="form-horizontal">
 		<div class="form-group">
 			<select id="step1" class="emptyCheck" title="시/도">

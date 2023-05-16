@@ -72,8 +72,11 @@ function Theme__applyTo(themeName) {
 			<h1>${pageTitle }&nbsp;PAGE</h1>
 		</div>
 
-		<div class="hover:underline">
-			<a class="h-full px-3 flex items-center" href="/adm/member/doLogout">
+		<div class="flex">
+			<a class="hover:underline  h-full px-3 flex items-center" href="/usr/home/main">
+				<span>HOME</span>
+			</a>
+			<a class="hover:underline  h-full px-3 flex items-center" href="/adm/member/doLogout">
 				<span>LOGOUT</span>
 			</a>
 		</div>

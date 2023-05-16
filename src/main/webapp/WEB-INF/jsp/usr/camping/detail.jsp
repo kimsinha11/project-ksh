@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Map"%>
-<c:set var="pageTitle" value="CAMPING" />
+<c:set var="pageTitle" value="캠핑장-상세보기" />
 <%@ include file="../common/head.jspf"%>
 <%@ include file="../common/toastUiEditorLib.jspf"%>
 <%@ page import="java.util.stream.Collectors"%>
@@ -29,7 +29,7 @@ List<String[]> data = (List<String[]>) request.getAttribute("data");
 								%>
 								<tr style="height: 20px;">
 										<th style="font-size: 20px">번호</th>
-										<th>
+										<th style="background-color: white;">
 
 												<div class="badge badge-lg"><%=row[0]%></div>
 
@@ -37,15 +37,15 @@ List<String[]> data = (List<String[]>) request.getAttribute("data");
 								</tr>
 								<tr style="height: 50px;">
 										<th style="font-size: 20px">종류</th>
-										<th  style="font-size: 20px"><%=row[2]%></th>
+										<th  style="font-size: 20px; background-color: white;"><%=row[2]%></th>
 								</tr>
 								<tr style="height: 50px;">
 										<th  style="font-size: 20px">부대시설1</th>
-										<th  style="font-size: 20px"><%=row[10]%></th>
+										<th  style="font-size: 20px; background-color: white;"><%=row[10]%></th>
 								</tr>
 								<tr style="height: 50px;">
 								<th  style="font-size: 20px">부대시설2</th>
-								<th  style="font-size: 20px"><%=row[11]%></th>
+								<th  style="font-size: 20px; background-color: white;"><%=row[11]%></th>
 								</tr>
 								<%
 								}

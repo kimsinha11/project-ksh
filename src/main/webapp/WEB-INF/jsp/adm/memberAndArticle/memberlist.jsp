@@ -60,12 +60,12 @@
 					<tbody>
 						<c:forEach var="member" items="${members }">
 							<tr class="hover">
-								<td>${member.id}</td>
-								<td>${member.forPrintType1RegDate}</td>
-								<td>${member.forPrintType1UpdateDate}</td>
-								<td>${member.loginId}</td>
-								<td>${member.name}</td>
-								<td>${member.nickname}</td>
+								<th>${member.id}</th>
+								<th>${member.forPrintType1RegDate}</th>
+								<th>${member.forPrintType1UpdateDate}</th>
+								<th>${member.loginId}</th>
+								<th>${member.name}</th>
+								<th>${member.nickname}</th>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -103,18 +103,8 @@
 		</div>
 	</div>
 <div class="list" style="display: inline-block; width: 7%; text-align: center;">
-						<a style="display: block;" href="/adm/article/list">게시판</a>
-						<ul>
-								<li>
-										<a href="/adm/article/list?boardId=1">NOTICE</a>
-								</li>
-								<li>
-										<a href="/adm/article/list?boardId=2">FREE</a>
-								</li>
-								<li>
-										<a href="/adm/article/list?boardId=3">QnA</a>
-								</li>
-						</ul>
+						<a  href="/adm/article/list">게시판</a>
+						
 				</div>
 
 </section>

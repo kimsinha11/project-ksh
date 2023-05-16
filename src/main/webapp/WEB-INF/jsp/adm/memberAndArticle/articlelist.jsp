@@ -21,6 +21,42 @@ List<Article> commentsCount = (List<Article>) request.getAttribute("commentsCoun
 Board board = (Board) request.getAttribute("board");
 %>
 <%@ include file="../common/head.jspf"%>
+<div>
+  <select class="select select-bordered w-full max-w-xs" name="category" onchange="categoryChange(this)">
+    <option disabled selected>게시판 선택</option>
+    <option value="etc">기타글</option>
+    <option value="review">리뷰</option>
+  </select>
+  <select class="select select-bordered w-full max-w-xs" name="boardId" id="board-select" disabled>
+    <option disabled selected>게시판 선택</option>
+  </select>
+</div>
+
+<script>
+  function categoryChange(select) {
+    var boardSelect = document.getElementById("board-select");
+    boardSelect.innerHTML = '<option disabled selected>게시판 선택</option>';
+    boardSelect.disabled = false;
+    if (select.value == "etc") {
+      boardSelect.innerHTML += '<option value="1">Notice</option>';
+      boardSelect.innerHTML += '<option value="2">Free</option>';
+      boardSelect.innerHTML += '<option value="3">QnA</option>';
+    } else if (select.value == "review") {
+      boardSelect.innerHTML += '<option value="4">eReview</option>';
+      boardSelect.innerHTML += '<option value="5">cReview</option>';
+    }
+  }
+
+  document.getElementById("board-select").addEventListener("change", function() {
+    var selectedBoard = this.value;
+    if (selectedBoard) {
+      var url = "/adm/article/list?boardId=" + selectedBoard;
+      window.location.href = url;
+    }
+  });
+</script>
+
+
 
 <section class="mt-10 text-xs">
 		<div class="mx-auto overflow-x-auto w-full">
@@ -122,8 +158,8 @@ Board board = (Board) request.getAttribute("board");
 <br />
 <form style="text-align: center;" method="get" action="list">
 		<div class="history">
-		
-<button class="btn-text-link btn btn-outline btn-xs" type="button" onclick="location.href='list'">뒤로가기</button>
+
+				<button class="btn-text-link btn btn-outline btn-xs" type="button" ><a href="/adm/memberAndArticle/list">뒤로가기</a></button>
 				<select data-value="${param.searchId}" name="searchId" class="select select-bordered max-w-xs">
 						<option disabled selected>선택</option>
 						<option value="1">제목</option>
@@ -150,16 +186,15 @@ Board board = (Board) request.getAttribute("board");
 </form>
 <style>
 .history {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 10px;
 }
-button[type="button"],
-select[name="searchId"],
-input[name="searchKeyword"],
-button[type="submit"] {
-  margin: 0 10px;
+
+button[type="button"], select[name="searchId"], input[name="searchKeyword"],
+	button[type="submit"] {
+	margin: 0 10px;
 }
 }
 </style>

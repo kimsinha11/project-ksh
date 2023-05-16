@@ -8,11 +8,13 @@
 Member member = (Member) request.getAttribute("member");
 int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 %>
-	
+
 <section class="mt-10 text-xl">
-<br /><br /><br />
+		<br />
+		<br />
+		<br />
 		<div class="mx-auto overflow-x-auto">
-		
+
 				<table class=" table w-full table-box-type-1" style="width: 500px;">
 						<thead>
 								<tr>
@@ -64,6 +66,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 								href="../member/checkPw?id=${rq.loginedMember.id }">수정</a>
 						<a class="btn-text-link btn btn-outline btn-xs" onclick="if(confirm('정말 탈퇴하시겠습니까?') == false) return false;"
 								href="#">탈퇴</a>
+						<a class="btn-text-link btn btn-outline btn-xs" href="/usr/home/APITest2">일정관리</a>
 						<%
 						}
 						%>
