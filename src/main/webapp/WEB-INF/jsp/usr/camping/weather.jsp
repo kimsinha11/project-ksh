@@ -36,7 +36,7 @@
 				<option id="town" value="">읍/면/동</option>
 			</select>
  
-			<span>날짜 선택: <input type="text" id="datepicker" disabled="disabled" class="emptyCheck" title="날짜"></span>
+			<span style="display:inline-block;">날짜 선택: <input type="text" id="datepicker" disabled="disabled" class="emptyCheck" title="날짜"></span>
 
 			<select id="time" class="emptyCheck" title="시간">
 								<option value="" selected>시간</option>
@@ -68,7 +68,7 @@
 						</select>
 
 
-			<button type="button" class="btn btn-primary waves-effect waves-light" th:onclick="getWeather()">
+			<button type="button" class="btn-text-link btn btn-outline btn-xs" onclick="getWeather()">
 				<span>실행</span>
 			</button>
 

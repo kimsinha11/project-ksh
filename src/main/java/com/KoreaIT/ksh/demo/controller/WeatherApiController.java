@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.KoreaIT.ksh.demo.service.WeatherService;
 import com.KoreaIT.ksh.demo.vo.AreaRequestDTO;
+import com.KoreaIT.ksh.demo.vo.WeatherDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
