@@ -16,13 +16,13 @@
 		form.email.value = form.email.value.trim();
 
 		if (form.name.value.length == 0) {
-			alert('이름 써라');
+			alert('이름을 입력해주세요');
 			form.name.focus();
 			return;
 		}
 
 		if (form.email.value.length == 0) {
-			alert('email 써라');
+			alert('이메일을 입력해주세요');
 			form.email.focus();
 			return;
 		}
@@ -32,55 +32,31 @@
 
 	}
 </script>
+<br /><br /><br />
+<form style="text-align: center;" method="post" onsubmit="MemberFindLoginId__submit(this); return false;"
+		action="../member/doFindLoginId">
+		<input type="hidden" name="afterFindLoginIdUri" value="${param.afterFindLoginIdUri }" />
+		<div style="display: inline-block; border: 2px solid black; padding: 100px; text-align: left;">
 
-<section class="mt-8 text-xl">
-	<div class="container mx-auto px-3">
-		<div class="table-box-type-1">
-			<form action="../member/doFindLoginId" method="POST" onsubmit="MemberFindLoginId__submit(this); return false;">
-				<input type="hidden" name="afterFindLoginIdUri" value="${param.afterFindLoginIdUri }" />
-				<table border="1">
-					<colgroup>
-						<col width="200" />
-					</colgroup>
 
-					<tbody>
-						<tr>
-							<th>이름</th>
-							<td>
-								<input class="input input-bordered w-full max-w-xs" autocomplete="off" type="text" placeholder="이름을 입력해주세요"
-									name="name" />
-							</td>
-						</tr>
-						<tr>
-							<th>이메일</th>
-							<td>
-								<input class="input input-bordered w-full max-w-xs" autocomplete="off" type="text" placeholder="이메일을 입력해주세요"
-									name="email" />
-							</td>
-						</tr>
-						<tr>
-							<th></th>
-							<td>
-								<button type="submit">아이디 찾기</button>
-							</td>
-						</tr>
-						<tr>
-							<th></th>
-							<td>
-								<a class="btn btn-active btn-ghost" href="../member/login">로그인</a>
-								<a class="btn btn-ghost btn-active" href="${rq.findLoginPwUri }">비밀번호찾기</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</form>
+				<div>
+						이름 :
+						<input class="input input-bordered input-sm w-full max-w-xl" type="text" name="name" autocomplete="off"
+								placeholder="이름을 입력해주세요" />
+				</div>
+				<div>
+						이메일 :
+						<input class="input input-bordered input-sm w-full max-w-xl" type="text" name="email" autocomplete="off"
+								placeholder="이메일을 입력해주세요" autocomplete="off" />
+				</div>
+
+				<br />
+				<div style="text-align: center">
+						<button class="btn-text-link btn btn-outline btn-xs" type="button" onclick="history.back();">뒤로가기</button>
+						<button class="btn-text-link btn btn-outline btn-xs" type="submit">아이디 찾기</button>
+						<a class="btn-text-link btn btn-outline btn-xs" href="../member/login">로그인</a>
+				</div>
 		</div>
-		<div class="btns">
-			<button class="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
-
-
-		</div>
-	</div>
-</section>
+</form>
 
 <%@ include file="../common/foot.jspf"%>

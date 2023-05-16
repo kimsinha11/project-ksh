@@ -188,7 +188,7 @@ public class Rq {
 		return getEncodedCurrentUri();
 	}
 
-	
+
 	
 
 	public boolean isAdmin() {

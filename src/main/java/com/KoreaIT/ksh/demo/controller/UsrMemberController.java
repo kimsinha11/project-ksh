@@ -277,10 +277,10 @@ public class UsrMemberController {
 		Member member = memberService.getMemberByNameAndEmail(name, email);
 		
 		if (member == null) {
-			return Ut.jsHistoryBack("F-1", "너는 없는 사람이야");
+			return Ut.jsHistoryBack("F-1", "존재하지 않는 정보입니다");
 		}
 		
-		return Ut.jsReplace("S-1", Ut.f("너의 아이디는 [ %s ] 야", member.getLoginId()), afterFindLoginIdUri);
+		return Ut.jsReplace("S-1", Ut.f("아이디는 [ %s ] 입니다", member.getLoginId()), afterFindLoginIdUri);
 	}
 	
 
