@@ -49,7 +49,7 @@ Article article = (Article) request.getAttribute("article");
 <form style="text-align: left;" enctype="multipart/form-data" method="post"
 		onsubmit="ArticleWrite__submit(this); return false;" action="doWrite">
 		<input type="hidden" name="body" />
-	
+
 		<div>
 				<select class="select select-bordered w-full max-w-xs" name="category" onchange="categoryChange(this)">
 						<option disabled selected>게시판 선택</option>
@@ -60,6 +60,7 @@ Article article = (Article) request.getAttribute("article");
 						<option disabled selected>게시판 선택</option>
 				</select>
 		</div>
+	
 		<script>
 			function categoryChange(select) {
 				var boardSelect = document.getElementById("board-select");
@@ -75,15 +76,15 @@ Article article = (Article) request.getAttribute("article");
 				}
 			}
 		</script>
-<br />
+		<br />
 		<div style="text-align: left;">
 				제목 :
 				<input value="${article.title }" class="input input-bordered w-full max-w-xs" type="text" name="title"
 						placeholder="제목을 입력해주세요" />
-							<div style="text-align: right;">${rq.loginedMember.nickname }</div>
+				<div style="text-align: right;">${rq.loginedMember.nickname }</div>
 		</div>
 		<div>
-				
+
 				<div class="toast-ui-editor">
 						<script type="text/x-template">
       </script>
@@ -92,7 +93,7 @@ Article article = (Article) request.getAttribute("article");
 		</div>
 
 		<button class="btn-text-link btn btn-outline btn-xs" style="display: inline" type="submit">작성하기</button>
-		
+
 
 		<script>
 			const boardSelect = document.getElementsByName("boardId")[0];

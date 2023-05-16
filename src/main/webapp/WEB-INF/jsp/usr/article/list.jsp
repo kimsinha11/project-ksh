@@ -83,10 +83,10 @@ Board board = (Board) request.getAttribute("board");
 	<c:set var="baseUri2"
 		value="itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}" />
 	<c:if test="${pageNum > 1}">
-		<a href="?boardId=${article.boardId}&pageNum=1&${baseUri2 }">◀◀</a>
+		<a class="btn-text-link btn btn-outline btn-xl" href="?boardId=${article.boardId}&pageNum=1&${baseUri2 }">◀◀</a>
 	</c:if>
 	<c:if test="${pageNum > 10}">
-		<a class="btn-text-link btn btn-outline btn-xs"
+		<a class="btn-text-link btn btn-outline btn-xl"
 			href="?boardId=${article.boardId}&pageNum=${pageNum - 10}&${baseUri2 }">이전</a>
 	</c:if>
 
@@ -98,22 +98,22 @@ Board board = (Board) request.getAttribute("board");
 			test="${status.index >= ((pageNum-1) / 10) * 10 && status.index < ((pageNum-1) / 10 + 1) * 10}">
 			<c:choose>
 				<c:when test="${i == pageNum}">
-					<a class="btn-text-link btn btn-outline btn-xs active"
+					<a class="btn-text-link btn btn-outline btn-xl active"
 						href="${baseUri }">${i}</a>
 				</c:when>
 				<c:otherwise>
-					<a class="btn-text-link btn btn-outline btn-xs" href="${baseUri }">${i}</a>
+					<a class="btn-text-link btn btn-outline btn-xl" href="${baseUri }">${i}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:if>
 	</c:forEach>
 	<c:if test="${pageNum < totalPages && totalPages - pageNum >= 10}">
-		<a class="btn-text-link btn btn-outline btn-xs"
+		<a class="btn-text-link btn btn-outline btn-xl"
 			href="?boardId=${article.boardId}&pageNum=${pageNum + 10}&${baseUri2 }">다음</a>
 	</c:if>
 
 	<c:if test="${pageNum < totalPages && totalPages - pageNum >= 10}">
-		<a
+		<a class="btn-text-link btn btn-outline btn-xl"
 			href="?boardId=${article.boardId}&pageNum=${totalPages}&${baseUri2 }">▶▶</a>
 	</c:if>
 </div>

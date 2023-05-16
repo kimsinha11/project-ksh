@@ -82,13 +82,16 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(HttpSession httpSession, String title, String body, int boardId) {
+	public String doWrite(HttpSession httpSession, String title, String body, Integer boardId) {
 
 		if (Ut.empty(title)) {
-			return Ut.jsHistoryBack("F-A", "제목을 입력해주세요.");
+			return Ut.jsHistoryBack("F-N", "제목을 입력해주세요.");
 		}
 		if (Ut.empty(body)) {
-			return Ut.jsHistoryBack("F-A", "내용을 입력해주세요");
+			return Ut.jsHistoryBack("F-N", "내용을 입력해주세요");
+		}
+		if (Ut.empty(boardId)) {
+			return Ut.jsHistoryBack("F-N", "게시판을 선택해주세요");
 		}
 
 		Board board = BoardService.getBoardById(boardId);
