@@ -166,3 +166,32 @@ html[data-theme="dark"] .btn-theme-toggle>span:first-child {
 html[data-theme="dark"] .btn-theme-toggle>span:last-child {
 	display: none;
 }
+
+/* 날씨 */
+#resultWeather {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#resultWeather th,
+#resultWeather td {
+    padding: 5px;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+}
+
+#resultWeather th {
+    background-color: #f2f2f2;
+}
+
+#resultWeather img{
+	display: inline;
+}
+
+#resultWeather .even {
+    background-color: #f9f9f9;
+}
+
+#resultWeather .odd {
+    background-color: #ffffff;
+}

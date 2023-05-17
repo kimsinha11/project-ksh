@@ -18,7 +18,7 @@
 				<img src="https://user-images.githubusercontent.com/65358991/170092559-883fe071-eb4f-4610-8c8b-a037d061c617.png"
 						id="forest">
 
-				<a href="/usr/article/list" id="btn">Start</a>
+				<a href="/usr/camping/list" id="btn">Search Camping</a>
 
 				<img src="https://user-images.githubusercontent.com/65358991/170092605-eada6510-d556-45cc-b7fa-9e4d1d258d26.png"
 						id="rocks">
