@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ public class UsrCampingController {
 	@RequestParam(required = false, defaultValue = "0") int searchType,
 	@RequestParam(required = false, defaultValue = "1") int pageNo,
 	@RequestParam(required = false, defaultValue = "10") int pageSize) {
+
 		List<String[]> data = new ArrayList<>();
 
 		try (InputStream inputStream = getClass().getResourceAsStream("/camping/camping.csv");
@@ -90,7 +93,9 @@ public class UsrCampingController {
 	}
 
 	@RequestMapping("usr/camping/map")
-	public String map() {
+	public String map(Model model, String searchKeyword) {
+
+		 model.addAttribute("searchKeyword", searchKeyword);
 		return "usr/camping/map";
 	}
 }

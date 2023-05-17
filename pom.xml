@@ -89,9 +89,13 @@
 		    <groupId>org.json</groupId>
 		    <artifactId>json</artifactId>
 		    <version>20210307</version>
-		  </dependency>
-		<!-- 날씨를 보내기 위한 -->
-		  
+		</dependency>
+		<!-- 사진 업로드 -->
+		  <dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.4</version>
+		</dependency>
 
 	</dependencies>
 

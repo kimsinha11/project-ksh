@@ -90,9 +90,7 @@ public class UsrArticleController {
 		if (Ut.empty(body)) {
 			return Ut.jsHistoryBack("F-N", "내용을 입력해주세요");
 		}
-		if (Ut.empty(boardId)) {
-			return Ut.jsHistoryBack("F-N", "게시판을 선택해주세요");
-		}
+		
 
 		Board board = BoardService.getBoardById(boardId);
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);

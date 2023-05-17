@@ -1,5 +1,7 @@
 package com.KoreaIT.ksh.demo.vo;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +22,6 @@ public class Article {
 	private int goodReactionPoint;
 	private int badReactionPoint;
 	private int count;
-//	private boolean actorCanDelete;
+	
+
 }

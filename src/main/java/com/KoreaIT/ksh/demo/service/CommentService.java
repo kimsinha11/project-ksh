@@ -5,10 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.KoreaIT.ksh.demo.repository.ArticleRepository;
 import com.KoreaIT.ksh.demo.repository.CommentRepository;
 import com.KoreaIT.ksh.demo.util.Ut;
-import com.KoreaIT.ksh.demo.vo.Article;
 import com.KoreaIT.ksh.demo.vo.Comment;
 import com.KoreaIT.ksh.demo.vo.ResultData;
 
