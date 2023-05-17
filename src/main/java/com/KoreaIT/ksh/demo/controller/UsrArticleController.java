@@ -82,7 +82,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(HttpSession httpSession, String title, String body, Integer boardId) {
+	public String doWrite(HttpSession httpSession, String title, String body, @RequestParam(defaultValue = "2") Integer boardId) {
 
 		if (Ut.empty(title)) {
 			return Ut.jsHistoryBack("F-N", "제목을 입력해주세요.");

@@ -283,6 +283,14 @@ public class UsrMemberController {
 		return Ut.jsReplace("S-1", Ut.f("아이디는 [ %s ] 입니다", member.getLoginId()), afterFindLoginIdUri);
 	}
 	
+	@RequestMapping("usr/member/calender")
 
+	public String calender() {
+		if (!rq.isLogined()) {
+			return Ut.jsHistoryBack("F-1", "로그인 후 이용해주세요");
+		}
+
+		return "usr/member/calender";
+	}
 
 }

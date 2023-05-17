@@ -66,7 +66,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 								href="../member/checkPw?id=${rq.loginedMember.id }">수정</a>
 						<a class="btn-text-link btn btn-outline btn-xs" onclick="if(confirm('정말 탈퇴하시겠습니까?') == false) return false;"
 								href="#">탈퇴</a>
-						<a class="btn-text-link btn btn-outline btn-xs" href="/usr/home/APITest2">일정관리</a>
+						<a class="btn-text-link btn btn-outline btn-xs" href="/usr/member/calender">일정관리</a>
 						<%
 						}
 						%>
