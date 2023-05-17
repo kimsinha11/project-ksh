@@ -197,11 +197,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css" />
-<title>Document</title>
 </head>
 <body>
-
-
+<br />
+<h1>😊Tip:검색결과가 없을때 검색어를 간략하게 변경해보세요😊</h1>
+<hr /><br />
 		<div class="map_wrap">
 				<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
 
