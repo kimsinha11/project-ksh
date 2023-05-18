@@ -133,6 +133,11 @@ public class ArticleService {
 		articleRepository.deleteArticle(article.getId());
 	}
 
+	public List<Article> getMyArticles(Integer boardId, int memberId, int i, int itemsPerPage,
+			String searchKeyword, Integer searchId) {
+		return articleRepository.getMyArticles(boardId,memberId, i, itemsPerPage, searchKeyword, searchId);
+	}
+
 
 
 

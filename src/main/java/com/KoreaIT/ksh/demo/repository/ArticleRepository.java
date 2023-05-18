@@ -71,4 +71,7 @@ public interface ArticleRepository {
 
 	public List<Article> getCommentsCount();
 
+	public List<Article> getMyArticles(Integer boardId, int memberId, int i, int itemsPerPage, String searchKeyword,
+			Integer searchId);
+
 }

@@ -2,13 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<c:set var="pageTitle" value="전체 게시물" />
+
+<c:set var="pageTitle" value="내가 쓴 게시물" />
 <c:if test="${board!=null }">
-		<c:set var="pageTitle" value="${board.name}" />
+		<c:set var="pageTitle" value="내가 쓴 게시물" />
 </c:if>
 <%@ page import="com.KoreaIT.ksh.demo.vo.Article"%>
 <%@ page import="com.KoreaIT.ksh.demo.vo.Board"%>
 <%@ page import="java.util.List"%>
+
 <c:set var="totalCount" value="${totalCount}" />
 <c:set var="totalPages" value="${totalPages}" />
 <c:set var="pageNum" value="${pageNum}" />
@@ -35,7 +37,7 @@ Board board = (Board) request.getAttribute("board");
 					<div style="text-align: center; font-size: 19px">총게시물 :
 						${totalCount }개</div>
 
-					<th style="font-size: 19px"> 찜</th>
+					<th><label><input type="checkbox" class="checkbox" /></label></th>
 					<th style="font-size: 19px">번호</th>
 					<th style="font-size: 19px">날짜</th>
 					<th style="font-size: 19px">제목</th>
