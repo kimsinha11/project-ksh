@@ -40,26 +40,27 @@ public class UsrCalenderController {
 	ScheduleDao scheduleDao = sqlsession.getMapper(ScheduleDao.class);
 	ArrayList<ScheduleDto> Schedule_list =  scheduleDao.schedule_list(dateData);
 
-	//달력데이터에 넣기 위한 배열 추가
+	// 달력 데이터에 넣기 위한 배열 추가
 	ScheduleDto[][] schedule_data_arr = new ScheduleDto[32][4];
-	if(Schedule_list.isEmpty()!=true){
-	int j = 0;
-	for(int i=0; i<Schedule_list.size(); i++){
-	int date = Integer.parseInt(String.valueOf(Schedule_list.get(i).getSchedule_date()).substring(String.valueOf(Schedule_list.get(i).getSchedule_date()).length()-2,String.valueOf(Schedule_list.get(i).getSchedule_date()).length()));
-	if(i>0){
-	int date_before = Integer.parseInt(String.valueOf(Schedule_list.get(i-1).getSchedule_date()).substring(String.valueOf(Schedule_list.get(i-1).getSchedule_date()).length()-2,String.valueOf(Schedule_list.get(i-1).getSchedule_date()).length()));
-	if(date_before==date){
-	j=j+1;
-	schedule_data_arr[date][j] = Schedule_list.get(i);
-	}else{
-	j=0;
-	schedule_data_arr[date][j] = Schedule_list.get(i);
+	if (!Schedule_list.isEmpty()) {
+	    int j = 0;
+	    for (int i = 0; i < Schedule_list.size(); i++) {
+	        int date = Integer.parseInt(String.valueOf(Schedule_list.get(i).getSchedule_startdate()).substring(String.valueOf(Schedule_list.get(i).getSchedule_startdate()).length() - 2, String.valueOf(Schedule_list.get(i).getSchedule_startdate()).length()));
+	        if (i > 0) {
+	            int date_before = Integer.parseInt(String.valueOf(Schedule_list.get(i - 1).getSchedule_startdate()).substring(String.valueOf(Schedule_list.get(i - 1).getSchedule_startdate()).length() - 2, String.valueOf(Schedule_list.get(i - 1).getSchedule_startdate()).length()));
+	            if (date_before == date) {
+	                j = j + 1;
+	                schedule_data_arr[date][j] = Schedule_list.get(i);
+	            } else {
+	                j = 0;
+	                schedule_data_arr[date][j] = Schedule_list.get(i);
+	            }
+	        } else {
+	            schedule_data_arr[date][j] = Schedule_list.get(i);
+	        }
+	    }
 	}
-	}else{
-	schedule_data_arr[date][j] = Schedule_list.get(i);
-	}
-	}
-	}
+
 
 
 

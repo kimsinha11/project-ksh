@@ -11,8 +11,7 @@
 <!-- jquery datepicker -->
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
-<script src="/resources/js/board.js"></script>
+
 <!-- jquery datepicker 끝 -->
 
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -21,6 +20,131 @@
 	
 </script>
 <style>
+a:link { font-size:9pt; font-family:"돋움";color:#000000; text-decoration:none; }
+		a:visited { font-size:9pt; font-family:"돋움";color:#000000; text-decoration:none; }
+		a:active { font-size:9pt; font-family:"돋움";color:red; text-decoration:none; }
+		a:hover { font-size:9pt; font-family:"돋움";color:red;text-decoration:none;}
+		.day{
+			width:100px; 
+			height:30px;
+			font-weight: bold;
+			font-size:15px;
+			font-weight:bold;
+			text-align: center;
+		}
+		.sat{
+			color:#529dbc;
+		}
+		.sun{
+			color:red;
+		}
+		.today_button_div{
+			float: right;
+		}
+		.today_button{
+			width: 100px; 
+			height:30px;
+		}
+		.calendar{
+			width:80%;
+			margin:auto;
+		}
+		.navigation{
+			margin-top:100px;
+			margin-bottom:30px;
+			text-align: center;
+			font-size: 25px;
+			vertical-align: middle;
+		}
+		.calendar_body{
+			width:100%;
+			background-color: #FFFFFF;
+			border:1px solid white;
+			margin-bottom: 50px;
+			border-collapse: collapse;
+		}
+		.calendar_body .today{
+			border:1px solid white;
+			height:120px;
+			background-color:#c9c9c9;
+			text-align: left;
+			vertical-align: top;
+		}
+		.calendar_body .date{
+			font-weight: bold;
+			font-size: 15px;
+			padding-left: 3px;
+			padding-top: 3px;
+		}
+		.date{
+			margin-bottom:10px;
+		}
+		.sat{
+			margin-bottom:10px;
+		}
+		.sun{
+			margin-bottom:10px;
+		}
+		.calendar_body .sat_day{
+			border:1px solid white;
+			height:120px;
+			background-color:#EFEFEF;
+			text-align:left;
+			vertical-align: top;
+		}
+		.calendar_body .sat_day .sat{
+			color: #529dbc; 
+			font-weight: bold;
+			font-size: 15px;
+			padding-left: 3px;
+			padding-top: 3px;
+		}
+		.calendar_body .sun_day{
+			border:1px solid white;
+			height:120px;
+			background-color:#EFEFEF;
+			text-align: left;
+			vertical-align: top;
+		}
+		.calendar_body .sun_day .sun{
+			color: red; 
+			font-weight: bold;
+			font-size: 15px;
+			padding-left: 3px;
+			padding-top: 3px;
+		}
+		.calendar_body .normal_day{
+			border:1px solid white;
+			height:120px;
+			background-color:#EFEFEF;
+			vertical-align: top;
+			text-align: left;
+		}
+		.before_after_month{
+			margin: 10px;
+			font-weight: bold;
+		}
+		.before_after_year{
+			font-weight: bold;
+		}
+		.this_month{
+			margin: 10px;
+		}
+		.schdule_add_button{
+			float:right;
+		}
+		/*
+		*	게시판 이동 모달
+		*/
+		
+
+		.date_subject{
+			margin:0px; margin-bottom:5px; margin-left:12px; font-size:12px; font-weight:bold;
+		}
+
+
+
+
 .schedule_form {
 	display: none; /* 기본적으로 숨겨진 상태로 설정 */
 }
@@ -87,7 +211,7 @@
 	margin-bottom: 5px;
 }
 
-.calendar_body .date_subject {
+.calendar_body .date_subject {  
 	margin-top: 5px;
 	font-weight: bold;
 }
@@ -230,37 +354,32 @@ text-align: right;}
 		<div id="mask_board_move"></div>
 		<div class="normal_move_board_modal">
 				<script>
-					$(function() {
-						$("#testDatepicker").datepicker(
-								{
-
-									dateFormat : "yy-mm-dd",
-									changeMonth : true,
-									changeYear : true,
-									dayNames : [ '월요일', '화요일', '수요일', '목요일',
-											'금요일', '토요일', '일요일' ],
-									dayNamesMin : [ '월', '화', '수', '목', '금',
-											'토', '일' ],
-									monthNamesShort : [ '1', '2', '3', '4',
-											'5', '6', '7', '8', '9', '10',
-											'11', '12' ]
-								});
+				$(function() {
+					  $("#testDatepicker").datepicker({
+					    dateFormat: "yy-mm-dd",
+					    changeMonth: true,
+					    changeYear: true,
+					    dayNames: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
+					    dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'],
+					    monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+					    multiSelect: true // 여러 날짜 선택을 허용
+					  });
 					});
+
 					function scheduleAdd() {
-						var schedule_add_form = document.schedule_add;
-						if (schedule_add_form.schedule_date.value == ""
-								|| schedule_add_form.schedule_date.value == null) {
-							alert("날짜를 입력해주세요.");
-							schedule_add_form.schedule_date.focus();
-							return false;
-						} else if (schedule_add_form.schedule_subject.value == ""
-								|| schedule_add_form.schedule_subject.value == null) {
-							alert("제목을 입력해주세요.");
-							schedule_add_form.schedule_date.focus();
-							return false;
-						}
-						schedule_add_form.submit();
+					  var schedule_add_form = document.schedule_add;
+					  if (schedule_add_form.schedule_date.value == "" || schedule_add_form.schedule_date.value == null) {
+					    alert("날짜를 입력해주세요.");
+					    schedule_add_form.schedule_date.focus();
+					    return false;
+					  } else if (schedule_add_form.schedule_subject.value == "" || schedule_add_form.schedule_subject.value == null) {
+					    alert("제목을 입력해주세요.");
+					    schedule_add_form.schedule_date.focus();
+					    return false;
+					  }
+					  schedule_add_form.submit();
 					}
+
 				</script>
 
 
@@ -275,25 +394,31 @@ text-align: right;}
 												<li>
 														<div class="text_subject">순번 :</div>
 														<div style = "border:1px solid gray;"class="text_desc">
-																<input type="text" name="schedule_num" class="text_type1" />
+																<input style="width: 100%;"type="text" name="schedule_num" class="text_type1" />
 														</div>
 												</li>
 												<li>
-														<div class="text_subject">날짜 :</div>
+														<div class="text_subject">시작 :</div>
 														<div style = "border:1px solid gray;" class="text_desc">
-																<input type="text" name="schedule_date" class="text_type1" id="testDatepicker" readonly="readonly" />
+																<input style="width: 100%;" type="text" name="schedule_startdate" class="text_type1" id="testDatepicker" readonly="readonly" />
+														</div>
+												</li>
+												<li>
+														<div class="text_subject">끝 :</div>
+														<div style = "border:1px solid gray;" class="text_desc">
+																<input style="width: 100%;" type="text" name="schedule_enddate" class="text_type1" id="testDatepicker" readonly="readonly" />
 														</div>
 												</li>
 												<li>
 														<div class="text_subject">제목 :</div>
 														<div style = "border:1px solid gray;" class="text_desc">
-																<input type="text" name="schedule_subject" class="text_type1" />
+																<input style="width: 100%;" type="text" name="schedule_subject" class="text_type1" />
 														</div>
 												</li>
 												<li>
 														<div class="text_subject">내용 :</div>
 														<div style = "border:1px solid gray;" class="text_area_desc">
-																<textarea name="schedule_desc" class="textarea_type1" rows="7"></textarea>
+																<textarea style="width: 100%;" name="schedule_desc" class="textarea_type1" rows="7"></textarea>
 														</div>
 												</li>
 												<li class="button_li">

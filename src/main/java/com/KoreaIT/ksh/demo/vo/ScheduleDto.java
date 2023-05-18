@@ -15,8 +15,9 @@ public class ScheduleDto {
 	int schedule_num;
 	String schedule_subject;
 	String schedule_desc;
-	Date schedule_date;
-	
+	Date schedule_startdate;
+	Date schedule_enddate;
+
 	
 	public int getSchedule_idx() {
 		return schedule_idx;
@@ -50,18 +51,25 @@ public class ScheduleDto {
 	}
 	
 	
-	public Date getSchedule_date() {
-		return schedule_date;
+	public Date getSchedule_startdate() {
+		return schedule_startdate;
 	}
-	public void setSchedule_date(Date schedule_date) {
-		this.schedule_date = schedule_date;
+	public Date getSchedule_enddate() {
+		return schedule_enddate;
+	}
+	public void setSchedule_startdate(Date schedule_startdate) {
+		this.schedule_startdate = schedule_startdate;
+	}
+	
+	public void setSchedule_enddate(Date schedule_enddate) {
+		this.schedule_enddate = schedule_enddate;
 	}
 	
 	
 	@Override
 	public String toString() {
 		return "ScheduleDto [schedule_idx=" + schedule_idx + ", schedule_num=" + schedule_num + ", schedule_subject="
-				+ schedule_subject + ", schedule_desc=" + schedule_desc + ", schedule_date=" + schedule_date + "]";
+				+ schedule_subject + ", schedule_desc=" + schedule_desc + ", schedule_startdate=\" + schedule_startdate + \", schedule_enddate=" + schedule_enddate + "]";
 	}
 	
 	

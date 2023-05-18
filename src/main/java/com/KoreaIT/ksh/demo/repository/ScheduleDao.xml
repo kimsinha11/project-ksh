@@ -7,22 +7,22 @@
 		insert into schedule
 			<include refid="schedule_cols" /> 
 		values
-			(#{schedule_idx}, #{schedule_num}, #{schedule_subject}, #{schedule_desc}, #{schedule_date})
+			(#{schedule_idx}, #{schedule_num}, #{schedule_subject}, #{schedule_desc}, #{schedule_startdate}, #{schedule_enddate})
 	</insert>
 
 	
 	<sql id="schedule_cols">
-   		(schedule_idx, schedule_num, schedule_subject, schedule_desc, schedule_date)
+   		(schedule_idx, schedule_num, schedule_subject, schedule_desc, schedule_startdate, schedule_enddate)
    	</sql>
 	<select id="before_schedule_add_search" resultType="int">
 		
-		select count(*) from schedule where schedule_date = #{schedule_date}
+		select count(*) from schedule where schedule_date = #{schedule_startdate}
 		
 	</select>
    	<select id="schedule_list" resultType="ScheduleDto">
 		
-		select * from schedule where schedule_date &gt;= #{db_startDate} and schedule_date &lt;= #{db_endDate} 
-		order by schedule_date, schedule_num, schedule_idx
+		select * from schedule where schedule_startdate &gt;= #{db_startDate} and schedule_startdate &lt;= #{db_endDate} 
+		order by schedule_startdate, schedule_num, schedule_idx
 		
 	</select>
 
