@@ -257,6 +257,14 @@ Board board = (Board) request.getAttribute("board");
 					<th><span class="article-detail__hit-count">${article.hitCount }</span>
 					</th>
 				</tr>
+				<tr>
+						<th>첨부 이미지</th>
+						<td>
+							<img class="w-full rounded-xl" src="${rq.getImgUri(article.id)}"
+								onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
+							<div>${rq.getImgUri(article.id)}</div>
+						</td>
+					</tr>
 
 			</thead>
 

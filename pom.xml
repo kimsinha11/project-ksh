@@ -90,11 +90,11 @@
 		    <artifactId>json</artifactId>
 		    <version>20210307</version>
 		</dependency>
-		<!-- 사진 업로드 -->
-		  <dependency>
-		    <groupId>commons-fileupload</groupId>
-		    <artifactId>commons-fileupload</artifactId>
-		    <version>1.4</version>
+		<!-- 파일 업로드를 위한 -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>31.1-jre</version>
 		</dependency>
 
 	</dependencies>

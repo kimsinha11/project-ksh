@@ -1,6 +1,7 @@
 package com.KoreaIT.ksh.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,10 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.KoreaIT.ksh.demo.service.ArticleService;
 import com.KoreaIT.ksh.demo.service.BoardService;
 import com.KoreaIT.ksh.demo.service.CommentService;
+import com.KoreaIT.ksh.demo.service.GenFileService;
 import com.KoreaIT.ksh.demo.service.ReactionPointService;
 import com.KoreaIT.ksh.demo.util.Ut;
 import com.KoreaIT.ksh.demo.vo.Article;
@@ -36,6 +40,8 @@ public class UsrArticleController {
 	@Autowired
 	private CommentService commentService;
 
+	@Autowired
+	private GenFileService genFileService;
 
 	@RequestMapping("/usr/article/modify")
 
@@ -82,7 +88,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(HttpSession httpSession, String title, String body, @RequestParam(defaultValue = "0") Integer boardId) {
+	public String doWrite(HttpSession httpSession, String title, String body, @RequestParam(defaultValue = "0") Integer boardId, MultipartRequest multipartRequest) {
 
 		if (Ut.empty(title)) {
 			return Ut.jsHistoryBack("F-N", "제목을 입력해주세요.");
@@ -97,6 +103,18 @@ public class UsrArticleController {
 		Board board = BoardService.getBoardById(boardId);
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
 		int id = (int) writeArticleRd.getData1();
+		
+
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		for (String fileInputName : fileMap.keySet()) {
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+
+			if (multipartFile.isEmpty() == false) {
+				genFileService.save(multipartFile, id);
+			}
+		}
+
 		return Ut.jsReplace("S-1", "작성완료", Ut.f("../article/detail?id=%d&boardId=%d", id, boardId));
 
 	}

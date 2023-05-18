@@ -1,27 +1,38 @@
 package com.KoreaIT.ksh.demo.vo;
 
-import lombok.Getter;
+import java.util.Map;
+
+import com.KoreaIT.ksh.demo.util.Ut;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 
 public class ResultData<DT> {
-	@Getter
 	private String resultCode;
-	@Getter
 	private String msg;
-	@Getter
 	private DT data1;
-	@Getter
 	private String data1Name;
-	@Getter
 	private Object data2;
-	@Getter
 	private String data2Name;
+	private Map<String, Object> body;
+
+	public ResultData(String resultCode, String msg, Object... args) {
+		this.resultCode = resultCode;
+		this.msg = msg;
+		this.body = Ut.mapOf(args);
+	}
 
 	public static <DT> ResultData<DT> from(String resultCode, String msg) {
 		return from(resultCode, msg, null, null);
 	}
 
 	public static <DT> ResultData<DT> from(String resultCode, String msg, String data1Name, DT data1) {
-		ResultData<DT> rd = new ResultData<>();
+		ResultData<DT> rd = new ResultData<DT>();
 		rd.resultCode = resultCode;
 		rd.msg = msg;
 		rd.data1Name = data1Name;
@@ -31,19 +42,15 @@ public class ResultData<DT> {
 	}
 
 	public boolean isSuccess() {
-		// private boolean success한 것과 같다.
 		return resultCode.startsWith("S-");
-		// 출력형태 -> "success": true || false
 	}
 
 	public boolean isFail() {
-		// private boolean fail한 것과 같다.
 		return isSuccess() == false;
-		// 출력형태 -> "fail": true || false
 	}
 
-	public static <DT> ResultData<DT> newData(ResultData<?> Rd, String data1Name, DT newData) {
-		return from(Rd.getResultCode(), Rd.getMsg(), data1Name, newData);
+	public static <DT> ResultData<DT> newData(ResultData rd, String data1Name, DT newData) {
+		return from(rd.getResultCode(), rd.getMsg(), data1Name, newData);
 	}
 
 	public void setData2(String data2Name, Object data2) {

@@ -20,6 +20,8 @@ import lombok.Getter;
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Rq {
 	@Getter
+	boolean isAjax;
+	@Getter
 	private boolean isLogined;
 	@Getter
 	private int loginedMemberId;
@@ -34,14 +36,15 @@ public class Rq {
 	public Rq(HttpServletRequest req, HttpServletResponse resp, MemberService memberService) {
 		this.req = req;
 		this.resp = resp;
+
 		this.session = req.getSession();
-		
+
 		paramMap = Ut.getParamMap(req);
-		
+
 		boolean isLogined = false;
 		int loginedMemberId = 0;
 		Member loginedMember = null;
-		
+
 		if (session.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
@@ -51,7 +54,27 @@ public class Rq {
 		this.isLogined = isLogined;
 		this.loginedMemberId = loginedMemberId;
 		this.loginedMember = loginedMember;
+
 		this.req.setAttribute("rq", this);
+
+		String requestUri = req.getRequestURI();
+
+		boolean isAjax = requestUri.endsWith("Ajax");
+
+		if (isAjax == false) {
+			if (paramMap.containsKey("ajax") && paramMap.get("ajax").equals("Y")) {
+				isAjax = true;
+			} else if (paramMap.containsKey("isAjax") && paramMap.get("isAjax").equals("Y")) {
+				isAjax = true;
+			}
+		}
+		if (isAjax == false) {
+			if (requestUri.contains("/get")) {
+				isAjax = true;
+			}
+		}
+		this.isAjax = isAjax;
+
 	}
 
 	public void printHitoryBackJs(String msg) throws IOException {
@@ -140,7 +163,7 @@ public class Rq {
 	}
 	
 	//로그인 후 접근 불가 페이지 afterLoginUri 값이 유지되도록
-	private String getAfterLoginUri() {
+	public String getAfterLoginUri() {
 		String requestUri = req.getRequestURI();
 		switch(requestUri) {
 		case "/usr/member/login":
@@ -199,4 +222,15 @@ public class Rq {
 		return loginedMember.isAdmin();
 	}
 
+	public String getImgUri(int id) {
+		return "/common/genFile/file/article/" + id + "/extra/Img/1";
+	}
+
+	public String getProfileFallbackImgUri() {
+		return "https://via.placeholder.com/150/?text=*^_^*";
+	}
+
+	public String getProfileFallbackImgOnErrorHtml() {
+		return "this.src = '" + getProfileFallbackImgUri() + "'";
+	}
 }

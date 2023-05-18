@@ -60,7 +60,7 @@ Article article = (Article) request.getAttribute("article");
 						<option disabled selected>게시판 선택</option>
 				</select>
 		</div>
-	
+
 		<script>
 			function categoryChange(select) {
 				var boardSelect = document.getElementById("board-select");
@@ -82,6 +82,10 @@ Article article = (Article) request.getAttribute("article");
 				<input value="${article.title }" class="input input-bordered w-full max-w-xs" type="text" name="title"
 						placeholder="제목을 입력해주세요" />
 				<div style="text-align: right;">${rq.loginedMember.nickname }</div>
+		</div>
+		<div style="text-align: left;">
+				첨부 이미지 :
+				<input name="file__article__0__extra__Img__1" placeholder="이미지를 선택해주세요" type="file" />
 		</div>
 		<div>
 
