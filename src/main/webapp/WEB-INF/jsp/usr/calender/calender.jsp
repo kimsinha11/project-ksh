@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Calendar"%>
-<%@ page contentType="text/html; charset=utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ include file="../common/head.jspf"%>
 <html lang="ko">
 <head>
 <title>캘린더</title>
@@ -11,358 +11,111 @@
 <!-- jquery datepicker -->
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<link href="/resources/css/main.css" rel="stylesheet" type="text/css">
+<script src="/resources/js/board.js"></script>
 <!-- jquery datepicker 끝 -->
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
 
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
 
 <script type="text/javaScript" language="javascript">
 	
 </script>
-<style TYPE="text/css">
-body {
-	scrollbar-face-color: #F6F6F6;
-	scrollbar-highlight-color: #bbbbbb;
-	scrollbar-3dlight-color: #FFFFFF;
-	scrollbar-shadow-color: #bbbbbb;
-	scrollbar-darkshadow-color: #FFFFFF;
-	scrollbar-track-color: #FFFFFF;
-	scrollbar-arrow-color: #bbbbbb;
-	margin-left: "0px";
-	margin-right: "0px";
-	margin-top: "0px";
-	margin-bottom: "0px";
+<style>
+.schedule_form {
+	display: none; /* 기본적으로 숨겨진 상태로 설정 */
 }
 
-td {
-	font-family: "돋움";
-	font-size: 9pt;
-	color: #595959;
-}
-
-th {
-	font-family: "돋움";
-	font-size: 9pt;
-	color: #000000;
-}
-
-select {
-	font-family: "돋움";
-	font-size: 9pt;
-	color: #595959;
-}
-
-.divDotText {
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-a:link {
-	font-size: 9pt;
-	font-family: "돋움";
-	color: #000000;
-	text-decoration: none;
-}
-
-a:visited {
-	font-size: 9pt;
-	font-family: "돋움";
-	color: #000000;
-	text-decoration: none;
-}
-
-a:active {
-	font-size: 9pt;
-	font-family: "돋움";
-	color: red;
-	text-decoration: none;
-}
-
-a:hover {
-	font-size: 9pt;
-	font-family: "돋움";
-	color: red;
-	text-decoration: none;
-}
-
-.day {
-	width: 100px;
-	height: 30px;
-	font-weight: bold;
-	font-size: 15px;
-	font-weight: bold;
-	text-align: center;
-}
-
-.sat {
-	color: #529dbc;
-}
-
-.sun {
-	color: red;
-}
-
-.today_button_div {
-	float: right;
-}
-
-.today_button {
-	width: 100px;
-	height: 30px;
-}
-
-.calendar {
-	width: 80%;
-	margin: auto;
-}
-
+/* 날짜 네비게이션 */
 .navigation {
-	margin-top: 100px;
-	margin-bottom: 30px;
-	text-align: center;
-	font-size: 25px;
-	vertical-align: middle;
+	margin-bottom: 20px;
 }
 
+.before_after_year, .before_after_month {
+	text-decoration: none;
+	color: #000;
+	margin-right: 10px;
+}
+
+.before_after_year:hover, .before_after_month:hover {
+	text-decoration: underline;
+}
+
+.this_month {
+	font-weight: bold;
+	font-size: 20px;
+	margin: 0 10px;
+}
+
+/* 달력 테이블 */
 .calendar_body {
 	width: 100%;
-	background-color: #FFFFFF;
-	border: 1px solid white;
-	margin-bottom: 50px;
+	height: 700px;
 	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+.calendar_body th {
+	background-color: #CECECE;
+	text-align: center;
+	padding: 10px;
+}
+
+.calendar_body td {
+	text-align: center;
+	padding: 10px;
+	border: 1px solid #ddd;
+}
+
+.calendar_body .day {
+	font-weight: bold;
 }
 
 .calendar_body .today {
-	border: 1px solid white;
-	height: 120px;
-	background-color: #c9c9c9;
-	text-align: left;
-	vertical-align: top;
+	background-color: #f5f5f5;
+}
+
+.calendar_body .sat_day {
+	background-color: #eaf6ff;
+}
+
+.calendar_body .sun_day {
+	background-color: #fff6f6;
 }
 
 .calendar_body .date {
 	font-weight: bold;
-	font-size: 15px;
-	padding-left: 3px;
-	padding-top: 3px;
-}
-
-.date {
-	margin-bottom: 10px;
-}
-
-.sat {
-	margin-bottom: 10px;
-}
-
-.sun {
-	margin-bottom: 10px;
-}
-
-.calendar_body .sat_day {
-	border: 1px solid white;
-	height: 120px;
-	background-color: #EFEFEF;
-	text-align: left;
-	vertical-align: top;
-}
-
-.calendar_body .sat_day .sat {
-	color: #529dbc;
-	font-weight: bold;
-	font-size: 15px;
-	padding-left: 3px;
-	padding-top: 3px;
-}
-
-.calendar_body .sun_day {
-	border: 1px solid white;
-	height: 120px;
-	background-color: #EFEFEF;
-	text-align: left;
-	vertical-align: top;
-}
-
-.calendar_body .sun_day .sun {
-	color: red;
-	font-weight: bold;
-	font-size: 15px;
-	padding-left: 3px;
-	padding-top: 3px;
-}
-
-.calendar_body .normal_day {
-	border: 1px solid white;
-	height: 120px;
-	background-color: #EFEFEF;
-	vertical-align: top;
-	text-align: left;
-}
-
-.before_after_month {
-	margin: 10px;
-	font-weight: bold;
-}
-
-.before_after_year {
-	font-weight: bold;
-}
-
-.this_month {
-	margin: 10px;
-}
-
-.schdule_add_button {
-	float: right;
-}
-/*
-		*	게시판 이동 모달
-		*/
-#mask_board_move {
-	position: absolute;
-	z-index: 9000;
-	background-color: #000;
-	display: none;
-	left: 0;
-	top: 0;
-}
-
-.normal_move_board_modal {
-	display: none;
-	position: fixed;
-	z-index: 10000;
-	left: 42% !important;
-	top: 30% !important;
-	margin-left: -250px !important;
-	margin-top: -100px !important;
-	width: 50% !important;
-	height: 65% !important;
-	border-radius: 12px !important;
-	background-color: white !important;
-}
-
-.normal_move_board_modal .top {
-	background-color: black;
-	width: 100%;
-	height: 13%;
-	border-radius: 12px 12px 0px 0px;
-}
-
-.normal_move_board_modal .top .close {
-	float: right;
-	cursor: pointer;
-	color: white;
-	font-size: 25px;
-	font-weight: bold;
-	padding-top: 5px;
-	padding-right: 20px;
-}
-
-.normal_move_board_modal .top .subject {
-	float: left;
-	margin-left: 10px;
-	margin-top: 20px;
-	font-size: 20px;
-	font-weight: bold;
-	color: white;
-	padding-left: 20px;
-}
-
-.normal_move_board_modal .bottom {
-	width: 100%;
-	height: 15%;
-	vertical-align: middle;
-}
-
-.normal_move_board_modal .bottom .info {
-	padding: 10px 15px 10px 15px;
-	text-align: left;
-	font-size: 12px;
-	color: red;
-	margin-left: 50px;
-}
-
-.normal_move_board_modal .bottom .contents {
-	margin: 20px 50px 20px 50px;
-	text-align: center;
-}
-
-.normal_move_board_modal .bottom .contents .board_select {
-	width: 240px;
-	height: 40px;
-	font-size: 15px;
-}
-
-.normal_move_board_modal .bottom .contents .board_move_go {
-	width: 80px;
-	height: 40px;
-	font-size: 15px;
-	background-color: gray;
-	color: white;
-}
-
-.normal_move_board_modal ul {
-	padding: 0;
-	margin: 0;
-	list-style: none;
-}
-
-.normal_move_board_modal ul li {
-	text-align: left;
-	padding: 5px;
-	height: 30px;
-}
-
-.normal_move_board_modal ul li .text_subject {
-	width: 10%;
-	height: 100%;
-	float: left;
-	font-size: 18px;
-	vertical-align: middle;
-	margin-top: 3px;
-}
-
-.normal_move_board_modal ul li .text_desc {
-	height: 25px;
-	width: 90%;
-	float: left;
-}
-
-.normal_move_board_modal ul li .text_area_desc {
-	width: 90%;
-	float: left;
-}
-
-.normal_move_board_modal ul li .text_type1 {
-	height: 100% !important;
-	width: 100%;
-}
-
-.normal_move_board_modal ul li .textarea_type1 {
-	width: 100%;
-	font-size: 18px;
-}
-
-.normal_move_board_modal ul .button_li {
-	padding-top: 130px;
-	width: 100%;
-}
-
-.normal_move_board_modal .bottom .contents .board_move_go {
-	width: 100% !important;
-	height: 40px;
-	font-size: 15px;
-	background-color: gray;
-	color: white;
-}
-
-.date_subject {
-	margin: 0px;
 	margin-bottom: 5px;
-	margin-left: 12px;
-	font-size: 12px;
+}
+
+.calendar_body .date_subject {
+	margin-top: 5px;
 	font-weight: bold;
 }
+
+/* 일정 추가 버튼 */
+.schudule_button_div {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.board_move {
+	background-color: #007bff;
+	color: #gray;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.board_move:hover {
+	background-color: #0069d9;
+}
+
+.today_button_div {
+text-align: right;}
 </style>
+
 </head>
 <body>
 		<form name="calendarFrm" id="calendarFrm" action="" method="GET">
@@ -375,6 +128,15 @@ a:hover {
 						alert(message);
 					}
 				</script>
+
+				<script>
+					function showForm() {
+						var form = document.querySelector(".schedule_form");
+						form.style.display = "block"; // 폼을 보이도록 변경
+					}
+				</script>
+
+
 				<div class="calendar">
 
 						<!--날짜 네비게이션  -->
@@ -404,9 +166,9 @@ a:hover {
 								</a>
 						</div>
 
-						<!-- <div class="today_button_div"> -->
-						<!-- <input type="button" class="today_button" onclick="javascript:location.href='/calendar.do'" value="go today"/> -->
-						<!-- </div> -->
+						<div class="today_button_div">
+								<input type="button" class="btn-text-link btn btn-outline btn-xs" onclick="javascript:location.href='/calendar.do'" value="go today" />
+						</div>
 						<table class="calendar_body">
 
 								<thead>
@@ -428,8 +190,8 @@ a:hover {
 																		<c:if test="${date_status.index%7==0}">
 																				<tr>
 																		</c:if>
-																		<td class="today">
-																				<div class="date">
+																		<td style="background-color: lightgray;" class="today">
+																				<div  class="date">
 																</c:when>
 																<c:when test="${date_status.index%7==6}">
 																		<td class="sat_day">
@@ -460,9 +222,11 @@ a:hover {
 						</table>
 
 						<div class="schudule_button_div">
-								<button type="button" class="board_move openMask_board_move pointer">일정추가</button>
+								<button type="button" onclick="showForm()" class="btn-text-link btn btn-outline btn-xs">일정추가</button>
+
 						</div>
 		</form>
+
 		<div id="mask_board_move"></div>
 		<div class="normal_move_board_modal">
 				<script>
@@ -498,12 +262,10 @@ a:hover {
 						schedule_add_form.submit();
 					}
 				</script>
-				<div class="top" style="">
-						<div class="close">x</div>
-						<div class="subject">스케쥴 등록</div>
-				</div>
 
-				<div class="bottom">
+
+
+				<div class="schedule_form">
 						<div class="info"></div>
 						<form name="schedule_add" action="schedule_add.do">
 								<input type="hidden" name="year" value="${today_info.search_year}" />
@@ -512,30 +274,30 @@ a:hover {
 										<ul>
 												<li>
 														<div class="text_subject">순번 :</div>
-														<div class="text_desc">
+														<div style = "border:1px solid gray;"class="text_desc">
 																<input type="text" name="schedule_num" class="text_type1" />
 														</div>
 												</li>
 												<li>
 														<div class="text_subject">날짜 :</div>
-														<div class="text_desc">
+														<div style = "border:1px solid gray;" class="text_desc">
 																<input type="text" name="schedule_date" class="text_type1" id="testDatepicker" readonly="readonly" />
 														</div>
 												</li>
 												<li>
 														<div class="text_subject">제목 :</div>
-														<div class="text_desc">
+														<div style = "border:1px solid gray;" class="text_desc">
 																<input type="text" name="schedule_subject" class="text_type1" />
 														</div>
 												</li>
 												<li>
 														<div class="text_subject">내용 :</div>
-														<div class="text_area_desc">
+														<div style = "border:1px solid gray;" class="text_area_desc">
 																<textarea name="schedule_desc" class="textarea_type1" rows="7"></textarea>
 														</div>
 												</li>
 												<li class="button_li">
-														<button type="button" class="board_move_go pointer" onclick="scheduleAdd();">일정등록</button>
+														<button type="button" class="btn-text-link btn btn-outline btn-xs" onclick="scheduleAdd();">일정등록</button>
 												</li>
 										</ul>
 
@@ -546,5 +308,5 @@ a:hover {
 		</div>
 
 
-</body>
-</html>
+
+<%@ include file="../common/foot.jspf"%>
