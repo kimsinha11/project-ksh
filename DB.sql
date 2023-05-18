@@ -256,11 +256,20 @@ COLLATE='utf8_general_ci'
 ENGINE=INNODB
 ;
 
+create table `schedule` (
+schedule_idx int(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+schedule_num int(11),
+schedule_subject varchar(45),
+schedule_desc varchar(45),
+schedule_startdate date,
+schedule_enddate date
+)
 ###################################################################
 SELECT * FROM article;
 SELECT * FROM `member`;
 SELECT * FROM board;
 SELECT * FROM tb_weather_area;
+select * from `schedule`;
 
 SELECT *
 FROM reactionPoint AS RP
