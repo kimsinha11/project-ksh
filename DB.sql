@@ -118,6 +118,20 @@ SET regDate = NOW(),
 updateDate = NOW(),
 `code` = 'QNA',
 `name` = '질의응답';
+# 게시판 테이블 추가 생성
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'eReview',
+`name` = '도구리뷰';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'cReview',
+`name` = '요리리뷰';
+
+
 
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
 
@@ -240,8 +254,9 @@ CREATE TABLE `tb_weather_area` (
 )
 COMMENT='Excel 파일의 값들을 DB화 한 테이블'
 COLLATE='utf8_general_ci'
-ENGINE=INNODB
+ENGINE=InnoDB
 ;
+
 
 CREATE TABLE `tw_weather_response` (
 	`baseDate` VARCHAR(50) NOT NULL COMMENT '발표일자' COLLATE 'utf8_general_ci',
@@ -253,8 +268,9 @@ CREATE TABLE `tw_weather_response` (
 )
 COMMENT='날씨 API 호출 응답값 저장'
 COLLATE='utf8_general_ci'
-ENGINE=INNODB
+ENGINE=InnoDB
 ;
+
 
 create table `schedule` (
 schedule_idx int(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -264,12 +280,13 @@ schedule_desc varchar(45),
 schedule_startdate date,
 schedule_enddate date
 )
+
 ###################################################################
 SELECT * FROM article;
 SELECT * FROM `member`;
+select * from tb_weather_area;
 SELECT * FROM board;
-SELECT * FROM tb_weather_area;
-select * from `schedule`;
+SELECT * FROM reactionPoint;
 
 SELECT *
 FROM reactionPoint AS RP

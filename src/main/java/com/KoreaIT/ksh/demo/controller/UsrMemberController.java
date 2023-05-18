@@ -58,6 +58,10 @@ public class UsrMemberController {
 		if (member.getLoginPw().equals(loginPw) == false) {
 			return Ut.jsHistoryBack("F-4", "비밀번호가 틀렸습니다");
 		}
+		
+		if (member.isDelStatus() == true) {
+			return Ut.jsReplace("사용정지된 계정입니다", "/");
+		}
 
 		rq.login(member);
 		
