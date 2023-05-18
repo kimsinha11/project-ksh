@@ -1,5 +1,6 @@
 package com.KoreaIT.ksh.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ import com.KoreaIT.ksh.demo.vo.Article;
 import com.KoreaIT.ksh.demo.vo.Board;
 import com.KoreaIT.ksh.demo.vo.Comment;
 import com.KoreaIT.ksh.demo.vo.Member;
-import com.KoreaIT.ksh.demo.vo.ResultData;
 import com.KoreaIT.ksh.demo.vo.Rq;
 
 @Controller
@@ -107,23 +107,40 @@ public class AdmMemberController {
 	
 	@RequestMapping("/adm/article/delete")
 	@ResponseBody
-	public String doDelete(Model model, int id, int boardId) {
+	public String doDelete(Model model,@RequestParam(defaultValue = "") String ids, @RequestParam(defaultValue = "/adm/memberAndArticle/list") String replaceUri) {
 
-		Article article = articleService.getArticle(id);
-		if (article == null) {
-			return Ut.jsHistoryBack("F-D", id + "번 글은 존재하지 않습니다.");
-		}
-
+	
 		if (rq.isAdmin()) {
-			articleService.deleteArticle(id);
-			model.addAttribute("article", article);
-			return Ut.jsReplace("S-1", "삭제완료", Ut.f("../article/list?boardId=%d", boardId));
+			List<Integer> articleIds = new ArrayList<>();
+
+			for (String idStr : ids.split(",")) {
+				articleIds.add(Integer.parseInt(idStr));
+			}
+
+			articleService.deleteArticles(articleIds);
+			
+		
+			return Ut.jsReplace("해당 게시들이 삭제되었습니다.", replaceUri);
 		} else {
 			return Ut.jsHistoryBack("F-C", "권한이 없습니다.");
 		}
 	}
 
+	@RequestMapping("/adm/memberAndArticle/doDeleteMembers")
+	@ResponseBody
+	public String doDeleteMembers(@RequestParam(defaultValue = "") String ids,
+			@RequestParam(defaultValue = "/adm/memberAndArticle/list") String replaceUri) {
+		List<Integer> memberIds = new ArrayList<>();
 
+		for (String idStr : ids.split(",")) {
+			memberIds.add(Integer.parseInt(idStr));
+		}
+
+		memberService.deleteMembers(memberIds);
+
+		return Ut.jsReplace("해당 회원들이 삭제되었습니다.", replaceUri);
+	}
+	
 	@RequestMapping("/adm/member/doLogout")
 	@ResponseBody
 	public String doLogout(@RequestParam(defaultValue = "/") String afterLogoutUri) {
