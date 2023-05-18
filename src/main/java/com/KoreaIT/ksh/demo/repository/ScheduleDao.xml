@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.KoreaIT.ksh.demo.repository.ScheduleDao">
+	
+	<insert id="schedule_add">
+		insert into schedule
+			<include refid="schedule_cols" /> 
+		values
+			(#{schedule_idx}, #{schedule_num}, #{schedule_subject}, #{schedule_desc}, #{schedule_date})
+	</insert>
+
+	
+	<sql id="schedule_cols">
+   		(schedule_idx, schedule_num, schedule_subject, schedule_desc, schedule_date)
+   	</sql>
+	<select id="before_schedule_add_search" resultType="int">
+		
+		select count(*) from schedule where schedule_date = #{schedule_date}
+		
+	</select>
+   	<select id="schedule_list" resultType="ScheduleDto">
+		
+		select * from schedule where schedule_date &gt;= #{db_startDate} and schedule_date &lt;= #{db_endDate} 
+		order by schedule_date, schedule_num, schedule_idx
+		
+	</select>
+
+</mapper>
