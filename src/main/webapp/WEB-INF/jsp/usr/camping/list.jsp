@@ -22,10 +22,10 @@ int pageSize = (int) request.getAttribute("pageSize");
 						<option value="0" ${searchType == 0 ? 'selected' : ''}>지역</option>
 						<option value="1" ${searchType == 1 ? 'selected' : ''}>종류</option>
 				</select>
-				<input name="searchKeyword" type="text" class="ml-2 w-96 input input-borderd" placeholder="검색어를 입력해주세요"
+				<input name="searchKeyword" type="text" class="input input-bordered w-full max-w-sm" placeholder="검색어를 입력해주세요"
 						maxlength="20" value="${searchKeyword}" />
-				<button type="submit" class="ml-2 btn btn-ghost">검색</button>
-				<a class="ml-2 btn btn-ghost" href="/usr/camping/map" type="button">지도</a>
+				<button type="submit" class="btn btn-outline btn-xlbtn-ghost">검색</button>
+				<a class="btn btn-outline btn-xlbtn-ghost" href="/usr/camping/map" type="button">지도</a>
 		</form>
 </div>
 
@@ -64,11 +64,11 @@ int pageSize = (int) request.getAttribute("pageSize");
 						<c:set var="startPage" value="${((pageNo - 1) / 10 * 10) + 1}" />
 						<c:set var="endPage" value="${startPage + 9}" />
 						<c:if test="${startPage > 6}">
-								<a class="btn-text-link btn btn-outline btn-xl"
+								<a class="btn-text-link btn btn-outline btn-sm"
 										href="?searchType=${searchType}&searchKeyword=${searchKeyword}&pageNo=1">처음</a>
 						</c:if>
 						<c:if test="${startPage > 1}">
-								<a class="btn-text-link btn btn-outline btn-xl"
+								<a class="btn-text-link btn btn-outline btn-sm"
 										href="?searchType=${searchType}&searchKeyword=${searchKeyword}&pageNo=${(startPage - 1).intValue()}">이전</a>
 						</c:if>
 
@@ -76,21 +76,21 @@ int pageSize = (int) request.getAttribute("pageSize");
 								<c:choose>
 										<c:when test="${loop.index <= maxPage}">
 												<c:if test="${loop.index == pageNo}">
-														<strong class="btn-text-link btn btn-outline btn-xl active">${loop.index}</strong>
+														<strong class="btn-text-link btn btn-outline btn-sm active">${loop.index}</strong>
 												</c:if>
 												<c:if test="${loop.index != pageNo}">
-														<a class="btn-text-link btn btn-outline btn-xl "
+														<a class="btn-text-link btn btn-outline btn-sm "
 																href="?searchType=${searchType}&searchKeyword=${searchKeyword}&pageNo=${loop.index}">${loop.index}</a>
 												</c:if>
 										</c:when>
 								</c:choose>
 						</c:forEach>
 						<c:if test="${endPage < maxPage}">
-								<a class="btn-text-link btn btn-outline btn-xl"
+								<a class="btn-text-link btn btn-outline btn-sm"
 										href="?searchType=${searchType}&searchKeyword=${searchKeyword}&pageNo=${(endPage + 1).intValue()}">다음</a>
 						</c:if>
 						<c:if test="${pageNo < maxPage && maxPage - pageNo >= 10}">
-								<a class="btn-text-link btn btn-outline btn-xl"
+								<a class="btn-text-link btn btn-outline btn-sm"
 										href="?searchType=${searchType}&searchKeyword=${searchKeyword}&pageNo=${(maxPage).intValue()}">마지막</a>
 						</c:if>
 

@@ -96,7 +96,7 @@ Article article = (Article) request.getAttribute("article");
 				<!--  <textarea type="text" class="input input-bordered w-full max-w-xs"  placeholder="내용을 입력해주세요" name="body" /></textarea>-->
 		</div>
 
-		<button class="btn-text-link btn btn-outline btn-xs" style="display: inline" type="submit">작성하기</button>
+		<button class="btn-text-link btn btn-outline btn-sm" style="display: inline" type="submit">작성하기</button>
 
 
 		<script>

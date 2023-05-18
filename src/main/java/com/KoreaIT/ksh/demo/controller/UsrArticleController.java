@@ -1,5 +1,6 @@
 package com.KoreaIT.ksh.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -247,4 +248,24 @@ public class UsrArticleController {
 		return rd;
 	}
 
+	@RequestMapping("/usr/mylist/delete")
+	@ResponseBody
+	public String doDelete(Model model,@RequestParam(defaultValue = "") String ids, @RequestParam(defaultValue = "/usr/article/mylist") String replaceUri) {
+
+	
+		if (rq.isLogined()) {
+			List<Integer> articleIds = new ArrayList<>();
+
+			for (String idStr : ids.split(",")) {
+				articleIds.add(Integer.parseInt(idStr));
+			}
+
+			articleService.deletemyArticles(articleIds);
+			
+		
+			return Ut.jsReplace("해당 게시들이 삭제되었습니다.", replaceUri);
+		} else {
+			return Ut.jsHistoryBack("F-C", "권한이 없습니다.");
+		}
+	}
 }

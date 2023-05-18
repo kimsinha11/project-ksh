@@ -53,7 +53,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 				<%
 				if (member.getId() != loginedMemberId) {
 				%>
-				<button class="btn-text-link btn btn-outline btn-xs" type="button" onclick="history.back()">뒤로가기</button>
+				<button class="btn-text-link btn btn-outline btn-sm" type="button" onclick="history.back()">뒤로가기</button>
 				<%
 				}
 				%>
@@ -61,13 +61,13 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 						<%
 						if (member.getId() == loginedMemberId) {
 						%>
-						<button class="btn-text-link btn btn-outline btn-xs" type="button" onclick="history.back()">뒤로가기</button>
-						<a class="btn-text-link btn btn-outline btn-xs" onclick="if(confirm('정말 수정하시겠습니까?') == false) return false;"
+						<button class="btn-text-link btn btn-outline btn-sm" type="button" onclick="history.back()">뒤로가기</button>
+						<a class="btn-text-link btn btn-outline btn-sm" onclick="if(confirm('정말 수정하시겠습니까?') == false) return false;"
 								href="../member/checkPw?id=${rq.loginedMember.id }">수정</a>
-						<a class="btn-text-link btn btn-outline btn-xs" onclick="if(confirm('정말 탈퇴하시겠습니까?') == false) return false;"
+						<a class="btn-text-link btn btn-outline btn-sm" onclick="if(confirm('정말 탈퇴하시겠습니까?') == false) return false;"
 								href="#">탈퇴</a>
-						<a class="btn-text-link btn btn-outline btn-xs" href="/calendar.do">일정관리</a>
-						<a class="btn-text-link btn btn-outline btn-xs" href="/usr/article/mylist">내게시물보기</a>
+						<a class="btn-text-link btn btn-outline btn-sm" href="/calendar.do">일정관리</a>
+						<a class="btn-text-link btn btn-outline btn-sm" href="/usr/article/mylist">내게시물보기</a>
 						<%
 						}
 						%>

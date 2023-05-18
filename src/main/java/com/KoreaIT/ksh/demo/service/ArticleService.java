@@ -133,12 +133,20 @@ public class ArticleService {
 		articleRepository.deleteArticle(article.getId());
 	}
 
+	public void deletemyArticles(List<Integer> articleIds) {
+		for (int articleId : articleIds) {
+			Article article = getArticle(articleId);
+			
+			if(article != null) {
+				deleteArticle(article);
+			}
+		}
+		
+	}
+
 	public List<Article> getMyArticles(Integer boardId, int memberId, int i, int itemsPerPage,
 			String searchKeyword, Integer searchId) {
 		return articleRepository.getMyArticles(boardId,memberId, i, itemsPerPage, searchKeyword, searchId);
 	}
-
-
-
 
 }

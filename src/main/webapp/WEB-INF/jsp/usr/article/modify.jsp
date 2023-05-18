@@ -67,7 +67,7 @@ Board board = (Board) request.getAttribute("board");
 						<!--  <textarea type="text" class="input input-bordered w-full max-w-xs"  placeholder="내용을 입력해주세요" name="body" /></textarea>-->
 				</div>
 
-				<button class="btn-text-link btn btn-outline btn-xs" style="display: inline" type="submit">수정하기</button>
+				<button class="btn-text-link btn btn-outline btn-sm" style="display: inline" type="submit">수정하기</button>
 		</div>
 </form>
 <%@ include file="../common/foot.jspf"%>

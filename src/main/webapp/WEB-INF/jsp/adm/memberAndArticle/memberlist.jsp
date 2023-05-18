@@ -33,7 +33,7 @@
 
 					<input name="MsearchKeyword" type="text" class="ml-2 w-96 input input-borderd" placeholder="검색어를 입력해주세요"
 						maxlength="20" value="${param.searchKeyword }" />
-					<button type="submit" class="ml-2 btn btn-ghost">검색</button>
+					<button type="submit" class="ml-2 btn btn-sm btn-ghost">검색</button>
 				</form>
 			</div>
 			<div class="table-box-type-1 mt-3">
@@ -51,7 +51,7 @@
 					<thead>
 						<tr>
 							<th>
-								<input type="checkbox" class="checkbox-all-member-id" />
+								<input type="checkbox" class="checkbox checkbox-all-member-id" />
 							</th>
 							<th>번호</th>
 							<th>가입날짜</th>
@@ -68,7 +68,7 @@
 						<c:forEach var="member" items="${members }">
 							<tr class="hover">
 								<th>
-									<input type="checkbox" class="checkbox-member-id" value="${member.id }" />
+									<input type="checkbox" class="checkbox checkbox-member-id" value="${member.id }" />
 								</th>
 								<td>${member.id}</td>
 								<td>${member.forPrintType1RegDate}</td>
@@ -100,7 +100,7 @@
 			    });
 			</script>
 			<div>
-				<button class="btn btn-error btn-delete-selected-members">선택삭제</button>
+				<button class="btn btn-sm btn-error btn-delete-selected-members">선택삭제</button>
 			</div>
 
 			<form hidden method="POST" name="do-delete-members-form" action="../memberAndArticle/doDeleteMembers">

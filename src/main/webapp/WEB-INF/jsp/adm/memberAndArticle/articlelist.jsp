@@ -69,7 +69,7 @@ Board board = (Board) request.getAttribute("board");
 
 										<th>
 												<label>
-														<input type="checkbox" class="checkbox-all-article-id" />
+														<input type="checkbox" class="checkbox checkbox-all-article-id" />
 												</label>
 										</th>
 										<th style="font-size: 19px">번호</th>
@@ -88,7 +88,7 @@ Board board = (Board) request.getAttribute("board");
 										<tr>
 												<th>
 														<label>
-																<input type="checkbox" class="checkbox-article-id" value="${article.id }" />
+																<input type="checkbox" class="checkbox checkbox-article-id" value="${article.id }" />
 														</label>
 												</th>
 												<th>
@@ -116,7 +116,7 @@ Board board = (Board) request.getAttribute("board");
 		</div>
 </section>
 	<script>
-	<script>
+	
 	$('.checkbox-all-article-id').change(function() {
 	      const $all = $(this);
 	      const allChecked = $all.prop('checked');
@@ -131,7 +131,7 @@ Board board = (Board) request.getAttribute("board");
 	    });
 	</script>
 	<div  style="margin-left: 265px;">
-		<button class="btn btn-outline btn-xl btn-error btn-delete-selected-articles">선택삭제</button>
+		<button class="btn btn-outline btn-sm btn-error btn-delete-selected-articles">선택삭제</button>
 	</div>
 
 	<form hidden method="POST" name="do-delete-articles-form" action="/adm/article/delete">
@@ -161,10 +161,10 @@ Board board = (Board) request.getAttribute("board");
 						<c:set var="baseUri2"
 								value="itemsPerPage=${itemsPerPage}&searchKeyword=${param.searchKeyword }&searchId=${param.searchId}" />
 						<c:if test="${pageNum > 1}">
-								<a class="btn-text-link btn btn-outline btn-xl" href="?boardId=${article.boardId}&pageNum=1&${baseUri2 }">◀◀</a>
+								<a class="btn-text-link btn btn-outline btn-sm" href="?boardId=${article.boardId}&pageNum=1&${baseUri2 }">◀◀</a>
 						</c:if>
 						<c:if test="${pageNum > 10}">
-								<a class="btn-text-link btn btn-outline btn-xl"
+								<a class="btn-text-link btn btn-outline btn-sm"
 										href="?boardId=${article.boardId}&pageNum=${pageNum - 10}&${baseUri2 }">이전</a>
 						</c:if>
 
@@ -175,28 +175,28 @@ Board board = (Board) request.getAttribute("board");
 								<c:if test="${status.index >= ((pageNum-1) / 10) * 10 && status.index < ((pageNum-1) / 10 + 1) * 10}">
 										<c:choose>
 												<c:when test="${i == pageNum}">
-														<a class="btn-text-link btn btn-outline btn-xl active" href="${baseUri }">${i}</a>
+														<a class="btn-text-link btn btn-outline btn-sm active" href="${baseUri }">${i}</a>
 												</c:when>
 												<c:otherwise>
-														<a class="btn-text-link btn btn-outline btn-xl" href="${baseUri }">${i}</a>
+														<a class="btn-text-link btn btn-outline btn-sm" href="${baseUri }">${i}</a>
 												</c:otherwise>
 										</c:choose>
 								</c:if>
 						</c:forEach>
 						<c:if test="${pageNum < totalPages && totalPages - pageNum >= 10}">
-								<a class="btn-text-link btn btn-outline btn-xl"
+								<a class="btn-text-link btn btn-outline btn-sm"
 										href="?boardId=${article.boardId}&pageNum=${pageNum + 10}&${baseUri2 }">다음</a>
 						</c:if>
 
 						<c:if test="${pageNum < totalPages && totalPages - pageNum >= 10}">
-								<a class="btn-text-link btn btn-outline btn-xl" href="?boardId=${article.boardId}&pageNum=${totalPages}&${baseUri2 }">▶▶</a>
+								<a class="btn-text-link btn btn-outline btn-sm" href="?boardId=${article.boardId}&pageNum=${totalPages}&${baseUri2 }">▶▶</a>
 						</c:if>
 				</div>
 				<br />
 				<form style="text-align: center;" method="get" action="list">
 						<div class="history">
 
-								<button class="btn-text-link btn btn-outline btn-xl" type="button">
+								<button class="btn-text-link btn btn-outline btn-sm" type="button">
 										<a href="/adm/memberAndArticle/list">뒤로가기</a>
 								</button>
 								<select data-value="${param.searchId}" name="searchId" class="select select-bordered max-w-xs">
@@ -208,7 +208,7 @@ Board board = (Board) request.getAttribute("board");
 								<input type="hidden" name="boardId" value="${param.boardId}" />
 								<input value="${param.searchKeyword }" class="input input-bordered w-full max-w-xs" type="text"
 										name="searchKeyword" placeholder="검색어를 입력해주세요" />
-								<button class="btn-text-link btn btn-outline btn-xl" style="display: inline;" type="submit">검색</button>
+								<button class="btn-text-link btn btn-outline btn-sm" style="display: inline;" type="submit">검색</button>
 						</div>
 
 						<script>
