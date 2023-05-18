@@ -1,19 +1,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Calendar"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../common/head.jspf"%>
 <html lang="ko">
 <head>
 <title>캘린더</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <!-- jquery datepicker -->
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
-	type="text/css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
 <!-- jquery datepicker 끝 -->
@@ -23,35 +19,8 @@
 <script type="text/javaScript" language="javascript">
 	
 </script>
+
 <style>
-a:link {
-	font-size: 9pt;
-	font-family: "돋움";
-	color: #000000;
-	text-decoration: none;
-}
-
-a:visited {
-	font-size: 9pt;
-	font-family: "돋움";
-	color: #000000;
-	text-decoration: none;
-}
-
-a:active {
-	font-size: 9pt;
-	font-family: "돋움";
-	color: red;
-	text-decoration: none;
-}
-
-a:hover {
-	font-size: 9pt;
-	font-family: "돋움";
-	color: red;
-	text-decoration: none;
-}
-
 .day {
 	width: 100px;
 	height: 30px;
@@ -224,6 +193,7 @@ a:hover {
 	height: 700px;
 	border-collapse: collapse;
 	margin-bottom: 20px;
+	border: 2px solid lightgray;
 }
 
 .calendar_body th {
@@ -291,114 +261,148 @@ a:hover {
 
 </head>
 <body>
-	<form name="calendarFrm" id="calendarFrm" action="" method="GET">
-		<input type="hidden" name="year" value="${today_info.search_year}" />
-		<input type="hidden" name="month" value="${today_info.search_month-1}" />
-		<script>
-			var message = "${message}";
-			console.log(message);
-			if (message != "") {
-				alert(message);
-			}
-		</script>
+		<form name="calendarFrm" id="calendarFrm" action="" method="GET">
+				<input type="hidden" name="year" value="${today_info.search_year}" />
+				<input type="hidden" name="month" value="${today_info.search_month-1}" />
+				<script>
+					var message = "${message}";
+					console.log(message);
+					if (message != "") {
+						alert(message);
+					}
+				</script>
 
-		<script>
-			function showForm() {
-				var form = document.querySelector(".schedule_form");
-				form.style.display = "block"; // 폼을 보이도록 변경
-			}
-		</script>
+				<script>
+					function showForm() {
+						var form = document.querySelector(".schedule_form");
+						form.style.display = "block"; // 폼을 보이도록 변경
+					}
+				</script>
 
 
-		<div class="calendar">
+				<div class="calendar">
 
-			<!--날짜 네비게이션  -->
-			<div class="navigation">
-				<a class="before_after_year"
-					href="./calendar.do?year=${today_info.search_year-1}&month=${today_info.search_month-1}">
-					&lt;&lt; <!-- 이전해 -->
-				</a> <a class="before_after_month"
-					href="./calendar.do?year=${today_info.before_year}&month=${today_info.before_month}">
-					&lt; <!-- 이전달 -->
-				</a> <span class="this_month"> &nbsp;${today_info.search_year}. <c:if
-						test="${today_info.search_month<10}">0</c:if>${today_info.search_month}
-				</span> <a class="before_after_month"
-					href="/calendar.do?year=${today_info.after_year}&month=${today_info.after_month}">
-					<!-- 다음달 --> &gt;
-				</a> <a class="before_after_year"
-					href="/calendar.do?year=${today_info.search_year+1}&month=${today_info.search_month-1}">
-					<!-- 다음해 --> &gt;&gt;
-				</a>
-			</div>
+						<!--날짜 네비게이션  -->
+						<div class="navigation">
+								<a class="before_after_year"
+										href="./calendar.do?year=${today_info.search_year-1}&month=${today_info.search_month-1}">
+										&lt;&lt;
+										<!-- 이전해 -->
+								</a>
+								<a class="before_after_month"
+										href="./calendar.do?year=${today_info.before_year}&month=${today_info.before_month}">
+										&lt;
+										<!-- 이전달 -->
+								</a>
+								<span class="this_month">
+										&nbsp;${today_info.search_year}.
+										<c:if test="${today_info.search_month<10}">0</c:if>${today_info.search_month}
+								</span>
+								<a class="before_after_month" href="/calendar.do?year=${today_info.after_year}&month=${today_info.after_month}">
+										<!-- 다음달 -->
+										&gt;
+								</a>
+								<a class="before_after_year"
+										href="/calendar.do?year=${today_info.search_year+1}&month=${today_info.search_month-1}">
+										<!-- 다음해 -->
+										&gt;&gt;
+								</a>
+						</div>
 
-			<div class="today_button_div">
-				<input type="button" class="btn-text-link btn btn-outline btn-xs"
-					onclick="javascript:location.href='/calendar.do'" value="go today" />
-			</div>
-			<table class="calendar_body">
+						<div class="today_button_div">
+								<input type="button" class="btn-text-link btn btn-outline btn-sm"
+										onclick="javascript:location.href='/calendar.do'" value="go today" />
+						</div>
+						<table class="calendar_body">
 
-				<thead>
-					<tr bgcolor="#CECECE">
-						<td class="day sun">일</td>
-						<td class="day">월</td>
-						<td class="day">화</td>
-						<td class="day">수</td>
-						<td class="day">목</td>
-						<td class="day">금</td>
-						<td class="day sat">토</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<c:forEach var="dateList" items="${dateList}"
-							varStatus="date_status">
-							<c:choose>
-								<c:when test="${dateList.value=='today'}">
-									<c:if test="${date_status.index%7==0}">
+								<thead>
+										<tr bgcolor="#CECECE">
+												<td class="day sun">일</td>
+												<td class="day">월</td>
+												<td class="day">화</td>
+												<td class="day">수</td>
+												<td class="day">목</td>
+												<td class="day">금</td>
+												<td class="day sat">토</td>
+										</tr>
+								</thead>
+								<tbody>
 										<tr>
-									</c:if>
-									<td style="background-color: lightgray;" class="today">
-										<div class="date">
-								</c:when>
-								<c:when test="${date_status.index%7==6}">
-									<td class="sat_day">
-										<div class="sat">
-								</c:when>
-								<c:when test="${date_status.index%7==0}">
-					</tr>
-					<tr>
-						<td class="sun_day">
-							<div class="sun">
-								</c:when>
-								<c:otherwise>
-									<td class="normal_day">
-										<div class="date">
-								</c:otherwise>
-								</c:choose>
-								${dateList.date}
-							</div>
-							<div>
-								<c:forEach var="scheduleList"
-									items="${dateList.schedule_data_arr}"
-									varStatus="schedule_data_arr_status">
-									<p style="background-color: ${scheduleList.color};" class="date_subject">${scheduleList.schedule_subject}</p>
-								</c:forEach>
-							</div>
-						</td>
-						</c:forEach>
-				</tbody>
+												<c:forEach var="dateList" items="${dateList}" varStatus="date_status">
+														<c:choose>
+																<c:when test="${dateList.value=='today'}">
+																		<c:if test="${date_status.index%7==0}">
+																				<tr>
+																		</c:if>
+																		<td style="background-color: lightgray;" class="today">
+																				<div class="date">
+																</c:when>
+																<c:when test="${date_status.index%7==6}">
+																		<td class="sat_day">
+																				<div class="sat">
+																</c:when>
+																<c:when test="${date_status.index%7==0}">
+										</tr>
+										<tr>
+												<td class="sun_day">
+														<div class="sun">
+																</c:when>
+																<c:otherwise>
+																		<td class="normal_day">
+																				<div class="date">
+																</c:otherwise>
+																</c:choose>
+																${dateList.date}
+														</div>
+														<div>
 
-			</table>
+																<c:forEach var="scheduleList" items="${dateList.schedule_data_arr}" varStatus="schedule_data_arr_status">
+																		<p style="background-color: ${scheduleList.color};" class="date_subject">
+																				<a href="#" class="schedule-link"
+																						data-schedule='{"schedule_num": "${scheduleList.schedule_num}", "start_date": "${scheduleList.schedule_startdate}", "end_date": "${scheduleList.schedule_enddate}", "schedule_subject": "${scheduleList.schedule_subject}", "schedule_desc": "${scheduleList.schedule_desc}"}'
+																						onclick="showScheduleDetails(event)">${scheduleList.schedule_subject}</a>
+																		</p>
 
-			<div class="schudule_button_div">
-				<button type="button" onclick="showForm()"
-					class="btn-text-link btn btn-outline btn-xs">일정추가</button>
+																</c:forEach>
+														</div>
+												</td>
+												</c:forEach>
+								</tbody>
 
-			</div>
-	</form>
+						</table>
 
-	<div id="mask_board_move"></div>
-	<div class="normal_move_board_modal">
+						<div class="schudule_button_div">
+								<button type="button" onclick="showForm()" class="btn-text-link btn btn-outline btn-sm">일정추가</button>
+
+						</div>
+		</form>
+
+
+		<script>
+			function displayScheduleInfo(schedule) {
+				var scheduleDetailsContainer = document
+						.getElementById("scheduleDetailsContainer");
+
+				// 일정 정보를 동적으로 생성하여 컨테이너에 추가
+				var scheduleDetailsHtml = "<h3>일정 정보</h3>" + "<p>순번: "
+						+ schedule.schedule_num + "</p>" + "<p>시작일: "
+						+ schedule.start_date + "</p>" + "<p>종료일: "
+						+ schedule.end_date + "</p>" + "<p>제목: "
+						+ schedule.schedule_subject + "</p>" + "<p>내용: "
+						+ schedule.schedule_desc + "</p>";
+
+				scheduleDetailsContainer.innerHTML = scheduleDetailsHtml;
+			}
+
+			function showScheduleDetails(event) {
+				event.preventDefault();
+				var target = event.target;
+				var schedule = JSON.parse(target.getAttribute("data-schedule"));
+
+				displayScheduleInfo(schedule);
+			}
+		</script>
+
 		<script>
 			$(function() {
 				$("#testDatepicker")
@@ -456,81 +460,77 @@ a:hover {
 			});
 
 			function scheduleAdd() {
-				  var schedule_add_form = document.schedule_add;
-				  if (schedule_add_form.schedule_startdate.value == "" || schedule_add_form.schedule_startdate.value == null) {
-				    alert("시작일을 입력해주세요.");
-				    schedule_add_form.schedule_startdate.focus();
-				    return false;
-				  } else if (schedule_add_form.schedule_enddate.value == "" || schedule_add_form.schedule_enddate.value == null) {
-				    alert("종료일을 입력해주세요.");
-				    schedule_add_form.schedule_enddate.focus();
-				    return false;
-				  } else if (schedule_add_form.schedule_subject.value == "" || schedule_add_form.schedule_subject.value == null) {
-				    alert("제목을 입력해주세요.");
-				    schedule_add_form.schedule_subject.focus();
-				    return false;
-				  }
-				  schedule_add_form.submit();
+				var schedule_add_form = document.schedule_add;
+				if (schedule_add_form.schedule_startdate.value == ""
+						|| schedule_add_form.schedule_startdate.value == null) {
+					alert("시작일을 입력해주세요.");
+					schedule_add_form.schedule_startdate.focus();
+					return false;
+				} else if (schedule_add_form.schedule_enddate.value == ""
+						|| schedule_add_form.schedule_enddate.value == null) {
+					alert("종료일을 입력해주세요.");
+					schedule_add_form.schedule_enddate.focus();
+					return false;
+				} else if (schedule_add_form.schedule_subject.value == ""
+						|| schedule_add_form.schedule_subject.value == null) {
+					alert("제목을 입력해주세요.");
+					schedule_add_form.schedule_subject.focus();
+					return false;
 				}
+				schedule_add_form.submit();
+			}
 		</script>
-
+		<div id="scheduleDetailsContainer" style="border: 1px solid black;"></div>
 		<div class="schedule_form">
-			<div class="info"></div>
-			<form name="schedule_add" action="schedule_add.do">
-				<input type="hidden" name="year" value="${today_info.search_year}" />
-				<input type="hidden" name="month"
-					value="${today_info.search_month-1}" />
-				<div class="contents">
-					<ul>
-						<li>
-							<div class="text_subject">순번 :</div>
-							<div style="border: 1px solid gray;" class="text_desc">
-								<input style="width: 100%;" type="text" name="schedule_num"
-									class="text_type1" />
-							</div>
-						</li>
-						<li>
-							<div class="text_subject">시작 :</div>
-							<div style="border: 1px solid gray;" class="text_desc">
-								<input style="width: 100%;" type="text"
-									name="schedule_startdate" class="text_type1"
-									id="testDatepicker" readonly="readonly" />
-							</div>
-						</li>
-						<li>
-							<div class="text_subject">끝 :</div>
-							<div style="border: 1px solid gray;" class="text_desc">
-								<input style="width: 100%;" type="text" name="schedule_enddate"
-									class="text_type1" id="endDatePicker" readonly="readonly" />
-							</div>
-						</li>
-						<li>
-							<div class="text_subject">제목 :</div>
-							<div style="border: 1px solid gray;" class="text_desc">
-								<input style="width: 100%;" type="text" name="schedule_subject"
-									class="text_type1" />
-							</div>
-						</li>
-						<li>
-							<div class="text_subject">내용 :</div>
-							<div style="border: 1px solid gray;" class="text_area_desc">
-								<textarea style="width: 100%;" name="schedule_desc"
-									class="textarea_type1" rows="7"></textarea>
-							</div>
-						</li>
-						<li class="button_li">
-							<button type="button"
-								class="btn-text-link btn btn-outline btn-xs"
-								onclick="scheduleAdd();">일정등록</button>
-						</li>
-					</ul>
+				<div class="info"></div>
+				<form name="schedule_add" action="schedule_add.do">
+						<input type="hidden" name="year" value="${today_info.search_year}" />
+						<input type="hidden" name="month" value="${today_info.search_month-1}" />
+						<div class="contents">
+								<ul>
+										<li>
+												<div class="text_subject">순번 :</div>
+												<div style="border: 1px solid gray;" class="text_desc">
+														<input style="width: 100%;" type="text" name="schedule_num" class="text_type1" />
+												</div>
+										</li>
+										<li>
+												<div class="text_subject">시작 :</div>
+												<div style="border: 1px solid gray;" class="text_desc">
+														<input style="width: 100%;" type="text" name="schedule_startdate" class="text_type1" id="testDatepicker"
+																readonly="readonly" />
+												</div>
+										</li>
+										<li>
+												<div class="text_subject">끝 :</div>
+												<div style="border: 1px solid gray;" class="text_desc">
+														<input style="width: 100%;" type="text" name="schedule_enddate" class="text_type1" id="endDatePicker"
+																readonly="readonly" />
+												</div>
+										</li>
+										<li>
+												<div class="text_subject">제목 :</div>
+												<div style="border: 1px solid gray;" class="text_desc">
+														<input style="width: 100%;" type="text" name="schedule_subject" class="text_type1" />
+												</div>
+										</li>
+										<li>
+												<div class="text_subject">내용 :</div>
+												<div style="border: 1px solid gray;" class="text_area_desc">
+														<textarea style="width: 100%;" name="schedule_desc" class="textarea_type1" rows="7"></textarea>
+												</div>
+										</li>
+										<li class="button_li">
+												<button type="button" class="btn-text-link btn btn-outline btn-xs" onclick="scheduleAdd();">일정등록</button>
+										</li>
+								</ul>
 
-				</div>
-			</form>
+						</div>
+				</form>
 		</div>
 
-	</div>
 
 
 
-	<%@ include file="../common/foot.jspf"%>
+
+		<%@ include file="../common/foot.jspf"%>

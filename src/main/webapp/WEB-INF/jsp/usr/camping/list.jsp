@@ -15,7 +15,13 @@ int pageNo = (int) request.getAttribute("pageNo");
 int pageSize = (int) request.getAttribute("pageSize");
 %>
 <meta charset="UTF-8">
-<h1>Camping List</h1>
+<br />
+<label>⛺캠핑장 검색하기⛺</label>
+
+		<hr />
+
+		<br />
+	
 <div>
 		<form class="flex">
 				<select name="searchType" class="select select-bordered" style="width: 150px;">
@@ -29,7 +35,7 @@ int pageSize = (int) request.getAttribute("pageSize");
 		</form>
 </div>
 
-<table class="table-box-type-3 table w-full" style="width: 100%">
+<table class="table-box-type-3 table w-full" style="width: 100%; border:2px solid black;">
 		<thead>
 				<tr>
 						<th>번호</th>

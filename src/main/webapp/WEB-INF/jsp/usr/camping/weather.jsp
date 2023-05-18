@@ -19,7 +19,7 @@
 <layout:fragment name="content">
 		<br />
 
-		<label>매시 30분 기준으로 업데이트</label>
+		<label>✨매시 30분 기준으로 업데이트✨</label>
 		<hr />
 		<br />
 		<form class="form-horizontal">
