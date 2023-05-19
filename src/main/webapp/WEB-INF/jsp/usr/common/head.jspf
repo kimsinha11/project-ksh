@@ -65,8 +65,8 @@ function Theme__applyTo(themeName) {
 <body>
 		<header id="header">
 				<div>
-						<a href="../home/main" class="logo">DDNJ</a>
-						<a href="../home/main" style="font-size: 5px;">ddeonoja</a>
+						<a href="/usr/home/main" class="logo">DDNJ</a>
+						<a href="/usr/home/main" style="font-size: 5px;">ddeonoja</a>
 				</div>
 				<ul>
 						<li class="">
@@ -76,7 +76,7 @@ function Theme__applyTo(themeName) {
 								</a>
 						</li>
 						<li>
-								<a href="../home/main" class="active">Home</a>
+								<a href="/usr/home/main" class="active">Home</a>
 						</li>
 						<li>
 								<a href="/usr/article/write">글쓰기</a>
