@@ -8,13 +8,13 @@
 		<include refid="schedule_cols" />
 		values
 		(#{schedule_idx}, #{schedule_num}, #{schedule_subject}, #{schedule_desc},
-		#{schedule_startdate}, #{schedule_enddate})
+		#{schedule_startdate}, #{schedule_enddate}, #{memberId})
 	</insert>
 
 
 	<sql id="schedule_cols">
 		(schedule_idx, schedule_num, schedule_subject, schedule_desc, schedule_startdate,
-		schedule_enddate)
+		schedule_enddate, memberId)
 	</sql>
 	<select id="before_schedule_add_search" resultType="int">
 
@@ -25,7 +25,7 @@
 	<select id="schedule_list" resultType="ScheduleDto">
 		select * from schedule
 		where schedule_startdate &gt;= #{db_startdate} and schedule_enddate &lt;=
-		#{db_enddate}
+		#{db_enddate} 
 		order by schedule_startdate, schedule_num, schedule_idx
 	</select>
 	<select id="getSchedule" resultType="ScheduleDto">

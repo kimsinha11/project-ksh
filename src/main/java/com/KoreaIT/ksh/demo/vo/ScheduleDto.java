@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleDto {
-
+	int memberId;
 	int schedule_idx;
 	int schedule_num;
 	String schedule_subject;
 	String schedule_desc;
 	Date schedule_startdate;
 	Date schedule_enddate;
+
 	private String color;
 
  

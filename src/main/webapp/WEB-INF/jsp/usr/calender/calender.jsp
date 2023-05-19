@@ -357,13 +357,15 @@
 														<div>
 
 																<c:forEach var="scheduleList" items="${dateList.schedule_data_arr}" varStatus="schedule_data_arr_status">
-																		<p style="background-color: ${scheduleList.color};" class="date_subject">
-																				<a href="#" class="schedule-link"
-																						data-schedule='{"schedule_num": "${scheduleList.schedule_num}","schedule_idx": "${scheduleList.schedule_idx}",  "start_date": "${scheduleList.schedule_startdate}", "end_date": "${scheduleList.schedule_enddate}", "schedule_subject": "${scheduleList.schedule_subject}", "schedule_desc": "${scheduleList.schedule_desc}"}'
-																						onclick="showScheduleDetails(event)">${scheduleList.schedule_subject}</a>
-																		</p>
-
+																		<c:if test="${scheduleList.memberId == rq.loginedMemberId}">
+																				<p style="background-color: ${scheduleList.color};" class="date_subject">
+																						<a href="#" class="schedule-link"
+																								data-schedule='{"schedule_num": "${scheduleList.schedule_num}","schedule_idx": "${scheduleList.schedule_idx}",  "start_date": "${scheduleList.schedule_startdate}", "end_date": "${scheduleList.schedule_enddate}", "schedule_subject": "${scheduleList.schedule_subject}", "schedule_desc": "${scheduleList.schedule_desc}"}'
+																								onclick="showScheduleDetails(event)">${scheduleList.schedule_subject}</a>
+																				</p>
+																		</c:if>
 																</c:forEach>
+
 														</div>
 												</td>
 												</c:forEach>
@@ -502,8 +504,16 @@
 				<form name="schedule_add" action="schedule_add.do">
 						<input type="hidden" name="year" value="${today_info.search_year}" />
 						<input type="hidden" name="month" value="${today_info.search_month-1}" />
+
+
 						<div class="contents">
 								<ul>
+										<li>
+												<div class="text_subject"></div>
+												<div style="border: 1px solid gray;" class="text_desc">
+														<input style="width: 100%;" type="hidden" name="memberId" value="${rq.loginedMemberId}" class="text_type1" />
+												</div>
+										</li>
 										<li>
 												<div class="text_subject">순번 :</div>
 												<div style="border: 1px solid gray;" class="text_desc">

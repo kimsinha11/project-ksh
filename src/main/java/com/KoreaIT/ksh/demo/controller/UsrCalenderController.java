@@ -19,8 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.KoreaIT.ksh.demo.repository.ScheduleDao;
 import com.KoreaIT.ksh.demo.util.Ut;
-import com.KoreaIT.ksh.demo.vo.Article;
 import com.KoreaIT.ksh.demo.vo.DateData;
+import com.KoreaIT.ksh.demo.vo.Rq;
 import com.KoreaIT.ksh.demo.vo.ScheduleDto;
 
 @Controller
@@ -29,6 +29,8 @@ public class UsrCalenderController {
 	SqlSession sqlsession;
 	@Autowired
 	ScheduleDao scheduleDao;
+	@Autowired
+	Rq rq;
 
 	@RequestMapping(value = "calendar.do", method = RequestMethod.GET)
 	public String calendar(Model model, HttpServletRequest request, DateData dateData) {
@@ -44,8 +46,10 @@ public class UsrCalenderController {
 		Map<String, Integer> today_info = dateData.today_info(dateData);
 		List<DateData> dateList = new ArrayList<DateData>();
 
+
 		// 검색 날짜 end
 		ScheduleDao scheduleDao = sqlsession.getMapper(ScheduleDao.class);
+		
 		ArrayList<ScheduleDto> Schedule_list = scheduleDao.schedule_list(dateData);
 
 		// 달력 데이터에 넣기 위한 배열 추가
@@ -130,16 +134,14 @@ public class UsrCalenderController {
 	@RequestMapping(value = "schedule_add.do", method = RequestMethod.GET)
 	public String schedule_add(HttpServletRequest request, ScheduleDto scheduleDto, RedirectAttributes rttr) {
 		ScheduleDao scheduleRepository = sqlsession.getMapper(ScheduleDao.class);
-		int count = scheduleRepository.before_schedule_add_search(scheduleDto);
+		
+		
+
 		String message = "";
 		String url = "redirect:calendar.do";
 
-		if (count >= 4) {
-			message = "스케쥴은 최대 4개만 등록 가능합니다.";
-		} else {
-			scheduleRepository.schedule_add(scheduleDto);
-			message = "스케쥴이 등록되었습니다";
-		}
+		scheduleRepository.schedule_add(scheduleDto);
+		message = "스케쥴이 등록되었습니다";
 
 		rttr.addFlashAttribute("message", message);
 		return url;
@@ -156,7 +158,7 @@ public class UsrCalenderController {
 		}
 
 		scheduleDao.deleteSchedule(idx);
-	
+
 		return Ut.jsReplace("S-1", "삭제완료", "/calendar.do");
 
 	}

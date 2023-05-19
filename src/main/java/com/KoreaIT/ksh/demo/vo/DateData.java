@@ -4,7 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class DateData {
 
@@ -15,12 +16,14 @@ public class DateData {
 	// 추가된 부분
 	String db_startdate = "";
 	String db_enddate = "";
+	int memberId;
 	ScheduleDto[] schedule_data_arr = new ScheduleDto[4];
 
 
 	public String getYear() {
 		return year;
 	}
+	
 
 	public void setYear(String year) {
 		this.year = year;
@@ -178,6 +181,12 @@ public class DateData {
 	@Override
 	public String toString() {
 		return "DateData [year=" + year + ", month=" + month + ", date=" + date + ", value=" + value + "]";
+	}
+
+
+	public int setMemberId(int memberId) {
+		return memberId;
+		
 	}
 
 }
