@@ -44,34 +44,38 @@ public class UsrCalenderController {
 		ArrayList<ScheduleDto> Schedule_list = scheduleDao.schedule_list(dateData);
 
 		// 달력 데이터에 넣기 위한 배열 추가
-		ScheduleDto[][] schedule_data_arr = new ScheduleDto[32][4];
-		if (!Schedule_list.isEmpty()) {
-			int j = 0;
-			for (int i = 0; i < Schedule_list.size(); i++) {
-				int startdate = Integer.parseInt(String.valueOf(Schedule_list.get(i).getSchedule_startdate())
-						.substring(String.valueOf(Schedule_list.get(i).getSchedule_startdate()).length() - 2));
-				int enddate = Integer.parseInt(String.valueOf(Schedule_list.get(i).getSchedule_enddate())
-						.substring(String.valueOf(Schedule_list.get(i).getSchedule_enddate()).length() - 2));
-				for (int date = startdate; date <= enddate; date++) {
-					if (i > 0) {
-						int date_before = Integer
-								.parseInt(String.valueOf(Schedule_list.get(i - 1).getSchedule_startdate()).substring(
-										String.valueOf(Schedule_list.get(i - 1).getSchedule_startdate()).length() - 2));
-						if (date_before == date) {
-							j = j + 1;
-							schedule_data_arr[date][j] = Schedule_list.get(i);
-						} else {
-							j = 0;
-							schedule_data_arr[date][j] = Schedule_list.get(i);
-						}
-					} else {
-						schedule_data_arr[date][j] = Schedule_list.get(i);
-					}
-				}
-				ScheduleDto schedule = Schedule_list.get(i);
-				schedule.setColor(generateRandomColor());
-			}
+		ArrayList<List<ScheduleDto>> schedule_data_arr = new ArrayList<>();
+		for (int i = 0; i < 32; i++) {
+		    schedule_data_arr.add(new ArrayList<>());
 		}
+
+		if (!Schedule_list.isEmpty()) {
+		    int j = 0;
+		    for (int i = 0; i < Schedule_list.size(); i++) {
+		        int startdate = Integer.parseInt(String.valueOf(Schedule_list.get(i).getSchedule_startdate())
+		                .substring(String.valueOf(Schedule_list.get(i).getSchedule_startdate()).length() - 2));
+		        int enddate = Integer.parseInt(String.valueOf(Schedule_list.get(i).getSchedule_enddate())
+		                .substring(String.valueOf(Schedule_list.get(i).getSchedule_enddate()).length() - 2));
+		        for (int date = startdate; date <= enddate; date++) {
+		            if (i > 0) {
+		                int date_before = Integer.parseInt(String.valueOf(Schedule_list.get(i - 1).getSchedule_startdate())
+		                        .substring(String.valueOf(Schedule_list.get(i - 1).getSchedule_startdate()).length() - 2));
+		                if (date_before == date) {
+		                    j = j + 1;
+		                    schedule_data_arr.get(date).add(Schedule_list.get(i));
+		                } else {
+		                    j = 0;
+		                    schedule_data_arr.get(date).add(Schedule_list.get(i));
+		                }
+		            } else {
+		                schedule_data_arr.get(date).add(Schedule_list.get(i));
+		            }
+		        }
+		        ScheduleDto schedule = Schedule_list.get(i);
+		        schedule.setColor(generateRandomColor());
+		    }
+		}
+
 
 		// 실질적인 달력 데이터 리스트에 데이터 삽입 시작.
 		// 일단 시작 인덱스까지 아무것도 없는 데이터 삽입
@@ -82,16 +86,16 @@ public class UsrCalenderController {
 
 		// 날짜 삽입
 		for (int i = today_info.get("startDay"); i <= today_info.get("endDay"); i++) {
-			ScheduleDto[] schedule_data_arr3 = schedule_data_arr[i];
+		    List<ScheduleDto> schedule_data_arr3 = schedule_data_arr.get(i);
 
-			if (i == today_info.get("today")) {
-				calendarData = new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()),
-						String.valueOf(i), "today", schedule_data_arr3);
-			} else {
-				calendarData = new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()),
-						String.valueOf(i), "normal_date", schedule_data_arr3);
-			}
-			dateList.add(calendarData);
+		    if (i == today_info.get("today")) {
+		        calendarData = new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()),
+		                String.valueOf(i), "today", schedule_data_arr3.toArray(new ScheduleDto[0]));
+		    } else {
+		        calendarData = new DateData(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()),
+		                String.valueOf(i), "normal_date", schedule_data_arr3.toArray(new ScheduleDto[0]));
+		    }
+		    dateList.add(calendarData);
 		}
 
 		// 빈 데이터 삽입
