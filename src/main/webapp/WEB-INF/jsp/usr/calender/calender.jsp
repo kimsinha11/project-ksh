@@ -359,7 +359,7 @@
 																<c:forEach var="scheduleList" items="${dateList.schedule_data_arr}" varStatus="schedule_data_arr_status">
 																		<p style="background-color: ${scheduleList.color};" class="date_subject">
 																				<a href="#" class="schedule-link"
-																						data-schedule='{"schedule_num": "${scheduleList.schedule_num}", "start_date": "${scheduleList.schedule_startdate}", "end_date": "${scheduleList.schedule_enddate}", "schedule_subject": "${scheduleList.schedule_subject}", "schedule_desc": "${scheduleList.schedule_desc}"}'
+																						data-schedule='{"schedule_num": "${scheduleList.schedule_num}","schedule_idx": "${scheduleList.schedule_idx}",  "start_date": "${scheduleList.schedule_startdate}", "end_date": "${scheduleList.schedule_enddate}", "schedule_subject": "${scheduleList.schedule_subject}", "schedule_desc": "${scheduleList.schedule_desc}"}'
 																						onclick="showScheduleDetails(event)">${scheduleList.schedule_subject}</a>
 																		</p>
 
@@ -377,7 +377,6 @@
 						</div>
 		</form>
 
-
 		<script>
 			function displayScheduleInfo(schedule) {
 				var scheduleDetailsContainer = document
@@ -385,11 +384,27 @@
 
 				// 일정 정보를 동적으로 생성하여 컨테이너에 추가
 				var scheduleDetailsHtml = "<h3>일정 정보</h3>" + "<p>순번: "
-						+ schedule.schedule_num + "</p>" + "<p>시작일: "
-						+ schedule.start_date + "</p>" + "<p>종료일: "
-						+ schedule.end_date + "</p>" + "<p>제목: "
-						+ schedule.schedule_subject + "</p>" + "<p>내용: "
-						+ schedule.schedule_desc + "</p>";
+						+ schedule.schedule_num
+						+ "</p>"
+						+ "<p>일정번호: "
+						+ schedule.schedule_idx
+						+ "</p>"
+						+ "<p>시작일: "
+						+ schedule.start_date
+						+ "</p>"
+						+ "<p>종료일: "
+						+ schedule.end_date
+						+ "</p>"
+						+ "<p>제목: "
+						+ schedule.schedule_subject
+						+ "</p>"
+						+ "<p>내용: "
+						+ schedule.schedule_desc
+						+ "</p>"
+						+ "<a class='btn-text-link btn btn-outline btn-xs' "
+						+ "onclick=\"if(confirm('정말 삭제하시겠습니까?') == false) return false;\" "
+						+ "href='/usr/calender/delete?idx="
+						+ schedule.schedule_idx + "'>삭제</a>";
 
 				scheduleDetailsContainer.innerHTML = scheduleDetailsHtml;
 			}
@@ -402,6 +417,7 @@
 				displayScheduleInfo(schedule);
 			}
 		</script>
+
 
 		<script>
 			$(function() {

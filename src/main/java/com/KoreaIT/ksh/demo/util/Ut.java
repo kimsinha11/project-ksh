@@ -88,6 +88,7 @@ public class Ut {
 
 	}
 
+
 	public static String jsHitoryBackOnView(HttpServletRequest req, String msg) {
 		req.setAttribute("msg", msg);
 		req.setAttribute("historyBack", true);
