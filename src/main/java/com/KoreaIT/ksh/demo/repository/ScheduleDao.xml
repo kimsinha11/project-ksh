@@ -34,9 +34,21 @@
 		#{idx}
 	</select>
 	
-	<delete id="deleteSchedule">
+	<delete id="deleteSchedule">S
 		DELETE FROM
 		schedule
 		WHERE schedule_idx = #{idx}
 	</delete>
+	
+	<update id="editSchedule">
+		UPDATE schedule
+		<set>
+			<if test="schedule_subject != null and schedule_subject != ''">schedule_subject = #{schedule_subject},</if>
+			<if test="schedule_desc != null and schedule_desc != ''">`schedule_desc` = #{schedule_desc},</if>
+			schedule_startdate = #{schedule_startdate},
+			schedule_enddate = #{schedule_enddate}
+		</set>
+		WHERE schedule_idx = #{idx}
+	</update>
+	
 </mapper>

@@ -406,9 +406,41 @@
 						+ "<a class='btn-text-link btn btn-outline btn-xs' "
 						+ "onclick=\"if(confirm('정말 삭제하시겠습니까?') == false) return false;\" "
 						+ "href='/usr/calender/delete?idx="
-						+ schedule.schedule_idx + "'>삭제</a>";
+						+ schedule.schedule_idx
+						+ "'>삭제</a>"
+						+ "<a class='btn-text-link btn btn-outline btn-xs' href='#' onclick='showEditForm("
+						+ schedule.schedule_idx + ")'>수정</a>";
 
 				scheduleDetailsContainer.innerHTML = scheduleDetailsHtml;
+			}
+
+			function showEditForm(idx) {
+				var editFormContainer = document
+						.getElementById("editFormContainer");
+
+				// 폼을 생성하여 컨테이너에 추가
+				var editFormHtml = "<h3>일정 수정</h3>"
+						+ "<form id='editForm' action='/usr/calender/edit'>"
+						+ "<input type='hidden' name='idx' value='" + idx + "' />"
+						+ "<div class='form-group'>"
+						+ "<label for='editedScheduleStartDate'>시작일:</label>"
+						+ "<input type='date' name='editedScheduleStartDate' id='editedScheduleStartDate' />"
+						+ "</div>"
+						+ "<div class='form-group'>"
+						+ "<label for='editedScheduleEndDate'>종료일:</label>"
+						+ "<input type='date' name='editedScheduleEndDate' id='editedScheduleEndDate' />"
+						+ "</div>"
+						+ "<div class='form-group'>"
+						+ "<label for='editedScheduleSubject'>제목:</label>"
+						+ "<input type='text' name='editedScheduleSubject' id='editedScheduleSubject' placeholder='수정할 제목' />"
+						+ "</div>"
+						+ "<div class='form-group'>"
+						+ "<label for='editedScheduleDesc'>내용:</label>"
+						+ "<textarea name='editedScheduleDesc' id='editedScheduleDesc' placeholder='수정할 내용'></textarea>"
+						+ "</div>" + "<button type='submit'>저장</button>"
+						+ "</form>";
+
+				editFormContainer.innerHTML = editFormHtml;
 			}
 
 			function showScheduleDetails(event) {
@@ -420,46 +452,18 @@
 			}
 		</script>
 
-
+		<!-- 이벤트 위임을 사용하여 일정 요소에 이벤트 핸들러를 등록 -->
 		<script>
-			$(function() {
-				$("#testDatepicker")
-						.datepicker(
-								{
-									dateFormat : "yy-mm-dd",
-									changeMonth : true,
-									changeYear : true,
-									dayNames : [ '월요일', '화요일', '수요일', '목요일',
-											'금요일', '토요일', '일요일' ],
-									dayNamesMin : [ '월', '화', '수', '목', '금',
-											'토', '일' ],
-									monthNamesShort : [ '1', '2', '3', '4',
-											'5', '6', '7', '8', '9', '10',
-											'11', '12' ],
-									multiSelect : true
-								// 여러 날짜 선택을 허용
-								});
-			});
-
-			function scheduleAdd() {
-				var schedule_add_form = document.schedule_add;
-				if (schedule_add_form.schedule_date.value == ""
-						|| schedule_add_form.schedule_date.value == null) {
-					alert("날짜를 입력해주세요.");
-					schedule_add_form.schedule_date.focus();
-					return false;
-				} else if (schedule_add_form.schedule_subject.value == ""
-						|| schedule_add_form.schedule_subject.value == null) {
-					alert("제목을 입력해주세요.");
-					schedule_add_form.schedule_date.focus();
-					return false;
+			document.addEventListener("click", function(event) {
+				var target = event.target;
+				if (target.matches(".schedule-item")) {
+					showScheduleDetails(event);
 				}
-				schedule_add_form.submit();
-			}
+			});
 		</script>
 		<script>
 			$(function() {
-				$("#endDatePicker")
+				$(".datepicker")
 						.datepicker(
 								{
 									dateFormat : "yy-mm-dd",
@@ -473,32 +477,34 @@
 											'5', '6', '7', '8', '9', '10',
 											'11', '12' ],
 									multiSelect : true
-								// 여러 날짜 선택을 허용
 								});
 			});
 
 			function scheduleAdd() {
-				var schedule_add_form = document.schedule_add;
-				if (schedule_add_form.schedule_startdate.value == ""
-						|| schedule_add_form.schedule_startdate.value == null) {
+				var form = document.schedule_add;
+				if (form.schedule_startdate.value === ""
+						|| form.schedule_startdate.value === null) {
 					alert("시작일을 입력해주세요.");
-					schedule_add_form.schedule_startdate.focus();
-					return false;
-				} else if (schedule_add_form.schedule_enddate.value == ""
-						|| schedule_add_form.schedule_enddate.value == null) {
-					alert("종료일을 입력해주세요.");
-					schedule_add_form.schedule_enddate.focus();
-					return false;
-				} else if (schedule_add_form.schedule_subject.value == ""
-						|| schedule_add_form.schedule_subject.value == null) {
-					alert("제목을 입력해주세요.");
-					schedule_add_form.schedule_subject.focus();
+					form.schedule_startdate.focus();
 					return false;
 				}
-				schedule_add_form.submit();
+				if (form.schedule_enddate.value === ""
+						|| form.schedule_enddate.value === null) {
+					alert("종료일을 입력해주세요.");
+					form.schedule_enddate.focus();
+					return false;
+				}
+				if (form.schedule_subject.value === ""
+						|| form.schedule_subject.value === null) {
+					alert("제목을 입력해주세요.");
+					form.schedule_subject.focus();
+					return false;
+				}
+				form.submit();
 			}
 		</script>
 		<div id="scheduleDetailsContainer" style="border: 1px solid black;"></div>
+		<div id="editFormContainer" style="border: 1px solid black;"></div>
 		<div class="schedule_form">
 				<div class="info"></div>
 				<form name="schedule_add" action="schedule_add.do">
@@ -523,17 +529,18 @@
 										<li>
 												<div class="text_subject">시작 :</div>
 												<div style="border: 1px solid gray;" class="text_desc">
-														<input style="width: 100%;" type="text" name="schedule_startdate" class="text_type1" id="testDatepicker"
+														<input style="width: 100%;" type="text" name="schedule_startdate" class="text_type1 datepicker"
 																readonly="readonly" />
 												</div>
 										</li>
 										<li>
 												<div class="text_subject">끝 :</div>
 												<div style="border: 1px solid gray;" class="text_desc">
-														<input style="width: 100%;" type="text" name="schedule_enddate" class="text_type1" id="endDatePicker"
+														<input style="width: 100%;" type="text" name="schedule_enddate" class="text_type1 datepicker"
 																readonly="readonly" />
 												</div>
 										</li>
+
 										<li>
 												<div class="text_subject">제목 :</div>
 												<div style="border: 1px solid gray;" class="text_desc">

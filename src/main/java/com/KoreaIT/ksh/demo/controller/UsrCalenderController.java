@@ -2,6 +2,7 @@ package com.KoreaIT.ksh.demo.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -161,6 +162,21 @@ public class UsrCalenderController {
 
 		return Ut.jsReplace("S-1", "삭제완료", "/calendar.do");
 
+	}
+	@RequestMapping("/usr/calender/edit")
+	@ResponseBody
+	public String doEdit(int idx, String schedule_subject, String schedule_desc, Date schedule_startdate, Date schedule_enddate) {
+		
+		ScheduleDto schedule = scheduleDao.getSchedule(idx);
+		
+		if (schedule == null) {
+			return Ut.jsHistoryBack("F-D", "존재하지 않는 일정입니다");
+		}
+		
+		scheduleDao.editSchedule(idx, schedule_subject, schedule_desc, schedule_startdate, schedule_enddate);
+		
+		return Ut.jsReplace("S-1", "수정완료", "/calendar.do");
+		
 	}
 
 }

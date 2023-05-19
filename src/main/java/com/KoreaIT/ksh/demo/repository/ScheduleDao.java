@@ -1,5 +1,6 @@
 package com.KoreaIT.ksh.demo.repository;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -15,6 +16,7 @@ public interface ScheduleDao {
 	public ArrayList<ScheduleDto> schedule_list(DateData scheduleDto);
 	public ScheduleDto getSchedule(int idx);
 	public void deleteSchedule(int idx);
+	public void editSchedule(int idx, String schedule_subject, String schedule_desc, Date schedule_startdate, Date schedule_enddate);
 }
 
 
