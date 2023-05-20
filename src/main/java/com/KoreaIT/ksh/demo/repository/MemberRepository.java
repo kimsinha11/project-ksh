@@ -2,6 +2,7 @@ package com.KoreaIT.ksh.demo.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -163,14 +164,6 @@ public interface MemberRepository {
 			""")
 	Member getMemberByNickname(String nickname);
 
-	
-	@Select("""
-			SELECT *
-			FROM `member`
-			WHERE email = #{email}
-			""")
-	Member getMemberByEmail(String email);
-
 	@Select("""
 			<script>
 			UPDATE `member`
@@ -183,5 +176,20 @@ public interface MemberRepository {
 			</script>
 			""")
 	void deleteMember(int id);
+	
+	@Select("""
+			SELECT *
+			FROM `member`
+			WHERE email = #{email}
+			""")
+	Member getMemberByEmail(String email);
+
+	@Delete("""
+			<script>
+			DELETE FROM `member`
+			WHERE memberId = #{memberId}
+			</script>
+			""")
+	void deleteMemberById(int memberId);
 
 }

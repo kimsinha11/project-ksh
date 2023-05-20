@@ -2,14 +2,17 @@ package com.KoreaIT.ksh.demo.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.KoreaIT.ksh.demo.repository.ArticleRepository;
 import com.KoreaIT.ksh.demo.repository.MemberRepository;
 import com.KoreaIT.ksh.demo.util.Ut;
+import com.KoreaIT.ksh.demo.vo.Article;
 import com.KoreaIT.ksh.demo.vo.Member;
 import com.KoreaIT.ksh.demo.vo.ResultData;
-
 
 @Service
 public class MemberService {
@@ -18,11 +21,14 @@ public class MemberService {
 	@Value("${custom.siteName")
 	private String siteName;
 	
+	@Autowired
 	private MemberRepository memberRepository;
-
+	@Autowired
+	private ArticleRepository articleRepository;
 	
-	public MemberService(MemberRepository memberRepository) {
+	public MemberService(MemberRepository memberRepository, ArticleRepository articleRepository) {
 		this.memberRepository = memberRepository;
+		this.articleRepository = articleRepository;
 	}
 
 	public ResultData<Integer> join(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
@@ -64,15 +70,14 @@ public class MemberService {
 		return memberRepository.profile(id);
 	}
 
-	public ResultData modifyMember(int id, String loginPw, String name, String nickname, String cellphoneNum, String email) {
-		memberRepository.modifyMember(id,loginPw, name, nickname, cellphoneNum, email);
+	public ResultData modifyMember(int id, String loginPw, String name, String nickname, String cellphoneNum,
+			String email) {
+		memberRepository.modifyMember(id, loginPw, name, nickname, cellphoneNum, email);
 
 		Member member = getMemberById(id);
 
 		return ResultData.from("S-1", Ut.f("%d번 회원을 수정 했습니다", id), "member", member);
 	}
-
-
 
 	public int getMembersCount(String authLevel, String searchKeywordTypeCode, String searchKeyword) {
 		return memberRepository.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);
@@ -96,9 +101,6 @@ public class MemberService {
 	public Member getMemberByEmail(String email) {
 		return memberRepository.getMemberByEmail(email);
 	}
-
-
-
 	public void deleteMembers(List<Integer> memberIds) {
 		for (int memberId : memberIds) {
 			Member member = getMemberById(memberId);
@@ -112,6 +114,22 @@ public class MemberService {
 	private void deleteMember(Member member) {
 		memberRepository.deleteMember(member.getId());
 	}
-	
+	@Transactional
+	public void deleteMember(int memberId) {
+		// 회원 정보 삭제
+		memberRepository.deleteMemberById(memberId);
+
+		// 회원과 관련된 게시물 삭제
+		deleteMemberArticles(memberId);
+	}
+
+	public void deleteMemberArticles(int memberId) {
+		// 회원과 관련된 게시물 조회 및 삭제
+		List<Article> memberArticles = articleRepository.getArticlesByMemberId(memberId);
+
+		for (Article article : memberArticles) {
+			ArticleRepository.memberArticlesdelete(article);
+		}
+	}
 
 }

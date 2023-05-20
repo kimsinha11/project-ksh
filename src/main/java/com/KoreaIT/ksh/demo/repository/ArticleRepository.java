@@ -2,9 +2,11 @@ package com.KoreaIT.ksh.demo.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.KoreaIT.ksh.demo.vo.Article;
 
@@ -73,5 +75,18 @@ public interface ArticleRepository {
 
 	public List<Article> getMyArticles(Integer boardId, int memberId, int i, int itemsPerPage, String searchKeyword,
 			Integer searchId);
+	
+	@Select("""
+	
+				SELECT * FROM article
+				WHERE memberId = #{memberId}
+		
+			""")
+	public List<Article> getArticlesByMemberId(int memberId);
+	
+	@Transactional
+	 @Modifying
+	    @Query("DELETE FROM Article a WHERE a.memberId = :memberId")
+	    void memberArticlesdelete(@Param("memberId") int memberId);
 
 }
