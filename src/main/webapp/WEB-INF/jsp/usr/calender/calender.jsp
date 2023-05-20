@@ -393,38 +393,38 @@
 						.getElementById("scheduleDetailsContainer");
 
 				// 일정 정보를 동적으로 생성하여 컨테이너에 추가
-				var scheduleDetailsHtml = "<h3>일정 정보</h3>" + "<p>순번: "
+				var scheduleDetailsHtml = "<h3 style='color: blue;'>일정 정보</h3>"
+						+ "<p class='input input-bordered w-full max-w-xs'>순번: "
 						+ schedule.schedule_num
 						+ "</p>"
-						+ "<p>일정번호: "
+						+ "<p class='input input-bordered w-full max-w-xs '>일정번호: "
 						+ schedule.schedule_idx
 						+ "</p>"
-						+ "<p>시작일: "
+						+ "<p class='input input-bordered w-full max-w-xs datepicker'>시작일: "
 						+ schedule.start_date
 						+ "</p>"
-						+ "<p>종료일: "
+						+ "<p class='input input-bordered w-full max-w-xs datepicker'>종료일: "
 						+ schedule.end_date
 						+ "</p>"
-						+ "<p>제목: "
+						+ "<p class='input input-bordered w-full max-w-xs'>제목: "
 						+ schedule.schedule_subject
 						+ "</p>"
-						+ "<p>내용: "
+						+ "<p class='input input-bordered w-full max-w-xs'>내용: "
 						+ schedule.schedule_desc
 						+ "</p>"
-						+ "<a class='btn-text-link btn btn-outline btn-xs' "
-						+ "onclick=\"if(confirm('정말 삭제하시겠습니까?') == false) return false;\" "
-						+ "href='/usr/calender/delete?idx="
+						+ "<a class='btn-text-link btn btn-outline btn-sm' style='margin: 10px;' onclick=\"if(confirm('정말 삭제하시겠습니까?') == false) return false;\" href='/usr/calender/delete?idx="
 						+ schedule.schedule_idx
 						+ "'>삭제</a>"
-						+ "<a class='btn-text-link btn btn-outline btn-xs' href='#' onclick='showeditForm(" + schedule.schedule_idx + ")'>수정</a>";
-
+						+ "<a class='btn-text-link btn btn-outline btn-sm' style='margin: 10px;' href='#' onclick='showeditForm("
+						+ schedule.schedule_idx + ")'>수정</a>";
 
 				scheduleDetailsContainer.innerHTML = scheduleDetailsHtml;
-				
-				  // 수정 폼에 schedule_idx 값 설정
-				  var scheduleEditForm = document.forms["schedule_edit"];
-				  var scheduleIdxInput = scheduleEditForm.querySelector("input[name='schedule_idx']");
-				  scheduleIdxInput.value = schedule.schedule_idx;
+
+				// 수정 폼에 schedule_idx 값 설정
+				var scheduleEditForm = document.forms["schedule_edit"];
+				var scheduleIdxInput = scheduleEditForm
+						.querySelector("input[name='schedule_idx']");
+				scheduleIdxInput.value = schedule.schedule_idx;
 			}
 			function showScheduleDetails(event) {
 				event.preventDefault();
@@ -433,8 +433,6 @@
 
 				displayScheduleInfo(schedule);
 			}
-
-		
 		</script>
 
 		<script>
@@ -478,8 +476,7 @@
 				}
 				form.submit();
 			}
-			
-			
+
 			$(function() {
 				$(".datepicker")
 						.datepicker(
@@ -530,14 +527,14 @@
 				}
 			});
 		</script>
-		<div id="scheduleDetailsContainer" style="border: 1px solid black;"></div>
-		<div id="editFormContainer" style="border: 1px solid black;"></div>
+		<div id="scheduleDetailsContainer"></div>
+
 		<div class="schedule_form">
 				<div class="info"></div>
 				<form name="schedule_add" action="schedule_add.do">
 						<input type="hidden" name="year" value="${today_info.search_year}" />
 						<input type="hidden" name="month" value="${today_info.search_month-1}" />
-						
+
 
 						<div class="contents">
 								<ul>
@@ -548,40 +545,46 @@
 												</div>
 										</li>
 										<li>
-												<div class="text_subject">순번 :</div>
-												<div style="border: 1px solid gray;" class="text_desc">
-														<input style="width: 100%;" type="text" name="schedule_num" class="text_type1" />
+
+												<div class="text_desc">
+														순번 :
+														<input style="width: 100%;" type="text" name="schedule_num" class="input input-bordered w-full max-w-xs" />
 												</div>
 										</li>
 										<li>
-												<div class="text_subject">시작 :</div>
-												<div style="border: 1px solid gray;" class="text_desc">
-														<input style="width: 100%;" type="text" name="schedule_startdate" class="text_type1 datepicker"
-																readonly="readonly" />
+
+												<div class="text_desc">
+														시작 :
+														<input style="width: 100%;" type="text" name="schedule_startdate"
+																class="input input-bordered w-full max-w-xs datepicker" readonly="readonly" />
 												</div>
 										</li>
 										<li>
-												<div class="text_subject">끝 :</div>
-												<div style="border: 1px solid gray;" class="text_desc">
-														<input style="width: 100%;" type="text" name="schedule_enddate" class="text_type1 datepicker"
-																readonly="readonly" />
+
+												<div class="text_desc">
+														종료 :
+														<input style="width: 100%;" type="text" name="schedule_enddate"
+																class="input input-bordered w-full max-w-xs datepicker" readonly="readonly" />
 												</div>
 										</li>
 
 										<li>
-												<div class="text_subject">제목 :</div>
-												<div style="border: 1px solid gray;" class="text_desc">
-														<input style="width: 100%;" type="text" name="schedule_subject" class="text_type1" />
+
+												<div class="text_desc">
+														제목 :
+														<input style="width: 100%;" type="text" name="schedule_subject"
+																class=" input input-bordered w-full max-w-xs" />
 												</div>
 										</li>
 										<li>
-												<div class="text_subject">내용 :</div>
-												<div style="border: 1px solid gray;" class="text_area_desc">
-														<textarea style="width: 100%;" name="schedule_desc" class="textarea_type1" rows="7"></textarea>
+
+												<div class="text_area_desc">
+														내용 :
+														<textarea style="width: 100%;" name="schedule_desc" class="input input-bordered w-full max-w-xs" rows="7"></textarea>
 												</div>
 										</li>
 										<li class="button_li">
-												<button type="button" class="btn-text-link btn btn-outline btn-xs" onclick="scheduleAdd();">일정등록</button>
+												<button type="button" class="btn-text-link btn btn-outline btn-sm" onclick="scheduleAdd();">일정등록</button>
 										</li>
 								</ul>
 
@@ -589,52 +592,58 @@
 				</form>
 		</div>
 
-<div id="scheduleEditContainer" style="border: 1px solid black;"></div>
-		
+		<div id="scheduleEditContainer" style="border: 1px solid black;"></div>
+
 		<div class="schedule_editform">
 				<div class="info"></div>
 				<form name="schedule_edit" action="../usr/calender/edit">
-	
-						<input type="text" name="schedule_idx"/>
+
+						<input type="hidden" name="schedule_idx" />
 
 						<div class="contents">
 								<ul>
-										
+
 										<li>
-												<div class="text_subject">순번 :</div>
-												<div style="border: 1px solid gray;" class="text_desc">
-														<input style="width: 100%;" type="text" name="schedule_num" class="text_type1" />
+
+												<div class="text_desc">
+														순번 :
+														<input style="width: 100%;" type="text" name="schedule_num" class="input input-bordered w-full max-w-xs" />
 												</div>
 										</li>
 										<li>
-												<div class="text_subject">시작 :</div>
-												<div style="border: 1px solid gray;" class="text_desc">
-														<input style="width: 100%;" type="text" name="schedule_startdate" class="text_type1 datepicker"
-																readonly="readonly" />
+
+												<div class="text_desc">
+														시작 :
+														<input style="width: 100%;" type="text" name="schedule_startdate"
+																class="input input-bordered w-full max-w-xs datepicker" readonly="readonly" />
 												</div>
 										</li>
 										<li>
-												<div class="text_subject">끝 :</div>
-												<div style="border: 1px solid gray;" class="text_desc">
-														<input style="width: 100%;" type="text" name="schedule_enddate" class="text_type1 datepicker"
-																readonly="readonly" />
+
+												<div class="text_desc">
+														종료 :
+														<input style="width: 100%;" type="text" name="schedule_enddate"
+																class="input input-bordered w-full max-w-xs datepicker" readonly="readonly" />
 												</div>
 										</li>
 
 										<li>
-												<div class="text_subject">제목 :</div>
-												<div style="border: 1px solid gray;" class="text_desc">
-														<input style="width: 100%;" type="text" name="schedule_subject" class="text_type1" />
+
+												<div class="text_desc">
+														제목 :
+														<input style="width: 100%;" type="text" name="schedule_subject"
+																class=" input input-bordered w-full max-w-xs" />
 												</div>
 										</li>
 										<li>
-												<div class="text_subject">내용 :</div>
-												<div style="border: 1px solid gray;" class="text_area_desc">
-														<textarea style="width: 100%;" name="schedule_desc" class="textarea_type1" rows="7"></textarea>
+
+												<div class="text_area_desc">
+														내용 :
+														<textarea style="width: 100%;" name="schedule_desc" class="input input-bordered w-full max-w-xs" rows="7"></textarea>
 												</div>
 										</li>
 										<li class="button_li">
-												<button type="button" class="btn-text-link btn btn-outline btn-xs" onclick="scheduleEdit();">수정</button>
+												<button type="button" style="margin: 10px;" class="btn-text-link btn btn-outline btn-sm" onclick="scheduleEdit();">수정</button>
 										</li>
 								</ul>
 
