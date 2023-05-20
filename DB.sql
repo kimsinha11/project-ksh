@@ -132,6 +132,26 @@ updateDate = NOW(),
 `name` = '요리리뷰';
 
 
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = '캠핑 후기',
+`name` = '캠핑 후기';
+
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = '차박 후기',
+`name` = '차박 후기';
+
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = '야영 후기',
+`name` = '야영 후기';
+
 
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
 
@@ -254,7 +274,7 @@ CREATE TABLE `tb_weather_area` (
 )
 COMMENT='Excel 파일의 값들을 DB화 한 테이블'
 COLLATE='utf8_general_ci'
-ENGINE=InnoDB
+ENGINE=INNODB
 ;
 
 
@@ -268,23 +288,25 @@ CREATE TABLE `tw_weather_response` (
 )
 COMMENT='날씨 API 호출 응답값 저장'
 COLLATE='utf8_general_ci'
-ENGINE=InnoDB
+ENGINE=INNODB
 ;
 
 
-create table `schedule` (
-schedule_idx int(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-schedule_num int(11),
-schedule_subject varchar(45),
-schedule_desc varchar(45),
-schedule_startdate date,
-schedule_enddate date
+CREATE TABLE `schedule` (
+schedule_idx INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+schedule_num INT(11),
+schedule_subject VARCHAR(45),
+schedule_desc VARCHAR(45),
+schedule_startdate DATE,
+schedule_enddate DATE,
+memberId INT(10) NOT NULL
 )
 
 ###################################################################
 SELECT * FROM article;
 SELECT * FROM `member`;
-select * from tb_weather_area;
+SELECT * FROM `schedule`;
+SELECT * FROM tb_weather_area;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
 

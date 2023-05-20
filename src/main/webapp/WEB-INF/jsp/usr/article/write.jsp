@@ -55,6 +55,7 @@ Article article = (Article) request.getAttribute("article");
 						<option disabled selected>게시판 선택</option>
 						<option value="etc">기타글</option>
 						<option value="review">리뷰</option>
+						<option value="feedback">후기</option>
 				</select>
 				<select class="select select-bordered w-full max-w-xs" name="boardId" id="board-select" disabled>
 						<option disabled selected>게시판 선택</option>
@@ -71,8 +72,12 @@ Article article = (Article) request.getAttribute("article");
 					boardSelect.innerHTML += '<option value="2">Free</option>';
 					boardSelect.innerHTML += '<option value="3">QnA</option>';
 				} else if (select.value == "review") {
-					boardSelect.innerHTML += '<option value="4">eReview</option>';
-					boardSelect.innerHTML += '<option value="5">cReview</option>';
+					boardSelect.innerHTML += '<option value="4">캠핑도구리뷰</option>';
+					boardSelect.innerHTML += '<option value="5">캠핑요리리뷰</option>';
+				} else if (select.value == "feedback") {
+					boardSelect.innerHTML += '<option value="6">캠핑후기</option>';
+					boardSelect.innerHTML += '<option value="7">차박후기</option>';
+					boardSelect.innerHTML += '<option value="8">야영후기</option>';
 				}
 			}
 		</script>

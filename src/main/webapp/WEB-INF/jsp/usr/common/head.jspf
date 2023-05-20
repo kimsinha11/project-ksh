@@ -188,13 +188,13 @@ function Theme__applyTo(themeName) {
 								<li class="first">
 										<a href="#">⛺후기⛺</a>
 								<li>
-										<a href="#">캠핑 후기</a>
+										<a href="/usr/article/list?boardId=6">캠핑 후기</a>
 								</li>
 								<li>
-										<a href="#">차박 후기</a>
+										<a href="/usr/article/list?boardId=7">차박 후기</a>
 								</li>
 								<li>
-										<a href="#">야영 후기</a>
+										<a href="/usr/article/list?boardId=8">야영 후기</a>
 								</li>
 						</ul>
 				</div>
