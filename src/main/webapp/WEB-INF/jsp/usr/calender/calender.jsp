@@ -166,6 +166,10 @@
 	display: none; /* 기본적으로 숨겨진 상태로 설정 */
 }
 
+.schedule_editform {
+	display: none;
+}
+
 /* 날짜 네비게이션 */
 .navigation {
 	margin-bottom: 20px;
@@ -275,6 +279,10 @@
 				<script>
 					function showForm() {
 						var form = document.querySelector(".schedule_form");
+						form.style.display = "block"; // 폼을 보이도록 변경
+					}
+					function showeditForm() {
+						var form = document.querySelector(".schedule_editform");
 						form.style.display = "block"; // 폼을 보이도록 변경
 					}
 				</script>
@@ -408,41 +416,16 @@
 						+ "href='/usr/calender/delete?idx="
 						+ schedule.schedule_idx
 						+ "'>삭제</a>"
-						+ "<a class='btn-text-link btn btn-outline btn-xs' href='#' onclick='showEditForm("
-						+ schedule.schedule_idx + ")'>수정</a>";
+						+ "<a class='btn-text-link btn btn-outline btn-xs' href='#' onclick='showeditForm(" + schedule.schedule_idx + ")'>수정</a>";
+
 
 				scheduleDetailsContainer.innerHTML = scheduleDetailsHtml;
+				
+				  // 수정 폼에 schedule_idx 값 설정
+				  var scheduleEditForm = document.forms["schedule_edit"];
+				  var scheduleIdxInput = scheduleEditForm.querySelector("input[name='schedule_idx']");
+				  scheduleIdxInput.value = schedule.schedule_idx;
 			}
-
-			function showEditForm(idx) {
-				var editFormContainer = document
-						.getElementById("editFormContainer");
-
-				// 폼을 생성하여 컨테이너에 추가
-				var editFormHtml = "<h3>일정 수정</h3>"
-						+ "<form id='editForm' action='/usr/calender/edit'>"
-						+ "<input type='hidden' name='idx' value='" + idx + "' />"
-						+ "<div class='form-group'>"
-						+ "<label for='editedScheduleStartDate'>시작일:</label>"
-						+ "<input type='date' name='editedScheduleStartDate' id='editedScheduleStartDate' />"
-						+ "</div>"
-						+ "<div class='form-group'>"
-						+ "<label for='editedScheduleEndDate'>종료일:</label>"
-						+ "<input type='date' name='editedScheduleEndDate' id='editedScheduleEndDate' />"
-						+ "</div>"
-						+ "<div class='form-group'>"
-						+ "<label for='editedScheduleSubject'>제목:</label>"
-						+ "<input type='text' name='editedScheduleSubject' id='editedScheduleSubject' placeholder='수정할 제목' />"
-						+ "</div>"
-						+ "<div class='form-group'>"
-						+ "<label for='editedScheduleDesc'>내용:</label>"
-						+ "<textarea name='editedScheduleDesc' id='editedScheduleDesc' placeholder='수정할 내용'></textarea>"
-						+ "</div>" + "<button type='submit'>저장</button>"
-						+ "</form>";
-
-				editFormContainer.innerHTML = editFormHtml;
-			}
-
 			function showScheduleDetails(event) {
 				event.preventDefault();
 				var target = event.target;
@@ -450,17 +433,10 @@
 
 				displayScheduleInfo(schedule);
 			}
+
+		
 		</script>
 
-		<!-- 이벤트 위임을 사용하여 일정 요소에 이벤트 핸들러를 등록 -->
-		<script>
-			document.addEventListener("click", function(event) {
-				var target = event.target;
-				if (target.matches(".schedule-item")) {
-					showScheduleDetails(event);
-				}
-			});
-		</script>
 		<script>
 			$(function() {
 				$(".datepicker")
@@ -480,8 +456,50 @@
 								});
 			});
 
-			function scheduleAdd() {
-				var form = document.schedule_add;
+			function scheduleEdit() {
+				var form = document.schedule_edit;
+				if (form.schedule_startdate.value === ""
+						|| form.schedule_startdate.value === null) {
+					alert("시작일을 입력해주세요.");
+					form.schedule_startdate.focus();
+					return false;
+				}
+				if (form.schedule_enddate.value === ""
+						|| form.schedule_enddate.value === null) {
+					alert("종료일을 입력해주세요.");
+					form.schedule_enddate.focus();
+					return false;
+				}
+				if (form.schedule_subject.value === ""
+						|| form.schedule_subject.value === null) {
+					alert("제목을 입력해주세요.");
+					form.schedule_subject.focus();
+					return false;
+				}
+				form.submit();
+			}
+			
+			
+			$(function() {
+				$(".datepicker")
+						.datepicker(
+								{
+									dateFormat : "yy-mm-dd",
+									changeMonth : true,
+									changeYear : true,
+									dayNames : [ '월요일', '화요일', '수요일', '목요일',
+											'금요일', '토요일', '일요일' ],
+									dayNamesMin : [ '월', '화', '수', '목', '금',
+											'토', '일' ],
+									monthNamesShort : [ '1', '2', '3', '4',
+											'5', '6', '7', '8', '9', '10',
+											'11', '12' ],
+									multiSelect : true
+								});
+			});
+
+			function scheduleEdit() {
+				var form = document.schedule_edit;
 				if (form.schedule_startdate.value === ""
 						|| form.schedule_startdate.value === null) {
 					alert("시작일을 입력해주세요.");
@@ -503,6 +521,15 @@
 				form.submit();
 			}
 		</script>
+		<!-- 이벤트 위임을 사용하여 일정 요소에 이벤트 핸들러를 등록 -->
+		<script>
+			document.addEventListener("click", function(event) {
+				var target = event.target;
+				if (target.matches(".schedule-item")) {
+					showScheduleDetails(event);
+				}
+			});
+		</script>
 		<div id="scheduleDetailsContainer" style="border: 1px solid black;"></div>
 		<div id="editFormContainer" style="border: 1px solid black;"></div>
 		<div class="schedule_form">
@@ -510,7 +537,7 @@
 				<form name="schedule_add" action="schedule_add.do">
 						<input type="hidden" name="year" value="${today_info.search_year}" />
 						<input type="hidden" name="month" value="${today_info.search_month-1}" />
-
+						
 
 						<div class="contents">
 								<ul>
@@ -562,7 +589,58 @@
 				</form>
 		</div>
 
+<div id="scheduleEditContainer" style="border: 1px solid black;"></div>
+		
+		<div class="schedule_editform">
+				<div class="info"></div>
+				<form name="schedule_edit" action="../usr/calender/edit">
+	
+						<input type="text" name="schedule_idx"/>
 
+						<div class="contents">
+								<ul>
+										
+										<li>
+												<div class="text_subject">순번 :</div>
+												<div style="border: 1px solid gray;" class="text_desc">
+														<input style="width: 100%;" type="text" name="schedule_num" class="text_type1" />
+												</div>
+										</li>
+										<li>
+												<div class="text_subject">시작 :</div>
+												<div style="border: 1px solid gray;" class="text_desc">
+														<input style="width: 100%;" type="text" name="schedule_startdate" class="text_type1 datepicker"
+																readonly="readonly" />
+												</div>
+										</li>
+										<li>
+												<div class="text_subject">끝 :</div>
+												<div style="border: 1px solid gray;" class="text_desc">
+														<input style="width: 100%;" type="text" name="schedule_enddate" class="text_type1 datepicker"
+																readonly="readonly" />
+												</div>
+										</li>
+
+										<li>
+												<div class="text_subject">제목 :</div>
+												<div style="border: 1px solid gray;" class="text_desc">
+														<input style="width: 100%;" type="text" name="schedule_subject" class="text_type1" />
+												</div>
+										</li>
+										<li>
+												<div class="text_subject">내용 :</div>
+												<div style="border: 1px solid gray;" class="text_area_desc">
+														<textarea style="width: 100%;" name="schedule_desc" class="textarea_type1" rows="7"></textarea>
+												</div>
+										</li>
+										<li class="button_li">
+												<button type="button" class="btn-text-link btn btn-outline btn-xs" onclick="scheduleEdit();">수정</button>
+										</li>
+								</ul>
+
+						</div>
+				</form>
+		</div>
 
 
 

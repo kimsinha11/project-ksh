@@ -48,7 +48,7 @@
 			schedule_startdate = #{schedule_startdate},
 			schedule_enddate = #{schedule_enddate}
 		</set>
-		WHERE schedule_idx = #{idx}
+		WHERE schedule_idx = #{schedule_idx}
 	</update>
 	
 </mapper>
