@@ -294,14 +294,29 @@ public class UsrMemberController {
 		return "usr/member/calender";
 	}
 
-	@Transactional
-	@DeleteMapping("/usr/member/delete")
-	public void deleteMember() {
-		int memberId = rq.getLoginedMemberId();
-		// 회원 정보 삭제
-		memberService.deleteMember(memberId);
 
-		// 회원과 관련된 게시물 삭제
-		memberService.deleteMemberArticles(memberId);
+	@RequestMapping("/usr/member/delete")
+	@ResponseBody
+	public String deleteMember(int memberId) {
+		Member member = memberService.getMemberById(memberId);
+		if(member == null) {
+			return Ut.jsHistoryBack("F-1", "존재하지 않는 회원입니다");
+		}
+		
+		if (member.getId() == rq.getLoginedMemberId()) {
+			//먼저 로그아웃
+			rq.logout();
+			// 회원 정보 삭제
+			memberService.deleteMember(memberId);
+			// 회원과 관련된 게시물 삭제
+			memberService.deleteMemberArticles(memberId);
+			
+			return Ut.jsReplace("S-1", "삭제완료", "../home/main");
+		} else {
+			return Ut.jsHistoryBack("F-C", "권한이 없습니다.");
+		}
+		
+
+		
 	}
 }

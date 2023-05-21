@@ -114,7 +114,7 @@ public class MemberService {
 	private void deleteMember(Member member) {
 		memberRepository.deleteMember(member.getId());
 	}
-	@Transactional
+
 	public void deleteMember(int memberId) {
 		// 회원 정보 삭제
 		memberRepository.deleteMemberById(memberId);
@@ -125,11 +125,8 @@ public class MemberService {
 
 	public void deleteMemberArticles(int memberId) {
 		// 회원과 관련된 게시물 조회 및 삭제
-		List<Article> memberArticles = articleRepository.getArticlesByMemberId(memberId);
+		articleRepository.deleteMemberArticles(memberId);
 
-		for (Article article : memberArticles) {
-			ArticleRepository.memberArticlesdelete(article);
-		}
 	}
 
 }

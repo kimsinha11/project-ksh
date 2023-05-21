@@ -76,17 +76,14 @@ public interface ArticleRepository {
 	public List<Article> getMyArticles(Integer boardId, int memberId, int i, int itemsPerPage, String searchKeyword,
 			Integer searchId);
 	
-	@Select("""
-	
-				SELECT * FROM article
-				WHERE memberId = #{memberId}
-		
+
+
+	@Delete("""
+			DELETE FROM article
+			WHERE memberId = #{memberId }
 			""")
-	public List<Article> getArticlesByMemberId(int memberId);
+	public void deleteMemberArticles(int memberId);
 	
-	@Transactional
-	 @Modifying
-	    @Query("DELETE FROM Article a WHERE a.memberId = :memberId")
-	    void memberArticlesdelete(@Param("memberId") int memberId);
+	
 
 }

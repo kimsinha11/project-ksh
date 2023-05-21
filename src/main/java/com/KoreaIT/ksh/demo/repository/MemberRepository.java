@@ -187,7 +187,7 @@ public interface MemberRepository {
 	@Delete("""
 			<script>
 			DELETE FROM `member`
-			WHERE memberId = #{memberId}
+			WHERE id = #{memberId}
 			</script>
 			""")
 	void deleteMemberById(int memberId);
