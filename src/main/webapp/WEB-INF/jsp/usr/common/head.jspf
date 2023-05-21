@@ -116,102 +116,101 @@ function Theme__applyTo(themeName) {
 		</header>
 		<hr />
 
-		<nav>
-				<br />
-			
-				
+		<br />
 
-				<div class="items">
-
-						<ul class="menu-item">
-								<li class="first">
-										<a href="#">⛺도란도란⛺</a>
-								<li>
-										<a href="/usr/article/list">전체글보기</a>
-								</li>
-								<li>
-										<a href="/usr/article/list?boardId=1">공지사항</a>
-								</li>
-								<li>
-										<a href="/usr/article/list?boardId=2">자유게시판</a>
-								</li>
-								<li>
-										<a href="/usr/article/list?boardId=3">질문사항</a>
-								</li>
-						</ul>
-				</div>
-				<div class="items">
-						<ul class="menu-item">
-								<li class="first">
-										<a href="#">⛺리뷰게시판⛺</a>
-								<li>
-										<a href="/usr/article/list?boardId=4">캠핑 장비 리뷰</a>
-								</li>
-								<li>
-										<a href="/usr/article/list?boardId=5">캠핑 요리 리뷰</a>
-								</li>
-
-						</ul>
-				</div>
-				<div class="items">
-						<ul class="menu-item">
-								<li class="first">
-										<a href="#">⛺정보 공유⛺</a>
-								<li>
-										<a href="/usr/camping/list">캠핑장 검색</a>
-								</li>
-								<li>
-										<a href="/usr/camping/weather">오늘 날씨</a>
-								</li>
-								<li>
-										<a href="/usr/camping/map">지도 서비스</a>
-								</li>
-						</ul>
-				</div>
-				<div class="items">
-						<ul class="menu-item">
-								<li class="first">
-										<a href="#">⛺실시간⛺</a>
-								<li>
-										<a href="#">실시간 캠핑</a>
-								</li>
-								<li>
-										<a href="#">실시간 차박</a>
-								</li>
-								<li>
-										<a href="#">실시간 아영</a>
-								</li>
-						</ul>
-				</div>
-				<div class="items">
-						<ul class="menu-item">
-								<li class="first">
-										<a href="#">⛺후기⛺</a>
-								<li>
-										<a href="/usr/article/list?boardId=6">캠핑 후기</a>
-								</li>
-								<li>
-										<a href="/usr/article/list?boardId=7">차박 후기</a>
-								</li>
-								<li>
-										<a href="/usr/article/list?boardId=8">야영 후기</a>
-								</li>
-						</ul>
-				</div>
-<br><br /></br><br><br /></br>
-
-<hr />
-
-		
+		<nav style="text-align: center; border: 1px solid black; padding: 10px 0;">
+				<ul class="menu-items" style="display: flex; justify-content: space-around;">
+						<li>
+								<a class="first" href="#">⛺도란도란⛺</a>
+								<ul>
+										<li>
+												<a href="/usr/article/list">전체글보기</a>
+										</li>
+										<li>
+												<a href="/usr/article/list?boardId=1">공지사항</a>
+										</li>
+										<li>
+												<a href="/usr/article/list?boardId=2">자유게시판</a>
+										</li>
+										<li>
+												<a href="/usr/article/list?boardId=3">질문사항</a>
+										</li>
+								</ul>
+						</li>
+						<li>
+								<a class="first" href="#">⛺리뷰게시판⛺</a>
+								<ul>
+										<li>
+												<a href="/usr/article/list?boardId=4">캠핑 장비 리뷰</a>
+										</li>
+										<li>
+												<a href="/usr/article/list?boardId=5">캠핑 요리 리뷰</a>
+										</li>
+								</ul>
+						</li>
+						<li>
+								<a class="first" href="#">⛺정보 공유⛺</a>
+								<ul>
+										<li>
+												<a href="/usr/camping/list">캠핑장 검색</a>
+										</li>
+										<li>
+												<a href="/usr/camping/weather">오늘 날씨</a>
+										</li>
+										<li>
+												<a href="/usr/camping/map">지도 서비스</a>
+										</li>
+								</ul>
+						</li>
+						<li>
+								<a class="first" href="#">⛺실시간⛺</a>
+								<ul>
+										<li>
+												<a href="#">실시간 캠핑</a>
+										</li>
+										<li>
+												<a href="#">실시간 차박</a>
+										</li>
+										<li>
+												<a href="#">실시간 아영</a>
+										</li>
+								</ul>
+						</li>
+						<li>
+								<a class="first" href="#">⛺후기⛺</a>
+								<ul>
+										<li>
+												<a href="/usr/article/list?boardId=6">캠핑 후기</a>
+										</li>
+										<li>
+												<a href="/usr/article/list?boardId=7">차박 후기</a>
+										</li>
+										<li>
+												<a href="/usr/article/list?boardId=8">야영 후기</a>
+										</li>
+								</ul>
+						</li>
+						<li>
+								<a class="first" href="#">⛺활동로그⛺</a>
+								<ul>
+										<li>
+												<a href="/usr/article/list?boardId=6">캠핑 후기</a>
+										</li>
+										<li>
+												<a href="/usr/article/list?boardId=7">차박 후기</a>
+										</li>
+										<li>
+												<a href="/usr/article/list?boardId=8">야영 후기</a>
+										</li>
+								</ul>
+						</li>
+				</ul>
 
 		</nav>
+
 </body>
 
-
-<main>
-
-
-		<style>
+<style>
 @import
 	url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap')
 	;
@@ -235,15 +234,12 @@ body {
 	min-height: 100vh;
 }
 
-.items {
-	float: right;
-	width: 200px; /* div의 너비를 지정합니다. */
-	margin-right: 30px; /* 각각의 div 사이에 10px의 간격을 둡니다. */
-	
+nav>ul>li>a {
+	font-weight: bold;
 }
 
-.items>.menu-item>.first {
-	font-weight: bold;
+nav>ul>li>ul>li:hover>a {
+	text-decoration: underline;
 }
 
 #header {
@@ -287,3 +283,6 @@ body {
 	color: #fff;
 }
 </style>
+<main>
+
+		

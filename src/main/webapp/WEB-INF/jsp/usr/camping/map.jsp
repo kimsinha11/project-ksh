@@ -288,7 +288,7 @@
 
 			} else { // HTML5의 GeoLocation을 사용할 수 없을때 
 
-				var locPosition = new kakao.maps.LatLng(37.566826, 126.9786567);
+				var locPosition = new kakao.maps.LatLng(36.3474034, 127.3694959);
 				alert('현재 위치를 찾을 수 없습니다!');
 			}
 

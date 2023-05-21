@@ -67,7 +67,8 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 						<a class="btn-text-link btn btn-outline btn-sm" onclick="if(confirm('정말 탈퇴하시겠습니까?') == false) return false;"
 								href="/usr/member/delete?memberId=${rq.loginedMember.id }">탈퇴</a>
 						<a class="btn-text-link btn btn-outline btn-sm" href="/calendar.do">일정관리</a>
-						<a class="btn-text-link btn btn-outline btn-sm" href="/usr/article/mylist">내게시물보기</a>
+						<a class="btn-text-link btn btn-outline btn-sm" href="/usr/article/mylist">내가쓴게시물보기</a>
+						<a class="btn-text-link btn btn-outline btn-sm" href="/usr/article/mylike">좋아요누른 게시물보기</a>
 						<%
 						}
 						%>

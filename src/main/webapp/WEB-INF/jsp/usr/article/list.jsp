@@ -17,13 +17,49 @@
 <c:set var="endPage"
 	value="${(pageNum + 4 < totalPages) ? pageNum + 4 : totalPages}" />
 <c:set var="itemsPerPage" value="${itemsPerPage}" />
+<script>
+//페이지 로딩 시 실행되는 함수
+function loadFavorites() {
+  const checkboxes = document.querySelectorAll('.checkbox');
+  checkboxes.forEach((checkbox) => {
+    const postId = checkbox.closest('tr').dataset.postId; // 예상되는 게시글 식별자 위치
+    const isFavorite = localStorage.getItem(`favorite_${postId}`);
+    if (isFavorite === 'true') {
+      checkbox.checked = true;
+    }
+  });
+}
 
+// 체크박스 클릭 이벤트 핸들러
+function handleCheckboxClick(event) {
+  const checkbox = event.target;
+  const postId = checkbox.closest('tr').dataset.postId; // 예상되는 게시글 식별자 위치
+  const isFavorite = checkbox.checked;
+  localStorage.setItem(`favorite_${postId}`, isFavorite);
+}
+
+// 페이지 로드 시 찜한 상태를 복원
+loadFavorites();
+
+// 체크박스 클릭 이벤트 리스너 등록
+const checkboxes = document.querySelectorAll('.checkbox');
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener('click', handleCheckboxClick);
+});
+
+</script>
 <%
 List<Article> commentsCount = (List<Article>) request.getAttribute("commentsCount");
 Board board = (Board) request.getAttribute("board");
 %>
 <%@ include file="../common/head.jspf"%>
-<h1>${board.name}</h1>
+<br />
+<label>🔥${board.name}🔥</label>
+
+		<hr />
+
+		<br />
+	
 <section class="mt-10 text-xs">
 	<div class="mx-auto overflow-x-auto w-full">
 		<table class="table-box-type-1 table w-full"

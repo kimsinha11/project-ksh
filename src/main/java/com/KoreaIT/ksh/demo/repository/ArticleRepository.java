@@ -76,6 +76,10 @@ public interface ArticleRepository {
 	public List<Article> getMyArticles(Integer boardId, int memberId, int i, int itemsPerPage, String searchKeyword,
 			Integer searchId);
 	
+	
+	public List<Article> getMylikes(Integer boardId, int memberId, int i, int itemsPerPage, String searchKeyword,
+			Integer searchId);
+	
 
 
 	@Delete("""
@@ -83,7 +87,7 @@ public interface ArticleRepository {
 			WHERE memberId = #{memberId }
 			""")
 	public void deleteMemberArticles(int memberId);
-	
+
 	
 
 }

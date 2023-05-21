@@ -149,4 +149,9 @@ public class ArticleService {
 		return articleRepository.getMyArticles(boardId,memberId, i, itemsPerPage, searchKeyword, searchId);
 	}
 
+	public List<Article> getMylikes(Integer boardId, int memberId, int i, int itemsPerPage,
+			String searchKeyword, Integer searchId) {
+		return articleRepository.getMylikes(boardId, memberId, i, itemsPerPage, searchKeyword, searchId);
+	}
+
 }
