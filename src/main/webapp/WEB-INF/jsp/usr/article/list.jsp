@@ -54,7 +54,13 @@ Board board = (Board) request.getAttribute("board");
 %>
 <%@ include file="../common/head.jspf"%>
 <br />
-<label>🔥${board.name}🔥</label>
+<c:if test="${board!=null }">
+		<label>🔥${board.name}🔥</label>
+</c:if>
+<c:if test="${board==null }">
+		<label>🔥전체 게시물🔥</label>
+</c:if>
+
 
 		<hr />
 

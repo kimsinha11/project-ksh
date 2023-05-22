@@ -6,7 +6,7 @@
 
 <Section>
 				<h2 id="text">
-						<span>It's time for a new</span>
+						<span>Let's go on a camping</span>
 						<br>
 						Adventure
 				</h2>

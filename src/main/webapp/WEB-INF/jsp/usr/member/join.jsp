@@ -254,7 +254,8 @@
 				<div>
 						비밀번호 :
 						<input onkeyup="checkPassword(this);" class="input input-bordered input-sm w-full max-w-xs" type="password"
-								name="loginPw" placeholder="비밀번호를 입력해주세요" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$"autocomplete="off" />
+								name="loginPw" placeholder="비밀번호를 입력해주세요" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$"
+								autocomplete="off" />
 				</div>
 				<div style="font-size: 15px; color: red;" class="checkDup-msg5"></div>
 				<br />

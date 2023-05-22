@@ -88,12 +88,14 @@ public class UsrCalenderController {
 
 		// 실질적인 달력 데이터 리스트에 데이터 삽입 시작.
 		// 일단 시작 인덱스까지 아무것도 없는 데이터 삽입
+		//재 월의 첫 번째 요일까지 빈 데이터를 dateList에 추가
 		for (int i = 1; i < today_info.get("start"); i++) {
 			calendarData = new DateData(null, null, null, null, null);
 			dateList.add(calendarData);
 		}
 
 		// 날짜 삽입
+		// 현재 월의 날짜 데이터를 dateList에 추가
 		for (int i = today_info.get("startDay"); i <= today_info.get("endDay"); i++) {
 			List<ScheduleDto> schedule_data_arr3 = schedule_data_arr.get(i);
 
@@ -129,8 +131,6 @@ public class UsrCalenderController {
 	public String schedule_add(HttpServletRequest request, ScheduleDto scheduleDto, RedirectAttributes rttr) {
 		ScheduleDao scheduleRepository = sqlsession.getMapper(ScheduleDao.class);
 		
-		
-
 		String message = "";
 		String url = "redirect:calendar.do";
 

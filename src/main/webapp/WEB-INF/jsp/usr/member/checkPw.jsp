@@ -44,7 +44,7 @@ function checkPw__submitForm(form) {
 		아이디 : <input value="${rq.loginedMember.loginId}" type="text" name="loginId" />
 	</div>
 	<div>
-		비밀번호 : <input class="input input-bordered input-sm w-full max-w-xs" type="text" name="loginPw"
+		비밀번호 : <input class="input input-bordered input-sm w-full max-w-xs" type="password" name="loginPw"
 			placeholder="비밀번호를 입력해주세요" />
 	</div>
 
