@@ -19,11 +19,13 @@ import com.KoreaIT.ksh.demo.service.ArticleService;
 import com.KoreaIT.ksh.demo.service.BoardService;
 import com.KoreaIT.ksh.demo.service.CommentService;
 import com.KoreaIT.ksh.demo.service.GenFileService;
+import com.KoreaIT.ksh.demo.service.MemberService;
 import com.KoreaIT.ksh.demo.service.ReactionPointService;
 import com.KoreaIT.ksh.demo.util.Ut;
 import com.KoreaIT.ksh.demo.vo.Article;
 import com.KoreaIT.ksh.demo.vo.Board;
 import com.KoreaIT.ksh.demo.vo.Comment;
+import com.KoreaIT.ksh.demo.vo.Member;
 import com.KoreaIT.ksh.demo.vo.ResultData;
 import com.KoreaIT.ksh.demo.vo.Rq;
 
@@ -32,6 +34,8 @@ public class UsrArticleController {
 
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private MemberService memberService;
 	@Autowired
 	private BoardService boardService;
 	@Autowired
@@ -226,9 +230,15 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/detail")
 	public String getArticle(Model model, int id, int boardId) {
-
+	
 		Article article = articleService.getArticle(id);
-
+		int memberId = article.getMemberId();
+		Member member = memberService.getMemberById(memberId);
+				if (member.isDelStatus() == true) {
+					return rq.jsHistoryBackOnView("탈퇴한 회원의 게시글입니다");
+				
+				}
+		
 		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "id", id);
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());

@@ -184,9 +184,10 @@ public interface MemberRepository {
 			""")
 	Member getMemberByEmail(String email);
 
-	@Delete("""
+	@Update("""
 			<script>
-			DELETE FROM `member`
+			UPDATE `member`
+			SET delStatus = 1
 			WHERE id = #{memberId}
 			</script>
 			""")

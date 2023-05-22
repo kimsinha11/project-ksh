@@ -57,8 +57,9 @@ public class UsrMemberController {
 			return Ut.jsHistoryBack("F-4", "비밀번호가 틀렸습니다");
 		}
 
+	
 		if (member.isDelStatus() == true) {
-			return Ut.jsReplace("사용정지된 계정입니다", "/");
+			return Ut.jsReplace("사용할 수 없는 계정입니다", "/");
 		}
 
 		rq.login(member);
@@ -308,8 +309,7 @@ public class UsrMemberController {
 			rq.logout();
 			// 회원 정보 삭제
 			memberService.deleteMember(memberId);
-			// 회원과 관련된 게시물 삭제
-			memberService.deleteMemberArticles(memberId);
+			
 			
 			return Ut.jsReplace("S-1", "삭제완료", "../home/main");
 		} else {

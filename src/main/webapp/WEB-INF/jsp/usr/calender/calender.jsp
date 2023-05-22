@@ -435,9 +435,10 @@
 			}
 		</script>
 
+	
 		<script>
 			$(function() {
-				$(".datepicker")
+				$("#testDatepicker")
 						.datepicker(
 								{
 									dateFormat : "yy-mm-dd",
@@ -451,32 +452,68 @@
 											'5', '6', '7', '8', '9', '10',
 											'11', '12' ],
 									multiSelect : true
+								// 여러 날짜 선택을 허용
 								});
 			});
 
-			function scheduleEdit() {
-				var form = document.schedule_edit;
-				if (form.schedule_startdate.value === ""
-						|| form.schedule_startdate.value === null) {
-					alert("시작일을 입력해주세요.");
-					form.schedule_startdate.focus();
+			function scheduleAdd() {
+				var schedule_add_form = document.schedule_add;
+				if (schedule_add_form.schedule_date.value == ""
+						|| schedule_add_form.schedule_date.value == null) {
+					alert("날짜를 입력해주세요.");
+					schedule_add_form.schedule_date.focus();
 					return false;
-				}
-				if (form.schedule_enddate.value === ""
-						|| form.schedule_enddate.value === null) {
-					alert("종료일을 입력해주세요.");
-					form.schedule_enddate.focus();
-					return false;
-				}
-				if (form.schedule_subject.value === ""
-						|| form.schedule_subject.value === null) {
+				} else if (schedule_add_form.schedule_subject.value == ""
+						|| schedule_add_form.schedule_subject.value == null) {
 					alert("제목을 입력해주세요.");
-					form.schedule_subject.focus();
+					schedule_add_form.schedule_date.focus();
 					return false;
 				}
-				form.submit();
+				schedule_add_form.submit();
 			}
+		</script>
+		<script>
+			$(function() {
+				$("#endDatePicker")
+						.datepicker(
+								{
+									dateFormat : "yy-mm-dd",
+									changeMonth : true,
+									changeYear : true,
+									dayNames : [ '월요일', '화요일', '수요일', '목요일',
+											'금요일', '토요일', '일요일' ],
+									dayNamesMin : [ '월', '화', '수', '목', '금',
+											'토', '일' ],
+									monthNamesShort : [ '1', '2', '3', '4',
+											'5', '6', '7', '8', '9', '10',
+											'11', '12' ],
+									multiSelect : true
+								// 여러 날짜 선택을 허용
+								});
+			});
 
+			function scheduleAdd() {
+				var schedule_add_form = document.schedule_add;
+				if (schedule_add_form.schedule_startdate.value == ""
+						|| schedule_add_form.schedule_startdate.value == null) {
+					alert("시작일을 입력해주세요.");
+					schedule_add_form.schedule_startdate.focus();
+					return false;
+				} else if (schedule_add_form.schedule_enddate.value == ""
+						|| schedule_add_form.schedule_enddate.value == null) {
+					alert("종료일을 입력해주세요.");
+					schedule_add_form.schedule_enddate.focus();
+					return false;
+				} else if (schedule_add_form.schedule_subject.value == ""
+						|| schedule_add_form.schedule_subject.value == null) {
+					alert("제목을 입력해주세요.");
+					schedule_add_form.schedule_subject.focus();
+					return false;
+				}
+				schedule_add_form.submit();
+			}
+		</script>
+		<script>
 			$(function() {
 				$(".datepicker")
 						.datepicker(
@@ -643,7 +680,8 @@
 												</div>
 										</li>
 										<li class="button_li">
-												<button type="button" style="margin: 10px;" class="btn-text-link btn btn-outline btn-sm" onclick="scheduleEdit();">수정</button>
+												<button type="button" style="margin: 10px;" class="btn-text-link btn btn-outline btn-sm"
+														onclick="scheduleEdit();">수정</button>
 										</li>
 								</ul>
 

@@ -119,14 +119,8 @@ public class MemberService {
 		// 회원 정보 삭제
 		memberRepository.deleteMemberById(memberId);
 
-		// 회원과 관련된 게시물 삭제
-		deleteMemberArticles(memberId);
 	}
 
-	public void deleteMemberArticles(int memberId) {
-		// 회원과 관련된 게시물 조회 및 삭제
-		articleRepository.deleteMemberArticles(memberId);
 
-	}
 
 }

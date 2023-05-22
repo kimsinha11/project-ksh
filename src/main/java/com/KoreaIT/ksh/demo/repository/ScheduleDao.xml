@@ -34,7 +34,7 @@
 		#{idx}
 	</select>
 	
-	<delete id="deleteSchedule">S
+	<delete id="deleteSchedule">
 		DELETE FROM
 		schedule
 		WHERE schedule_idx = #{idx}

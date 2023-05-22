@@ -190,20 +190,26 @@ function Theme__applyTo(themeName) {
 										</li>
 								</ul>
 						</li>
+						<%
+						if (isLogined) {
+						%>
 						<li>
 								<a class="first" href="#">⛺활동로그⛺</a>
 								<ul>
 										<li>
-												<a href="/usr/article/list?boardId=6">캠핑 후기</a>
+												<a href="/calendar.do">캘린더</a>
 										</li>
 										<li>
-												<a href="/usr/article/list?boardId=7">차박 후기</a>
+												<a href="/usr/article/mylist">나의게시물</a>
 										</li>
 										<li>
-												<a href="/usr/article/list?boardId=8">야영 후기</a>
+												<a href="/usr/article/mylike">나의좋아요</a>
 										</li>
 								</ul>
 						</li>
+						<%
+						}
+						%>
 				</ul>
 
 		</nav>

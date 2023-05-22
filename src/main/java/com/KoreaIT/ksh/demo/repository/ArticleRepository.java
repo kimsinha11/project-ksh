@@ -81,13 +81,7 @@ public interface ArticleRepository {
 			Integer searchId);
 	
 
-
-	@Delete("""
-			DELETE FROM article
-			WHERE memberId = #{memberId }
-			""")
-	public void deleteMemberArticles(int memberId);
-
+ 
 	
 
 }
