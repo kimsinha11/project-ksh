@@ -435,7 +435,7 @@
 			}
 		</script>
 
-	
+
 		<script>
 			$(function() {
 				$("#testDatepicker")
@@ -589,6 +589,26 @@
 												</div>
 										</li>
 										<li>
+												<div class="text_desc">
+														색상:
+														<select name="color" class="input input-bordered w-full max-w-xs" onchange="changeBackgroundColor(this)">
+																<option value="#FFFFFF">흰색</option>
+																<option value="#FF0000">빨강</option>
+																<option value="#FFA500">주황</option>
+																<option value="#FFFF00">노랑</option>
+																<option value="#00FF00">초록</option>
+																<option value="#0000FF">파랑</option>
+																<option value="#800080">보라</option>
+																<option value="#FFC0CB">핑크</option>
+																<option value="#FFFFCC">연노랑</option>
+																<option value="#CCFFCC">연초록</option>
+																<option value="#CCE0FF">연파랑</option>
+																<option value="#E6E6FA">연보라</option>
+																<!-- 다른 색상 옵션들 추가 -->
+														</select>
+												</div>
+										</li>
+										<li>
 
 												<div class="text_desc">
 														시작 :
@@ -645,6 +665,17 @@
 												<div class="text_desc">
 														순번 :
 														<input style="width: 100%;" type="text" name="schedule_num" class="input input-bordered w-full max-w-xs" />
+												</div>
+										</li>
+										<li>
+												<div class="text_desc">
+														색상:
+														<select name="color" class="input input-bordered w-full max-w-xs">
+																<option value="#FF0000">빨강</option>
+																<option value="#00FF00">초록</option>
+																<option value="#0000FF">파랑</option>
+																<!-- 다른 색상 옵션들 추가 -->
+														</select>
 												</div>
 										</li>
 										<li>

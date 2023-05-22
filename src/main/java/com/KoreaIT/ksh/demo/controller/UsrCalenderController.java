@@ -83,7 +83,6 @@ public class UsrCalenderController {
 					}
 				}
 				ScheduleDto schedule = Schedule_list.get(i);
-				schedule.setColor(generateRandomColor());
 			}
 		}
 
@@ -124,13 +123,7 @@ public class UsrCalenderController {
 		return "usr/calender/calender";
 	}
 
-	private String generateRandomColor() {
-		Random random = new Random();
-		int r = random.nextInt(256);
-		int g = random.nextInt(256);
-		int b = random.nextInt(256);
-		return String.format("#%02x%02x%02x", r, g, b);
-	}
+
 
 	@RequestMapping(value = "schedule_add.do", method = RequestMethod.GET)
 	public String schedule_add(HttpServletRequest request, ScheduleDto scheduleDto, RedirectAttributes rttr) {

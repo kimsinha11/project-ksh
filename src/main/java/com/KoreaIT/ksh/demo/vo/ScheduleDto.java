@@ -17,8 +17,7 @@ public class ScheduleDto {
 	String schedule_desc;
 	Date schedule_startdate;
 	Date schedule_enddate;
-
-	private String color;
+	String color;
 
  
     public String getColor() {

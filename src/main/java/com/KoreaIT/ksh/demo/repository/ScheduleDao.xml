@@ -8,13 +8,13 @@
 		<include refid="schedule_cols" />
 		values
 		(#{schedule_idx}, #{schedule_num}, #{schedule_subject}, #{schedule_desc},
-		#{schedule_startdate}, #{schedule_enddate}, #{memberId})
+		#{schedule_startdate}, #{schedule_enddate}, #{memberId}, #{color})
 	</insert>
 
 
 	<sql id="schedule_cols">
 		(schedule_idx, schedule_num, schedule_subject, schedule_desc, schedule_startdate,
-		schedule_enddate, memberId)
+		schedule_enddate, memberId, color)
 	</sql>
 	<select id="before_schedule_add_search" resultType="int">
 
