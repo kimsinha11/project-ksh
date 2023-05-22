@@ -3,22 +3,25 @@
 <%@ page import="com.KoreaIT.ksh.demo.vo.Member"%>
 <c:set var="pageTitle" value="PROFILE" />
 <%@ include file="../common/head.jspf"%>
+<!--  lodash debounce -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 <%
 Member member = (Member) request.getAttribute("member");
 %>
 
 <script>
-
+	let submitmodifyFormDone = false;
 	let validLoginId ="";
 	let validNickname ="";
 	let validEmail ="";
 	let validcellphoneNum ="";
-	let MemberModify__submitFormDone = false;
+
 	function MemberModify__submit(form) {
-	if (MemberModify__submitFormDone) {
-		return;
-	}
+		if (submitFormDone) {
+			alert('처리중입니다');
+			return;
+		}
+	
 		form.loginPw.value = form.loginPw.value.trim();
 		if (form.loginPw.value == 0) {
 			alert('비밀번호를 입력해주세요');
@@ -44,12 +47,12 @@ Member member = (Member) request.getAttribute("member");
 		}
 		form.nickname.value = validNickname;
 		if (form.nickname.value == 0) {
-			alert('닉네임을 입력해주세요');
+			alert('닉네임을 입력해주세요!!!');
 			return;
 		}
 		form.email.value = validEmail;
 		if (form.email.value == 0) {
-			alert('이메일을 입력해주세요');
+			alert('이메일을 입력해주세요!!!');
 			return;
 		}
 		form.cellphoneNum.value = form.validcellphoneNum.value.trim();
@@ -58,7 +61,7 @@ Member member = (Member) request.getAttribute("member");
 			return;
 		}
 	
-		MemberModify__submitFormDone  = true;
+		submitmodfyFormDone = true;
 		form.submit();
 	}
 	
@@ -237,16 +240,16 @@ Member member = (Member) request.getAttribute("member");
 				<div>
 						전화번호 :
 						<input onkeyup="checkPhoneNumber(this);" value="${member.cellphoneNum }"
-								class="input input-bordered input-sm w-full max-w-xs" type="text" name="cellphoneNum" placeholder="전화번호를 입력해주세요"
-								pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" autocomplete="off" />
+								class="input input-bordered input-sm w-full max-w-xs" type="text" name="cellphoneNum"
+								placeholder="전화번호를 입력해주세요" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" autocomplete="off" />
 				</div>
 				<div style="font-size: 15px; color: red;" class="checkDup-msg6"></div>
 				<br />
 				<div>
 						이메일 :
 						<input onkeyup="checkEmailDuplication(this);" value="${member.email }"
-								class="input input-bordered input-sm w-full max-w-xs" style="border: 1px solid black;" type="text" name="email"
-								placeholder="이메일을 입력해주세요" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
+								class="input input-bordered input-sm w-full max-w-xs" style="border: 1px solid black;"  type="text"
+								name="email" placeholder="이메일을 입력해주세요" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
 				</div>
 				<div style="font-size: 15px; color: red;" class="checkDup-msg3"></div>
 				<br />
@@ -255,8 +258,8 @@ Member member = (Member) request.getAttribute("member");
 						<a class="btn-text-link btn btn-outline btn-xs" href="/usr/member/login">로그인</a>
 						<button class="btn-text-link btn btn-outline btn-xs" style="display: inline" type="submit">수정하기</button>
 				</div>
-
-
+		
+				
 		</div>
 </form>
 
