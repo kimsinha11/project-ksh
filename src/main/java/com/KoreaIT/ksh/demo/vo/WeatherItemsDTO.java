@@ -9,9 +9,9 @@ public class WeatherItemsDTO
 {
     private List<WeatherItemDTO> item;
 
-    private int                  numOfRows;
+    private int numOfRows;
 
-    private int                  pageNo;
+    private int pageNo;
 
-    private int                  totalCount;
+    private int totalCount;
 }

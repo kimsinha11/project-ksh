@@ -39,6 +39,7 @@ public class UsrCampingController {
 
 		List<String[]> filteredData = new ArrayList<>();
 
+		 // 검색어에 따라 데이터 필터링
 		if (!searchKeyword.isEmpty()) {
 		    for (String[] row : data) {
 		        String searchTarget;

@@ -16,7 +16,7 @@ public class BoardService {
 	}
 	
 	public static Board getBoardById(int boardId) {
-
+		//boardId로 보드조회
 		return boardRepository.getBoardById(boardId);
 	}
 

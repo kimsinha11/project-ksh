@@ -37,12 +37,16 @@ public class AdmMemberController {
 	public String showList(Model model, @RequestParam(defaultValue = "0") String authLevel,
 			@RequestParam(defaultValue = "loginId,name,nickname") String searchKeywordTypeCode,
 			@RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue = "1") int page) {
-
+		
+		// 멤버 수를 파라미터에 따라 조회하여 가져온다.
 		int membersCount = memberService.getMembersCount(authLevel, searchKeywordTypeCode, searchKeyword);
 
 		int itemsInAPage = 10;
+		
+		// 페이지 수를 계산한다.
 		int pagesCount = (int) Math.ceil((double) membersCount / itemsInAPage);
 
+		// 멤버 리스트를 파라미터, 페이지 번호, 페이지 당 아이템 수에 따라 가져온다.
 		List<Member> members = memberService.getForPrintMembers(authLevel, searchKeywordTypeCode, searchKeyword,
 				itemsInAPage, page);
 
@@ -66,10 +70,14 @@ public class AdmMemberController {
 		if (boardId != 0 && board == null) {
 			return rq.jsHistoryBackOnView("그런 게시판은 없어");
 		}
+		
+		// 게시물 수를 파라미터에 따라 조회하여 가져온다.
 		int totalCount = articleService.getArticlesCount(boardId, searchId, searchKeyword);
+		// 전체 페이지 수를 계산한다.
 		int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage);
 		int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
 		int itemsInAPage = (pageNum - 1) * itemsPerPage;
+		// 게시물 리스트를 파라미터, 페이지 당 아이템 수, 검색 키워드에 따라 가져온다.
 		List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage, searchKeyword,
 				searchId);
 		List<Article> commentsCount = articleService.getCommentsCount();
@@ -93,7 +101,8 @@ public class AdmMemberController {
 	
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
-
+		
+			// 게시물에 대한 댓글 리스트를 가져온다.
 			List<Comment> comments = commentService.getComments(id);
 
 			model.addAttribute("comments", comments);
@@ -109,16 +118,16 @@ public class AdmMemberController {
 	@ResponseBody
 	public String doDelete(Model model,@RequestParam(defaultValue = "") String ids, @RequestParam(defaultValue = "/adm/memberAndArticle/list") String replaceUri) {
 
-	
+		// 관리자 권한이 있는지 확인한다.
 		if (rq.isAdmin()) {
 			List<Integer> articleIds = new ArrayList<>();
 
 			for (String idStr : ids.split(",")) {
 				articleIds.add(Integer.parseInt(idStr));
 			}
-
-			articleService.deleteArticles(articleIds);
 			
+			// 선택한 게시물들을 삭제한다.
+			articleService.deleteArticles(articleIds);
 		
 			return Ut.jsReplace("해당 게시들이 삭제되었습니다.", replaceUri);
 		} else {
@@ -135,7 +144,8 @@ public class AdmMemberController {
 		for (String idStr : ids.split(",")) {
 			memberIds.add(Integer.parseInt(idStr));
 		}
-
+		
+		// 선택한 회원들을 삭제한다.
 		memberService.deleteMembers(memberIds);
 
 		return Ut.jsReplace("해당 회원들이 삭제되었습니다.", replaceUri);
@@ -144,7 +154,8 @@ public class AdmMemberController {
 	@RequestMapping("/adm/member/doLogout")
 	@ResponseBody
 	public String doLogout(@RequestParam(defaultValue = "/") String afterLogoutUri) {
-
+		
+		// 로그아웃을 처리한다.
 		rq.logout();
 
 		return Ut.jsReplace("S-1", "로그아웃 되었습니다", afterLogoutUri);

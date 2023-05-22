@@ -33,8 +33,10 @@ public class UsrCommentController {
 
 	public String cmodify(Model model, int id, int boardId) {
 
-		Comment comment = commentService.getComment(id);
-		Board board = BoardService.getBoardById(boardId);
+	    // id를 기반으로 댓글 조회
+	    Comment comment = commentService.getComment(id);
+	    // boardId를 기반으로 게시물 조회
+	    Board board = BoardService.getBoardById(boardId);
 		
 		if (comment == null) {
 			return rq.jsHistoryBackOnView(Ut.f("%d번 댓글은 존재하지 않습니다", id));

@@ -299,8 +299,9 @@ schedule_subject VARCHAR(45),
 schedule_desc VARCHAR(45),
 schedule_startdate DATE,
 schedule_enddate DATE,
-memberId INT(10) NOT NULL
-)
+memberId INT(10) NOT NULL,
+color VARCHAR(45)
+);
 
 # 파일 테이블 추가
 CREATE TABLE genFile (
@@ -324,6 +325,10 @@ CREATE TABLE genFile (
   KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
 );
 
+SELECT*FROM article
+INNER JOIN reactionPoint
+ON article.id = reactionPoint.relId
+WHERE reactionPoint.memberId = 2
 ###################################################################
 SELECT * FROM article;
 SELECT * FROM `member`;
