@@ -16,9 +16,6 @@
 
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-<script type="text/javaScript" language="javascript">
-	
-</script>
 
 <style>
 .day {
@@ -591,22 +588,10 @@
 										<li>
 												<div class="text_desc">
 														색상:
-														<select name="color" class="input input-bordered w-full max-w-xs" onchange="changeBackgroundColor(this)">
-																<option value="#FFFFFF">흰색</option>
-																<option value="#FF0000">빨강</option>
-																<option value="#FFA500">주황</option>
-																<option value="#FFFF00">노랑</option>
-																<option value="#00FF00">초록</option>
-																<option value="#0000FF">파랑</option>
-																<option value="#800080">보라</option>
-																<option value="#FFC0CB">핑크</option>
-																<option value="#FFFFCC">연노랑</option>
-																<option value="#CCFFCC">연초록</option>
-																<option value="#CCE0FF">연파랑</option>
-																<option value="#E6E6FA">연보라</option>
-																<!-- 다른 색상 옵션들 추가 -->
-														</select>
+														<input type="color" name="color" class="input input-bordered w-full max-w-xs"
+																onchange="changeBackgroundColor(this)">
 												</div>
+
 										</li>
 										<li>
 
@@ -670,12 +655,8 @@
 										<li>
 												<div class="text_desc">
 														색상:
-														<select name="color" class="input input-bordered w-full max-w-xs">
-																<option value="#FF0000">빨강</option>
-																<option value="#00FF00">초록</option>
-																<option value="#0000FF">파랑</option>
-																<!-- 다른 색상 옵션들 추가 -->
-														</select>
+														<input type="color" name="color" class="input input-bordered w-full max-w-xs"
+																onchange="changeBackgroundColor(this)">
 												</div>
 										</li>
 										<li>
@@ -720,6 +701,28 @@
 				</form>
 		</div>
 
+		<script>
+			function changeBackgroundColor(input) {
+				var color = input.value; // 선택한 색상 코드 가져오기
+				var hexColor = rgbToHex(color); // RGB 값을 HEX 값으로 변환
+				var contents = document.querySelector('.contents');
+				contents.style.backgroundColor = hexColor;
+				updateColorValue(hexColor); // 선택한 HEX 색상 값을 전달하는 함수 호출
+			}
 
+			function rgbToHex(rgbColor) {
+				// RGB 값을 HEX 값으로 변환하는 로직
+				var rgb = rgbColor.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+				function hex(x) {
+					return ("0" + parseInt(x).toString(16)).slice(-2);
+				}
+				return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+			}
+
+			function updateColorValue(color) {
+				var colorInput = document.querySelector('input[name="color"]');
+				colorInput.value = color; // 선택한 HEX 색상 값을 input 요소에 설정
+			}
+		</script>
 
 		<%@ include file="../common/foot.jspf"%>
