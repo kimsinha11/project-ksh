@@ -123,7 +123,7 @@ INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
 `code` = 'eReview',
-`name` = '도구리뷰';
+`name` = '장비리뷰';
 
 INSERT INTO board
 SET regDate = NOW(),
