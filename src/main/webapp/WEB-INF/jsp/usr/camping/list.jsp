@@ -42,6 +42,7 @@ int pageSize = (int) request.getAttribute("pageSize");
 						<th>캠핑(야영)장명</th>
 						<th>지역</th>
 						<th>지도</th>
+						<th>찜</th>
 				</tr>
 		</thead>
 		<tbody>
@@ -59,6 +60,11 @@ int pageSize = (int) request.getAttribute("pageSize");
 												<a href="map?searchKeyword=${row[1]}">지도</a>
 										</div>
 								</th>
+								<th>
+														<label>
+																<input type="checkbox" class="checkbox" />
+														</label>
+												</th>
 						</tr>
 				</c:forEach>
 		</tbody>

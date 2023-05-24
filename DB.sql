@@ -123,7 +123,7 @@ INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
 `code` = 'eReview',
-`name` = '장비리뷰';
+`name` = '도구리뷰';
 
 INSERT INTO board
 SET regDate = NOW(),
@@ -325,10 +325,19 @@ CREATE TABLE genFile (
   KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
 );
 
+# 찜 테이블 추가
+CREATE TABLE likebutton (
+  regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL,
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
+    relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
+    `point` INT(10) NOT NULL
+);
 SELECT*FROM article
 INNER JOIN reactionPoint
 ON article.id = reactionPoint.relId
-WHERE reactionPoint.memberId = 2
+WHERE reactionPoint.memberId = 2;
 ###################################################################
 SELECT * FROM article;
 SELECT * FROM `member`;

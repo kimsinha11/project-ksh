@@ -1,20 +1,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../common/head.jspf"%>
+<head>
 <style>
 /* 팝업 스타일 */
 .popup-overlay {
 	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 100%;
+	top: 70%;
+	left: 0;
+	width: 0;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.1); /* 배경 색상과 투명도 조절 */
+	background-color: rgba(0, 0, 0, 0.5); /* 배경 색상과 투명도 조절 */
 	display: none; /* 초기에는 숨김 처리 */
 	align-items: center;
 	justify-content: center;
 	z-index: 9999;
+
 }
 
 .popup-content {
@@ -22,7 +23,6 @@
 	padding: 20px;
 	border-radius: 5px;
 	text-align: center;
-	
 }
 
 .popup-close {
@@ -30,8 +30,6 @@
 	top: 10px;
 	right: 10px;
 	cursor: pointer;
-	font-size: 40px;
-	
 }
 </style>
 </head>
@@ -43,8 +41,7 @@
 		<div id="popup" class="popup-overlay">
 				<div class="popup-content">
 
-						<p>
-						<div class="wrapper">
+						<p><div class="wrapper">
 								<div class="container">
 										<div class="left">
 												<div class="top">
@@ -170,8 +167,7 @@
 												</div>
 										</div>
 								</div>
-						</div>
-						</p>
+						</div></p>
 
 						<span class="popup-close" onclick="closePopup()">&times;</span>
 				</div>
@@ -187,7 +183,16 @@
         function closePopup() {
             document.getElementById("popup").style.display = "none";
         }
+        
+        // 팝업 이외의 영역 클릭 시 닫기
+        window.addEventListener("click", function(event) {
+            var popup = document.getElementById("popup");
+            if (event.target == popup) {
+                popup.style.display = "none";
+            }
+        });
     </script>
+
 
 		<style>
 @charset "UTF-8";
@@ -229,8 +234,8 @@ body {
 	position: relative;
 	top: 50%;
 	left: 50%;
-	width: 80%;
-	height: 75%;
+	width: 100%;
+	height: 100%;
 	background-color: var(--white);
 	transform: translate(-50%, -50%);
 }
@@ -617,28 +622,38 @@ keyframes slideFromLeft { 0% {
 100
 
 
+
+
 %
 {
 margin-left
 
 
+
+
 :
+
+
 
 
 0
+
+
 ;
-
-
 opacity
+
+
 
 
 :
 
 
+
+
 1
+
+
 ;
-
-
 }
 }
 @
@@ -650,28 +665,38 @@ opacity
 100
 
 
+
+
 %
 {
 margin-left
 
 
+
+
 :
+
+
 
 
 0
+
+
 ;
-
-
 opacity
+
+
 
 
 :
 
 
+
+
 1
+
+
 ;
-
-
 }
 }
 @
@@ -683,28 +708,38 @@ keyframes slideFromRight { 0% {
 100
 
 
+
+
 %
 {
 margin-right
 
 
+
+
 :
+
+
 
 
 0
+
+
 ;
-
-
 opacity
+
+
 
 
 :
 
 
+
+
 1
+
+
 ;
-
-
 }
 }
 @
@@ -715,28 +750,38 @@ opacity
 100
 
 
+
+
 %
 {
 margin-right
 
 
+
+
 :
+
+
 
 
 0
+
+
 ;
-
-
 opacity
+
+
 
 
 :
 
 
+
+
 1
+
+
 ;
-
-
 }
 }
 </style>
