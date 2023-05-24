@@ -144,7 +144,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/list")
 	public String showList(Model model, @RequestParam(defaultValue = "0") Integer boardId, @RequestParam(defaultValue = "1") int pageNum,
-			@RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
+			@RequestParam(defaultValue = "9") int itemsPerPage, String searchKeyword, Integer searchId) {
 
 		Board board = BoardService.getBoardById(boardId);
 
@@ -169,6 +169,7 @@ public class UsrArticleController {
 		model.addAttribute("lastPageInGroup", lastPageInGroup);
 		
 		if(boardId == 6 || boardId == 7 || boardId==8) {
+		
 			return "usr/article/list2";
 		}
 		return "usr/article/list";
