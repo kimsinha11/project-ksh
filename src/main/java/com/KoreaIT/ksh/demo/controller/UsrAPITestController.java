@@ -20,9 +20,7 @@ public class UsrAPITestController {
 
 	@RequestMapping("usr/home/APITest2")
 	public String APITest2() {
-		if (!rq.isLogined()) {
-			return Ut.jsHistoryBack("F-1", "로그인 후 이용해주세요");
-		}
+		
 
 		return "usr/home/APITest2";
 	}
