@@ -220,8 +220,8 @@ Board board = (Board) request.getAttribute("board");
 <br />
 <section class="mt-10 text-xl">
 		<div class="mx-auto overflow-x-auto">
-				<table class=" table w-full table-box-type-1" style="width:900px;">
-				
+				<table class=" table w-full table-box-type-1" style="width: 900px;">
+
 						<thead>
 								<tr>
 										<th style="font-size: 15px">번호</th>
@@ -251,7 +251,7 @@ Board board = (Board) request.getAttribute("board");
 								</tr>
 								<tr>
 										<th style="font-size: 15px">내용</th>
-										<th style="padding: 30px;">${article.body }</th>
+										<th style="word-break: break-word;">${article.body}</th>
 								</tr>
 								<tr>
 										<th style="font-size: 15px">조회수</th>
@@ -261,11 +261,11 @@ Board board = (Board) request.getAttribute("board");
 								</tr>
 								<tr>
 										<th>첨부 이미지</th>
-										<td>
+										<th>
 												<img class="w-full rounded-xl" src="${rq.getImgUri(article.id)}"
 														onerror="${rq.profileFallbackImgOnErrorHtml}" alt="" />
 												<div>${rq.getImgUri(article.id)}</div>
-										</td>
+										</th>
 								</tr>
 
 						</thead>
@@ -323,7 +323,7 @@ Board board = (Board) request.getAttribute("board");
 		<form style="text-align: center;" action="../comment/docWrite" method="POST"
 				onsubmit="ReplyWrite__submitForm(this); return false;">
 
-				<div style="display: inline-block; border: 2px solid black; width:900px; height: 100px; text-align: left;">
+				<div style="display: inline-block; border: 2px solid black; width: 900px; height: 100px; text-align: left;">
 						<div style="display: none">
 
 								<input value="${article.id }" class="input input-bordered w-full max-w-xs" type="hidden" name="relId" />
@@ -350,7 +350,7 @@ Board board = (Board) request.getAttribute("board");
 </div>
 <br />
 <div style="text-align: center;">댓글 리스트</div>
-<table class="table-box-type-2 table w-full">
+<table class="table-box-type-2 table w-full" style="border-collaspe: collaspe; width: 900px;">
 		<thead>
 
 				<tr>
