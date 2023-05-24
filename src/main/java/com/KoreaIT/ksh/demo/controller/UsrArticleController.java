@@ -167,7 +167,10 @@ public class UsrArticleController {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("itemsPerPage", itemsPerPage);
 		model.addAttribute("lastPageInGroup", lastPageInGroup);
-
+		
+		if(boardId == 6 || boardId == 7 || boardId==8) {
+			return "usr/article/list2";
+		}
 		return "usr/article/list";
 	}
 	@RequestMapping("/usr/article/mylist")
