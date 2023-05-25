@@ -22,26 +22,53 @@ int pageNo = (int) request.getAttribute("pageNo");
 int pageSize = (int) request.getAttribute("pageSize");
 %>
 <script>
-function checkAddRpBefore() {
-    <!-- 변수값에 따라 각 id가 부여된 버튼에 클래스 추가(이미 눌려있다는 색상 표시) -->
-    if (isAlreadyAddGoodRp) {
-        $('#likeButton').removeClass('btn-outline').addClass('btn-danger');
+function checkAddRpBefore(articleId) {
+    var isAlreadyAddGoodRp = localStorage.getItem('isAlreadyAddGoodRp_' + articleId); // 저장된 값 가져오기
+
+    // 변수값에 따라 각 id가 부여된 버튼에 클래스 추가 (이미 눌려있다는 색상 표시)
+    if (isAlreadyAddGoodRp === 'true') {
+        $('#likeButton' + articleId).addClass('btn-danger');
     } else {
-        $('#likeButton').removeClass('btn-danger').addClass('btn-outline');
+        $('#likeButton' + articleId).addClass('btn-outline');
     }
 }
-</script>
-<script>
+
 $(function() {
-	checkAddRpBefore();
+    $('button[id^="likeButton"]').each(function() {
+        var articleId = $(this).attr('id').replace('likeButton', '');
+        checkAddRpBefore(articleId);
+    });
+
+    $('button[id^="likeButton"]').click(function() {
+        var articleId = $(this).attr('id').replace('likeButton', '');
+        var isAlreadyAddGoodRp = localStorage.getItem('isAlreadyAddGoodRp_' + articleId); // 저장된 값 가져오기
+
+        if (isAlreadyAddGoodRp === 'true') {
+            // 좋아요 취소
+            $(this).removeClass('btn-danger').addClass('btn-outline');
+            localStorage.setItem('isAlreadyAddGoodRp_' + articleId, 'false');
+            doGoodReaction(articleId, false); // 좋아요 취소를 서버에 전송
+        } else {
+            // 좋아요
+            $(this).removeClass('btn-outline').addClass('btn-danger');
+            localStorage.setItem('isAlreadyAddGoodRp_' + articleId, 'true');
+            doGoodReaction(articleId, true); // 좋아요를 서버에 전송
+        }
+    });
+
+    // 초기 상태로 설정하기 위해 아래 코드 추가
+    $('button[id^="likeButton"]').each(function() {
+        var articleId = $(this).attr('id').replace('likeButton', '');
+        if (localStorage.getItem('isAlreadyAddGoodRp_' + articleId) === null) {
+            localStorage.setItem('isAlreadyAddGoodRp_' + articleId, 'false');
+        }
+    });
 });
-</script>
-<script>
-function doGoodReaction(articleId) {
-	if (params.memberId == 0) {
-		alert('로그인 후 이용해주세요.');
-		return;
-	}
+function doGoodReaction(articleId, isLiked) {
+    if (params.memberId === 0) {
+        alert('로그인 후 이용해주세요.');
+        return;
+    }
 
     $.ajax({
         url: '/usr/likebutton/doGoodReaction',
@@ -52,7 +79,7 @@ function doGoodReaction(articleId) {
             if (data.resultCode.startsWith('S-')) {
                 var likeButton = $('#likeButton' + articleId);
 
-                if (data.resultCode == 'S-1') {
+                if (data.resultCode === 'S-1') {
                     likeButton.removeClass('btn-danger').addClass('btn-outline');
                 } else {
                     likeButton.removeClass('btn-outline').addClass('btn-danger');
@@ -67,6 +94,8 @@ function doGoodReaction(articleId) {
     });
 }
 </script>
+
+
 
 
 <meta charset="UTF-8">
@@ -116,12 +145,13 @@ function doGoodReaction(articleId) {
 										</div>
 								</th>
 								<th>
-										 <button id="likeButton${row[0]}" class="btn btn-outline" type="button" onclick="doGoodReaction(${row[0]})">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<button id="likeButton${row[0]}" class="btn btn-outline" type="button" onclick="doGoodReaction(${row[0]})">
+												<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+														stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+																d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
         </svg>
-      </button>
+										</button>
 								</th>
 						</tr>
 				</c:forEach>

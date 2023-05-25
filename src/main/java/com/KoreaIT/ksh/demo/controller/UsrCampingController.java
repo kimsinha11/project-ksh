@@ -89,7 +89,7 @@ public class UsrCampingController {
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
 		model.addAttribute("isAlreadyAddGoodRp", likeButtonService.isAlreadyAddGoodRp(data.get(index)[0]));
-
+		model.addAttribute("articleId", data.get(index)[0]);
 		if (actorCanMakeReactionRd.isSuccess()) {
 			model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
 		}
