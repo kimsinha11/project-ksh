@@ -5,6 +5,13 @@
 <c:set var="pageTitle" value="캠핑장 검색" />
 <%@ include file="../common/head.jspf"%>
 <%@ include file="../common/toastUiEditorLib.jspf"%>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+var params = {}; // params 객체를 빈 객체로 초기화
+	params.memberId = '${loginedMemberId}';
+	var isAlreadyAddGoodRp = '${isAlreadyAddGoodRp}';
+
+</script>
 
 <%
 List<String[]> data = (List<String[]>) request.getAttribute("data");
@@ -14,14 +21,62 @@ int totalCount = (int) request.getAttribute("totalCount");
 int pageNo = (int) request.getAttribute("pageNo");
 int pageSize = (int) request.getAttribute("pageSize");
 %>
+<script>
+function checkAddRpBefore() {
+    <!-- 변수값에 따라 각 id가 부여된 버튼에 클래스 추가(이미 눌려있다는 색상 표시) -->
+    if (isAlreadyAddGoodRp) {
+        $('#likeButton').removeClass('btn-outline').addClass('btn-danger');
+    } else {
+        $('#likeButton').removeClass('btn-danger').addClass('btn-outline');
+    }
+}
+</script>
+<script>
+$(function() {
+	checkAddRpBefore();
+});
+</script>
+<script>
+function doGoodReaction(articleId) {
+	if (params.memberId == 0) {
+		alert('로그인 후 이용해주세요.');
+		return;
+	}
+
+    $.ajax({
+        url: '/usr/likebutton/doGoodReaction',
+        type: 'POST',
+        data: { relId: articleId },
+        dataType: 'json',
+        success: function(data) {
+            if (data.resultCode.startsWith('S-')) {
+                var likeButton = $('#likeButton' + articleId);
+
+                if (data.resultCode == 'S-1') {
+                    likeButton.removeClass('btn-danger').addClass('btn-outline');
+                } else {
+                    likeButton.removeClass('btn-outline').addClass('btn-danger');
+                }
+            } else {
+                alert(data.msg);
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('오류가 발생했습니다: ' + textStatus);
+        }
+    });
+}
+</script>
+
+
 <meta charset="UTF-8">
 <br />
 <label>⛺캠핑장 검색하기⛺</label>
 
-		<hr />
+<hr />
 
-		<br />
-	
+<br />
+
 <div>
 		<form class="flex">
 				<select name="searchType" class="select select-bordered" style="width: 150px;">
@@ -35,7 +90,7 @@ int pageSize = (int) request.getAttribute("pageSize");
 		</form>
 </div>
 
-<table class="table-box-type-3 table w-full" style="width: 100%; border:2px solid black;">
+<table class="table-box-type-3 table w-full" style="width: 100%; border: 2px solid black;">
 		<thead>
 				<tr>
 						<th>번호</th>
@@ -61,14 +116,18 @@ int pageSize = (int) request.getAttribute("pageSize");
 										</div>
 								</th>
 								<th>
-														<label>
-																<input type="checkbox" class="checkbox" />
-														</label>
-												</th>
+										 <button id="likeButton${row[0]}" class="btn btn-outline" type="button" onclick="doGoodReaction(${row[0]})">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      </button>
+								</th>
 						</tr>
 				</c:forEach>
 		</tbody>
 </table>
+
 <div class="pagination">
 		<c:choose>
 				<c:when test="${totalCount > pageSize}">

@@ -7,16 +7,24 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.KoreaIT.ksh.demo.service.LikeButtonService;
+import com.KoreaIT.ksh.demo.service.ReactionPointService;
+import com.KoreaIT.ksh.demo.vo.ResultData;
+import com.KoreaIT.ksh.demo.vo.Rq;
+
 @Controller
 public class UsrCampingController {
+	@Autowired
+	Rq rq;
+	@Autowired
+	private LikeButtonService likeButtonService;
 
 	@GetMapping("/usr/camping/list")
 	public String index(Model model, @RequestParam(required = false, defaultValue = "") String searchKeyword,
@@ -45,6 +53,7 @@ public class UsrCampingController {
 		if (!searchKeyword.isEmpty()) {
 		    // 만약 검색어가 비어있지 않다면, 데이터를 필터링
 		    for (String[] row : data) {
+
 		        String searchTarget;
 		        if (searchType == 0) {
 		            searchTarget = row[3]; // 주소 정보
@@ -75,6 +84,23 @@ public class UsrCampingController {
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("pageSize", pageSize);
 
+		int index = 0;
+		ResultData<Integer> actorCanMakeReactionRd = likeButtonService.actorCanMakeReaction(rq.getLoginedMemberId(), data.get(index)[0]);
+		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
+		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
+		model.addAttribute("isAlreadyAddGoodRp", likeButtonService.isAlreadyAddGoodRp(data.get(index)[0]));
+
+		if (actorCanMakeReactionRd.isSuccess()) {
+			model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
+		}
+
+		if (actorCanMakeReactionRd.getResultCode().equals("F-1")) {
+			int sumReactionPointByMemberId = (int) actorCanMakeReactionRd.getData1();
+
+			if (sumReactionPointByMemberId > 0) {
+				model.addAttribute("actorCanCancelGoodReaction", true);
+			} 
+		}
 		return "usr/camping/list";
 
 	}
