@@ -334,10 +334,39 @@ CREATE TABLE likebutton (
     relId INT(10) NOT NULL COMMENT '관련 데이터 번호',
     `point` INT(10) NOT NULL
 );
-SELECT*FROM article
-INNER JOIN reactionPoint
-ON article.id = reactionPoint.relId
-WHERE reactionPoint.memberId = 2;
+
+# chat 테이블 추가
+CREATE TABLE chat (
+    id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `type` VARCHAR(255) NOT NULL,
+    roomId INT(10) UNSIGNED NOT NULL,
+    sender VARCHAR(255) NOT NULL,
+    memberId INT(11) UNSIGNED NOT NULL,
+    message VARCHAR(255) NOT NULL,
+    `time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE chat CONVERT TO CHARSET UTF8;
+
+
+# chatRoom 테이블 생성
+CREATE TABLE chatRoom (
+  id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  roomName VARCHAR(255) NOT NULL,
+  memberId INT(11) UNSIGNED NOT NULL
+
+);
+ALTER TABLE chatRoom CONVERT TO CHARSET UTF8;
+
+# chat_user 테이블 생성
+CREATE TABLE chat_user (
+  id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  roomId INT(10) UNSIGNED NOT NULL,
+  memberId INT(11) UNSIGNED NOT NULL
+);
+
+ALTER TABLE chat_user CONVERT TO CHARSET UTF8;
+
 ###################################################################
 SELECT * FROM article;
 SELECT * FROM `member`;
@@ -345,6 +374,9 @@ SELECT * FROM `schedule`;
 SELECT * FROM tb_weather_area;
 SELECT * FROM board;
 SELECT * FROM reactionPoint;
+SELECT * FROM chat;
+SELECT * FROM chatRoom;
+SELECT * FROM chat_user;
 
 SELECT *
 FROM reactionPoint AS RP
