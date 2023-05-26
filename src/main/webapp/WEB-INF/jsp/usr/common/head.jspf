@@ -166,13 +166,13 @@ function Theme__applyTo(themeName) {
 								<a class="first" href="#">⛺실시간⛺</a>
 								<ul>
 										<li>
-												<a href="#">실시간 캠핑</a>
+												<a href="../chat/list">실시간 캠핑</a>
 										</li>
 										<li>
-												<a href="#">실시간 차박</a>
+												<a href="../chat/list">실시간 차박</a>
 										</li>
 										<li>
-												<a href="#">실시간 아영</a>
+												<a href="../chat/list">실시간 아영</a>
 										</li>
 								</ul>
 						</li>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.KoreaIT.ksh.demo.repository.ChatRepository">
+
+	<select id="getRooms" resultType="com.KoreaIT.ksh.demo.dto.ChatRoom">
+		SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
+		FROM chatRoom cr
+		LEFT JOIN chat_user cu
+		ON cr.id = cu.roomId
+		GROUP BY cr.id
+	</select>
+
+	<select id="getRoomById" resultType="com.KoreaIT.ksh.demo.dto.ChatRoom">
+		SELECT cr.*, COUNT(cu.memberId) AS 'userCount'
+		FROM chatRoom cr
+		INNER JOIN chat_user cu
+		ON cr.id = cu.roomId
+		WHERE cr.id = #{id};
+	</select>
+	
+	<insert id="createChatRoom">
+		INSERT INTO chatRoom
+		SET roomName = #{roomName},
+		memberId = #{memberId};
+	</insert>
+
+	<insert id="addUser">
+		INSERT INTO chat_user
+		SET roomId = #{roomId},
+		memberId = #{memberId};
+	</insert>
+	
+	<delete id="delUser">
+		DELETE FROM chat_user
+		WHERE roomId = #{roomId}
+		AND memberId = #{memberId};
+	</delete>
+	
+	<insert id="saveChat">
+		INSERT INTO chat 
+		SET `type` = #{type},
+		roomId = #{roomId},
+		sender = #{sender},
+		memberId = #{memberId},
+		message = #{message},
+		`time` = #{time};
+	</insert>
+
+	<select id="getUserName" resultType="String">
+		SELECT m.name AS 'userName'
+		FROM chat_user cu
+		INNER JOIN `member` m
+		ON m.id = cu.memberId
+		WHERE roomId = #{roomId}
+		AND memberId = #{memberId};
+	</select>
+	
+	<select id="getUserList" resultType="String">
+		SELECT m.name AS 'userName'
+		FROM chat_user cu
+		INNER JOIN `member` m
+		ON m.id = cu.memberId
+		WHERE cu.roomId = #{roomId};
+	</select>
+
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
+	
+	<select id="getChat_UserByRoomIdAndMemberId" resultType="com.KoreaIT.ksh.demo.dto.Chat_User">
+		SELECT *
+		FROM chat_user
+		WHERE memberId = #{memberId}
+		AND roomId = #{roomId};
+	</select>
+	
+	<select id="getChatHistory" resultType="com.KoreaIT.ksh.demo.dto.Chat">
+		SELECT *
+		FROM chat
+		WHERE roomId = #{roomId};
+	</select>
+	
+</mapper>
