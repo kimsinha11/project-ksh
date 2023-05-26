@@ -22,20 +22,18 @@ int pageSize = (int) request.getAttribute("pageSize");
 %>
 
 <script>
-	function checkAddRpBefore() {
-		$('button[id^="likeButton"]').each(
-				function() {
-					var articleId = $(this).attr('id').replace(/\ufeff/g, '');
-					// articleId 변수 사용하여 버튼의 초기 상태 설정
-					if (isAlreadyAddGoodRp === 'true') {
-						$('#' + articleId).removeClass('btn-outline').addClass(
-								'btn-danger');
-					} else {
-						$('#' + articleId).removeClass('btn-danger').addClass(
-								'btn-outline');
-					}
-				});
-	}
+function checkAddRpBefore() {
+    $('button[id^="likeButton"]').each(function() {
+        var articleId = $(this).attr('id').replace(/\ufeff/g, '');
+        
+        // articleId 변수 사용하여 버튼의 초기 상태 설정
+        if (isAlreadyAddGoodRp === 'true') {
+            $('#likebutton' + articleId).removeClass('btn-outline').addClass('btn-danger');
+        } else {
+            $('#likebutton' + articleId).removeClass('btn-danger').addClass('btn-outline');
+        }
+    });
+}
 </script>
 <script>
 	$(function() {

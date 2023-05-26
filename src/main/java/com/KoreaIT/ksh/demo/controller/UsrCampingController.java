@@ -83,24 +83,27 @@ public class UsrCampingController {
 		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("pageSize", pageSize);
-
-		int index = 0;
-		ResultData<Integer> actorCanMakeReactionRd = likeButtonService.actorCanMakeReaction(rq.getLoginedMemberId(), data.get(index)[0]);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
-		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
-		model.addAttribute("isAlreadyAddGoodRp", likeButtonService.isAlreadyAddGoodRp(data.get(index)[0]));
-		
-		if (actorCanMakeReactionRd.isSuccess()) {
-			model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
-		}
 
-		if (actorCanMakeReactionRd.getResultCode().equals("F-1")) {
-			int sumReactionPointByMemberId = (int) actorCanMakeReactionRd.getData1();
+	    // 데이터의 모든 행 검사
+	    for (String[] row : data) {
+	        ResultData<Integer> actorCanMakeReactionRd = likeButtonService.actorCanMakeReaction(rq.getLoginedMemberId(), row[0]);
+	        model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
+	        model.addAttribute("isAlreadyAddGoodRp", likeButtonService.isAlreadyAddGoodRp(row[0]));
 
-			if (sumReactionPointByMemberId > 0) {
-				model.addAttribute("actorCanCancelGoodReaction", true);
-			} 
-		}
+	        if (actorCanMakeReactionRd.isSuccess()) {
+	            model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
+	        }
+
+	        if (actorCanMakeReactionRd.getResultCode().equals("F-1")) {
+	            int sumReactionPointByMemberId = (int) actorCanMakeReactionRd.getData1();
+
+	            if (sumReactionPointByMemberId > 0) {
+	                model.addAttribute("actorCanCancelGoodReaction", true);
+	            }
+	        }
+	    }
+
 		return "usr/camping/list";
 
 	}
