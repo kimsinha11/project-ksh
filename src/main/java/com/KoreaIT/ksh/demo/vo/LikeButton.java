@@ -14,6 +14,7 @@ public class LikeButton {
 	private String regDate;
 	private String updateDate;
 	private int memberId;
+	private String relTypeCode;
 	private String relId;
 	private int count;
 }

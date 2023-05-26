@@ -9,25 +9,32 @@
 	<insert id="addGoodReactionPoint">
 		INSERT INTO likebutton
 		SET regDate = NOW(),
-		updateDate = NOW(),
+		updateDate
+		= NOW(),
 		memberId = #{loginedMemberId},
 		relId = #{relId},
+		relTypeCode = #{relTypeCode},
 		`point` = 1;
 	</insert>
 
 	<delete id="deleteReactionPoint">
 		DELETE FROM likebutton
 		WHERE memberId = #{loginedMemberId}
-		AND relId = #{relId};
+		AND relTypeCode = #{relTypeCode}
+		AND
+		relId = #{relId};
 	</delete>
 
 
 	<select id="getSumReactionPointByMemberId" resultType="int">
 		SELECT
 		IFNULL(SUM(RP.point),0)
-		FROM likebutton AS RP
-		WHERE RP.relId = #{relId}
-		AND RP.memberId = #{loginedMemberId}
+		FROM reactionPoint AS RP
+		WHERE RP.relTypeCode =
+		#{relTypeCode}
+		AND RP.relId = #{relId}
+		AND RP.memberId =
+		#{loginedMemberId}
 	</select>
 
 </mapper>

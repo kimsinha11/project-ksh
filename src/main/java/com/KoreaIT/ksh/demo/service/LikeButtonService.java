@@ -14,12 +14,12 @@ public class LikeButtonService {
 	@Autowired
 	Rq rq;
 
-	public ResultData actorCanMakeReaction(int loginedMemberId, String relId) {
+	public ResultData actorCanMakeReaction(int loginedMemberId, String relTypeCode, String relId) {
 		if (loginedMemberId == 0) {
 			return ResultData.from("F-L", "로그인 후 이용해주세요.");
 		}
 		// 해당 회원의 리액션 포인트 합계 조회
-		int sumReactionPointByMemberId = likeButtonRepository.getSumReactionPointByMemberId(loginedMemberId, relId);
+		int sumReactionPointByMemberId = likeButtonRepository.getSumReactionPointByMemberId(loginedMemberId, relTypeCode, relId);
 
 		if (sumReactionPointByMemberId != 0) {
 			return ResultData.from("F-1", "추천 불가", "sumReactionPointByMemberId", sumReactionPointByMemberId);
@@ -28,16 +28,16 @@ public class LikeButtonService {
 		return ResultData.from("S-1", "추천 가능", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 	}
 
-	public ResultData deleteGoodReactionPoint(int loginedMemberId, String relId) {
+	public ResultData deleteGoodReactionPoint(int loginedMemberId,String relTypeCode,  String relId) {
 		// 리액션 포인트 삭제
-		likeButtonRepository.deleteReactionPoint(loginedMemberId, relId);
+		likeButtonRepository.deleteReactionPoint(loginedMemberId,relTypeCode, relId);
 
 		return ResultData.from("S-1", "좋아요 취소 됨");
 	}
 
-	public ResultData addGoodReactionPoint(int loginedMemberId, String relId) {
+	public ResultData addGoodReactionPoint(int loginedMemberId, String relTypeCode, String relId) {
 		// 리액션 포인트 추가
-		int affectedRow = likeButtonRepository.addGoodReactionPoint(loginedMemberId, relId);
+		int affectedRow = likeButtonRepository.addGoodReactionPoint(loginedMemberId, relTypeCode, relId);
 
 		if (affectedRow != 1) {
 			return ResultData.from("F-1", "좋아요 실패");
@@ -47,8 +47,8 @@ public class LikeButtonService {
 	}
 	
 	// 이미 좋아요 리액션 포인트를 추가한 상태인지 확인하는 메서드
-		public boolean isAlreadyAddGoodRp(String relId) {
-			int getPointTypeCodeByMemberId = getSumReactionPointByMemberId(rq.getLoginedMemberId(),relId);
+		public boolean isAlreadyAddGoodRp(String relId, String relTypeCode) {
+			int getPointTypeCodeByMemberId = getSumReactionPointByMemberId(rq.getLoginedMemberId(), relTypeCode, relId);
 
 			if (getPointTypeCodeByMemberId > 0) {
 				return true;
@@ -57,8 +57,8 @@ public class LikeButtonService {
 		}
 
 		// 회원의 리액션 포인트 합계를 조회하는 메서드
-		private Integer getSumReactionPointByMemberId(int loginedMemberId, String relId) {
-			Integer getSumRP = likeButtonRepository.getSumReactionPointByMemberId(loginedMemberId, relId);
+		private Integer getSumReactionPointByMemberId(int loginedMemberId, String relTypeCode, String relId) {
+			Integer getSumRP = likeButtonRepository.getSumReactionPointByMemberId(loginedMemberId, relTypeCode, relId);
 
 			return (int) getSumRP;
 		}

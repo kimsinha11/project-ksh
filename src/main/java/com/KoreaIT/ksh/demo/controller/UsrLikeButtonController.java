@@ -20,20 +20,20 @@ public class UsrLikeButtonController {
  // 좋아요(긍정적 반응) 처리
  	@RequestMapping("/usr/likebutton/doGoodReaction")
  	@ResponseBody
- 	public ResultData doGoodReaction(String relId) {
+ 	public ResultData doGoodReaction(String relId, String relTypeCode) {
  		// 현재 사용자가 해당 리소스에 대해 좋아요 반응을 할 수 있는지 확인
- 		ResultData actorCanMakeReactionRd = likeButtonService.actorCanMakeReaction(rq.getLoginedMemberId(),  relId);
+ 		ResultData actorCanMakeReactionRd = likeButtonService.actorCanMakeReaction(rq.getLoginedMemberId(),  relTypeCode,  relId);
 
  		int actorCanMakeReaction = (int) actorCanMakeReactionRd.getData1();
 
  		if (actorCanMakeReaction == 1) {
  			// 이미 좋아요를 누른 상태이므로 좋아요 취소 처리
- 			ResultData rd = likeButtonService.deleteGoodReactionPoint(rq.getLoginedMemberId(),relId);
+ 			ResultData rd = likeButtonService.deleteGoodReactionPoint(rq.getLoginedMemberId(), relTypeCode, relId);
  			return ResultData.from("S-1", "좋아요 취소");
  		} 
 
  		// 좋아요 반응 처리
- 		ResultData rd = likeButtonService.addGoodReactionPoint(rq.getLoginedMemberId(), relId);
+ 		ResultData rd = likeButtonService.addGoodReactionPoint(rq.getLoginedMemberId(), relTypeCode,  relId);
 
  		if (rd.isFail()) {
  			ResultData.from("F-2", rd.getMsg());

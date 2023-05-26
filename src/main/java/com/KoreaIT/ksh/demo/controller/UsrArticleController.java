@@ -311,4 +311,5 @@ public class UsrArticleController {
 			return Ut.jsHistoryBack("F-C", "권한이 없습니다.");
 		}
 	}
+	
 }
