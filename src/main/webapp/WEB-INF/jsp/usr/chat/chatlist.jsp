@@ -23,26 +23,34 @@
 </script>
 
 <div>
-		<div class="container">
+
+		<form action="/usr/chat/createroom" method="post" onsubmit="createRoom(this); return false;" style="padding: 20px;">
+				<div style="display: inline-block; margin-right:490px;">😊즐거운 소통을 위해 채팅예절을 준수해주세요😊</div>
+				<input type="hidden" name="memberId" value=${rq.loginedMemberId }>
+				<input style="display: inline-block;" type="text" name="roomName" class="form-control input input-bordered"
+						id="roomName">
+				<button class="btn btn-secondary" id="create">개설하기 </button>
+		</form>
+		<hr /><br />
+		<div class="container" style="border: 2px solid black;">
 				<div>
 						<c:forEach var="room" items="${list }">
 								<ul>
 										<li class="list-group-item d-flex justify-content-between align-items-start">
+												<span class="badge bg-primary rounded-pill" style="display: inline;">${room.userCount}명</span>
 												<div class="ms-2 me-auto">
 														<div class="fw-bold">
-																<span class="hidden" id="${room.roomName}"></span> <a href="../chat/room?id=${room.id }">[[${room.roomName}]]</a>
+																<span class="hidden" id="${room.roomName}"></span>
+																<a style="padding: 20px; display: block;" href="../chat/room?id=${room.id }">${room.roomName} 👉
+																		참여하기</a>
 														</div>
-												</div> 
-												<span class="badge bg-primary rounded-pill">${room.userCount}명</span>
+												</div>
+
 										</li>
 								</ul>
 						</c:forEach>
 				</div>
 		</div>
-		<form action="/usr/chat/createroom" method="post" onsubmit="createRoom(this); return false;">
-				<input type="hidden" name="memberId" value=${rq.loginedMemberId }>
-				<input style="display: inline-block;" type="text" name="roomName" class="form-control input input-bordered" id="roomName">
-				<button class="btn btn-secondary" id="create">개설하기</button>
-		</form>
+
 </div>
 <%@ include file="../common/foot.jspf"%>

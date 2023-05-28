@@ -66,7 +66,7 @@ function Theme__applyTo(themeName) {
 		<header id="header">
 				<div>
 						<a href="/usr/home/main" class="logo">DDNJ</a>
-						<a href="/usr/home/main" style="font-size: 5px;">ddeonoja</a>
+						<a href="/usr/home/main" style="font-size: 5px;color:#094b65;">ddeonoja</a>
 				</div>
 				<ul>
 						<li class="">
@@ -242,10 +242,15 @@ body {
 
 nav>ul>li>a {
 	font-weight: bold;
+	color: #094b65;
 }
 
 nav>ul>li>ul>li:hover>a {
 	text-decoration: underline;
+}
+
+nav>ul>li>ul>li>a {
+	color: #094b65;
 }
 
 #header {
@@ -260,7 +265,7 @@ nav>ul>li>ul>li:hover>a {
 }
 
 #header .logo {
-	color: var(--primary);
+	color: #094b65;
 	font-weight: 700;
 	font-size: 2em;
 	text-decoration: none;
@@ -280,15 +285,13 @@ nav>ul>li>ul>li:hover>a {
 #header ul li a {
 	text-decoration: none;
 	padding: 6px 15px;
-	color: var(--primary);
+	color: black;
 	border-radius: 20px;
 }
 
 #header ul li a:hover, #header ul li a.active {
-	background: var(--primary);
+	background: #094b65;
 	color: #fff;
 }
 </style>
 <main>
-
-		

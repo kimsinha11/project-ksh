@@ -26,7 +26,7 @@ Board board = (Board) request.getAttribute("board");
 <c:if test="${board==null }">
 		<label>🔥전체 게시물🔥</label>
 </c:if>
-
+<hr />
 <div class="container">
 		<c:forEach var="article" items="${articles}">
 				<div class="card">

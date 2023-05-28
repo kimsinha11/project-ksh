@@ -52,9 +52,9 @@ function onConnected() {
 		{},
 		JSON.stringify({
 			"roomId": id,
-			sender: username,
-			memberId: memberId,
-			type: 'ENTER'
+			"sender": username,
+			"memberId": memberId,
+			"type": 'ENTER'
 		})
 	)
 

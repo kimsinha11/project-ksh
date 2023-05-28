@@ -28,9 +28,11 @@ public class ChatService {
 	private ChatRepository chatRepository;
 
 	public void enterUser(Chat chat, SimpMessageHeaderAccessor headerAccessor) {
-		System.out.println(chat.getRoomId());
+		System.out.println(chat.getRoomId() + "=============================================================");
 		
 		boolean isMemberIdUnique = isMemberIdUnique(chat.getRoomId(), chat.getMemberId());
+		
+		
 		
 		if(!isMemberIdUnique) {
 			return;
