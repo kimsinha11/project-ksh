@@ -74,12 +74,13 @@ function doCommentGoodReaction(commentId) {
             	var likeCount = $('#commentlikeCount_' + commentId);
 
                 if (data.resultCode == 'S-1') {
-          
+                	  likeButton.removeClass('btn-danger').addClass('btn-outline');
                     likeCount.text(parseInt(likeCount.text()) - 1);
                 } else {
-
+                	   likeButton.removeClass('btn-outline').addClass('btn-danger');
                     likeCount.text(parseInt(likeCount.text()) + 1);
                 }
+            
             } else {
                 alert(data.msg);
             }
@@ -106,10 +107,10 @@ function doCommentBadReaction(commentId) {
             	var dislikeCount = $('#commentDislikeCount_' + commentId);
 
                 if (data.resultCode == 'S-1') {
-
+                	dislikeButton.removeClass('btn-danger').addClass('btn-outline');
                     dislikeCount.text(parseInt(dislikeCount.text()) - 1);
                 } else {
-
+                	dislikeButton.removeClass('btn-outline').addClass('btn-danger');
                     dislikeCount.text(parseInt(dislikeCount.text()) + 1);
                 }
             } else {

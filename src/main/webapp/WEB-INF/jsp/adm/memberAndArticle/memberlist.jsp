@@ -22,7 +22,7 @@
 						<option value="0">전체</option>
 
 					</select>
-					<select data-value="${searchKeywordTypeCode }" name="MsearchKeywordTypeCode" class="select select-bordered">
+					<select data-value="${searchKeywordTypeCode }" name="searchKeywordTypeCode" class="select select-bordered">
 						<option disabled="disabled">검색 타입</option>
 						<option value="loginId">아이디</option>
 						<option value="name">이름</option>
@@ -31,7 +31,7 @@
 					</select>
 
 
-					<input name="MsearchKeyword" type="text" class="ml-2 w-96 input input-borderd" placeholder="검색어를 입력해주세요"
+					<input name="searchKeyword" type="text" class="ml-2 w-96 input input-borderd" placeholder="검색어를 입력해주세요"
 						maxlength="20" value="${param.searchKeyword }" />
 					<button type="submit" class="ml-2 btn btn-sm btn-ghost">검색</button>
 				</form>
