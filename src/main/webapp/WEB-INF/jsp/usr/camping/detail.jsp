@@ -20,7 +20,7 @@ List<String[]> data = (List<String[]>) request.getAttribute("data");
 <script>
 function checkAddRpBefore() {
     <!-- 변수값에 따라 각 id가 부여된 버튼에 클래스 추가(이미 눌려있다는 색상 표시) -->
-		if (isAlreadyAddGoodRp == true) {
+		if (isAlreadyAddGoodRp === true) {
 			$('#likeButton').removeClass('btn-outline').addClass('btn-danger');
 		} else {
 			return;

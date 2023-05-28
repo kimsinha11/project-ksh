@@ -29,7 +29,7 @@
 	<select id="getSumReactionPointByMemberId" resultType="int">
 		SELECT
 		IFNULL(SUM(RP.point),0)
-		FROM reactionPoint AS RP
+		FROM likebutton AS RP
 		WHERE RP.relTypeCode =
 		#{relTypeCode}
 		AND RP.relId = #{relId}
