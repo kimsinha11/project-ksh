@@ -41,7 +41,7 @@
 												<div class="ms-2 me-auto">
 														<div class="fw-bold">
 																<span class="hidden" id="${room.roomName}"></span>
-																<a style="padding: 20px; display: block;" href="../chat/room?id=${room.id }">${room.roomName} 👉
+																<a style="text-decoration: underline; padding: 20px; display: block;" href="../chat/room?id=${room.id }">${room.roomName} 👉
 																		참여하기</a>
 														</div>
 												</div>
