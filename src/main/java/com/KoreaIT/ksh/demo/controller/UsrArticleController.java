@@ -50,7 +50,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/modify")
 
-	public String modify(Model model, int id, int boardId,  String title, String body) {
+	public String modify(Model model, int id, int boardId, String title, String body) {
 
 		Article article = articleService.getArticle(id);
 		Board board = BoardService.getBoardById(boardId);
@@ -59,9 +59,9 @@ public class UsrArticleController {
 		}
 		if (article.getMemberId() == rq.getLoginedMemberId()) {
 
-			 model.addAttribute("article", article);
-			 model.addAttribute("board", board);
-			
+			model.addAttribute("article", article);
+			model.addAttribute("board", board);
+
 			return "usr/article/modify";
 		} else {
 			return rq.jsHistoryBackOnView(Ut.f("권한이없습니다."));
@@ -93,7 +93,8 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doWrite")
 	@ResponseBody
-	public String doWrite(HttpSession httpSession, String title, String body, @RequestParam(defaultValue = "0") Integer boardId, MultipartRequest multipartRequest) {
+	public String doWrite(HttpSession httpSession, String title, String body,
+			@RequestParam(defaultValue = "0") Integer boardId, MultipartRequest multipartRequest) {
 
 		if (Ut.empty(title)) {
 			return Ut.jsHistoryBack("F-N", "제목을 입력해주세요.");
@@ -108,7 +109,6 @@ public class UsrArticleController {
 		Board board = BoardService.getBoardById(boardId);
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body, rq.getLoginedMemberId(), boardId);
 		int id = (int) writeArticleRd.getData1();
-		
 
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 
@@ -143,8 +143,9 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(Model model, @RequestParam(defaultValue = "0") Integer boardId, @RequestParam(defaultValue = "1") int pageNum,
-			@RequestParam(defaultValue = "9") int itemsPerPage, String searchKeyword, Integer searchId) {
+	public String showList(Model model, @RequestParam(defaultValue = "0") Integer boardId,
+			@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "9") int itemsPerPage,
+			String searchKeyword, Integer searchId) {
 
 		Board board = BoardService.getBoardById(boardId);
 
@@ -158,7 +159,7 @@ public class UsrArticleController {
 		List<Article> articles = articleService.getArticles(boardId, itemsInAPage, itemsPerPage, searchKeyword,
 				searchId);
 		List<Article> commentsCount = articleService.getCommentsCount();
-		
+
 		model.addAttribute("commentsCount", commentsCount);
 		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);
@@ -167,19 +168,21 @@ public class UsrArticleController {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("itemsPerPage", itemsPerPage);
 		model.addAttribute("lastPageInGroup", lastPageInGroup);
-		
-		if(boardId == 6 || boardId == 7 || boardId==8) {
-		
+
+		if (boardId == 6 || boardId == 7 || boardId == 8) {
+
 			return "usr/article/list2";
 		}
 		return "usr/article/list";
 	}
+
 	@RequestMapping("/usr/article/mylist")
-	public String mylist(Model model, @RequestParam(defaultValue = "0") Integer boardId, @RequestParam(defaultValue = "1") int pageNum,
-			@RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
-		
+	public String mylist(Model model, @RequestParam(defaultValue = "0") Integer boardId,
+			@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int itemsPerPage,
+			String searchKeyword, Integer searchId) {
+
 		Board board = BoardService.getBoardById(boardId);
-		
+
 		if (boardId != 0 && board == null) {
 			return rq.jsHistoryBackOnView("그런 게시판은 없어");
 		}
@@ -187,10 +190,10 @@ public class UsrArticleController {
 		int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage);
 		int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
 		int itemsInAPage = (pageNum - 1) * itemsPerPage;
-		List<Article> articles = articleService.getMyArticles(boardId,rq.getLoginedMemberId(), itemsInAPage, itemsPerPage, searchKeyword,
-				searchId);
+		List<Article> articles = articleService.getMyArticles(boardId, rq.getLoginedMemberId(), itemsInAPage,
+				itemsPerPage, searchKeyword, searchId);
 		List<Article> commentsCount = articleService.getCommentsCount();
-		
+
 		model.addAttribute("commentsCount", commentsCount);
 		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);
@@ -199,16 +202,17 @@ public class UsrArticleController {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("itemsPerPage", itemsPerPage);
 		model.addAttribute("lastPageInGroup", lastPageInGroup);
-		
+
 		return "usr/mypage/mylist";
 	}
-	
+
 	@RequestMapping("/usr/article/mylike")
-	public String mylike(Model model, @RequestParam(defaultValue = "0") Integer boardId, @RequestParam(defaultValue = "1") int pageNum,
-			@RequestParam(defaultValue = "10") int itemsPerPage, String searchKeyword, Integer searchId) {
-		
+	public String mylike(Model model, @RequestParam(defaultValue = "0") Integer boardId,
+			@RequestParam(defaultValue = "1") int pageNum, @RequestParam(defaultValue = "10") int itemsPerPage,
+			String searchKeyword, Integer searchId) {
+
 		Board board = BoardService.getBoardById(boardId);
-		
+
 		if (boardId != 0 && board == null) {
 			return rq.jsHistoryBackOnView("그런 게시판은 없어");
 		}
@@ -216,10 +220,10 @@ public class UsrArticleController {
 		int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage);
 		int lastPageInGroup = (int) Math.min(((pageNum - 1) / 10 * 10 + 10), totalPages);
 		int itemsInAPage = (pageNum - 1) * itemsPerPage;
-		List<Article> articles = articleService.getMylikes(boardId,rq.getLoginedMemberId(), itemsInAPage, itemsPerPage, searchKeyword,
-				searchId);
+		List<Article> articles = articleService.getMylikes(boardId, rq.getLoginedMemberId(), itemsInAPage, itemsPerPage,
+				searchKeyword, searchId);
 		List<Article> commentsCount = articleService.getCommentsCount();
-		
+
 		model.addAttribute("commentsCount", commentsCount);
 		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);
@@ -228,27 +232,30 @@ public class UsrArticleController {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("itemsPerPage", itemsPerPage);
 		model.addAttribute("lastPageInGroup", lastPageInGroup);
-		
+
 		return "usr/mypage/mylike";
 	}
-	
+
 	@RequestMapping("/usr/article/detail")
 	public String getArticle(Model model, int id, int boardId) {
-	
+
 		Article article = articleService.getArticle(id);
 		int memberId = article.getMemberId();
 		Member member = memberService.getMemberById(memberId);
-				if (member.isDelStatus() == true) {
-					return rq.jsHistoryBackOnView("탈퇴한 회원의 게시글입니다");
-				
-				}
-		
-		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "id", id);
+		if (member.isDelStatus() == true) {
+			return rq.jsHistoryBackOnView("탈퇴한 회원의 게시글입니다");
+
+		}
+
+		ResultData<Integer> actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(),
+				"id", id);
+
 		model.addAttribute("article", article);
 		model.addAttribute("loginedMemberId", rq.getLoginedMemberId());
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
 		model.addAttribute("isAlreadyAddGoodRp", reactionPointService.isAlreadyAddGoodRp(id, "article"));
 		model.addAttribute("isAlreadyAddBadRp", reactionPointService.isAlreadyAddBadRp(id, "article"));
+
 		if (actorCanMakeReactionRd.isSuccess()) {
 			model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
 		}
@@ -262,15 +269,15 @@ public class UsrArticleController {
 				model.addAttribute("actorCanCancelBadReaction", true);
 			}
 		}
+		List<Comment> getCommentById = commentService.getCommentById(rq.getLoginedMemberId(), id);
+		List<Comment> comments = commentService.getComments(id);
+		model.addAttribute("getCommentById", getCommentById);
+		model.addAttribute("comments", comments);
 
-			List<Comment> comments = commentService.getComments(id);
+		Board board = BoardService.getBoardById(boardId);
 
-			model.addAttribute("comments", comments);
+		model.addAttribute(board);
 
-			Board board = BoardService.getBoardById(boardId);
-			
-			model.addAttribute(board);
-			
 		return "usr/article/detail";
 	}
 
@@ -293,9 +300,9 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/mylist/delete")
 	@ResponseBody
-	public String doDelete(Model model,@RequestParam(defaultValue = "") String ids, @RequestParam(defaultValue = "/usr/article/mylist") String replaceUri) {
+	public String doDelete(Model model, @RequestParam(defaultValue = "") String ids,
+			@RequestParam(defaultValue = "/usr/article/mylist") String replaceUri) {
 
-	
 		if (rq.isLogined()) {
 			List<Integer> articleIds = new ArrayList<>();
 
@@ -304,12 +311,11 @@ public class UsrArticleController {
 			}
 
 			articleService.deletemyArticles(articleIds);
-			
-		
+
 			return Ut.jsReplace("해당 게시들이 삭제되었습니다.", replaceUri);
 		} else {
 			return Ut.jsHistoryBack("F-C", "권한이 없습니다.");
 		}
 	}
-	
+
 }

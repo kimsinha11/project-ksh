@@ -75,6 +75,15 @@
 		
 	</select>
 
+	<select id="getCommentById" resultType="Comment">
+		SELECT comment.*, member.name
+		FROM `comment`
+		INNER JOIN `member`
+		ON comment.memberId = member.id
+		WHERE comment.relId = #{relId}
+		AND memberId = #{loginedMemberId}
+		AND goodReactionPoint > 0
+	</select>
 
 	<update id="increaseGoodReactionPoint">
 		UPDATE comment

@@ -29,4 +29,6 @@ public interface CommentRepository {
 	public int decreaseGoodReactionPoint(int relId);
 
 	public int decreaseBadReactionPoint(int relId);
+
+	public List<Comment> getCommentById(int loginedMemberId, int relId);
 }

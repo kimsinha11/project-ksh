@@ -2,11 +2,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.KoreaIT.ksh.demo.vo.Article"%>
 <%@ page import="com.KoreaIT.ksh.demo.vo.Board"%>
+<%@ page import="java.util.List"%>
 <c:set var="pageTitle" value="DETAIL" />
 <%@ include file="../common/head.jspf"%>
 <%@ page import="com.KoreaIT.ksh.demo.vo.Comment"%>
 <%
 Comment comment = (Comment) request.getAttribute("comment");
+List<Comment> comments = (List<Comment>) request.getAttribute("comments");
+List<Comment> getCommentById = (List<Comment>) request.getAttribute("getCommentById");
 %>
 
 <!-- <iframe src="http://localhost:8081/usr/article/doIncreaseHitCountRd?id=2" frameborder="0"></iframe> -->
@@ -17,26 +20,27 @@ Comment comment = (Comment) request.getAttribute("comment");
 	params.memberId = parseInt('${loginedMemberId}');
 	var isAlreadyAddGoodRp = ${isAlreadyAddGoodRp};
 	var isAlreadyAddBadRp = ${isAlreadyAddBadRp};
+
 </script>
 
 <!-- 메서드 생성 -->
 <script>
-	function ArticleDetail__increaseHitCount() {
-		const localStorageKey = 'article__' + params.id + '__alreadyView';
-		
-		if(localStorage.getItem(localStorageKey)) {
-			return;
-		}
-		
-		localStorage.setItem(localStorageKey, true);
-		
-		$.get('../article/doIncreaseHitCountRd', {
-			id : params.id,
-			ajaxMode : 'Y'
-		}, function(data) {
-			$('.article-detail__hit-count').empty().html(data.data1);
-		}, 'json');
+function ArticleDetail__increaseHitCount() {
+	const localStorageKey = 'article__' + params.id + '__alreadyView';
+	
+	if(localStorage.getItem(localStorageKey)) {
+		return;
 	}
+	
+	localStorage.setItem(localStorageKey, true);
+	
+	$.get('../article/doIncreaseHitCountRd', {
+		id : params.id,
+		ajaxMode : 'Y'
+	}, function(data) {
+		$('.article-detail__hit-count').empty().html(data.data1);
+	}, 'json');
+}
 	$(function() {
 		// 실전코드
 		 	ArticleDetail__increaseHitCount();
@@ -54,9 +58,33 @@ Comment comment = (Comment) request.getAttribute("comment");
 		}
 	};
 
+
+	function checkAddRpBefore2() {
+
+		<%for (int j = 0; j < getCommentById.size(); j++) {%>
+		var reactionPointRelId = <%=getCommentById.get(j).getId()%>;
+	    	<%for (int i = 0; i < comments.size(); i++) {%>
+        	var commentId = <%=comments.get(i).getId()%>;
+	    	if ((reactionPointRelId == commentId)) {
+	        	$('#commentlikeButton_' + commentId).removeClass('btn-outline').addClass('btn-danger');
+	        	
+	    	} else {
+	    		$('#commentDislikeButton_' + commentId).removeClass('btn-outline').addClass('btn-danger');
+	    	}
+	    <%}%>
+	    
+	    <%}%>
+	   
+	}
 </script>
 <!-- 댓글 리액션 실행 코드 -->
 <script>
+$(function() {
+	checkAddRpBefore();
+	if(params.memberId) {
+		checkAddRpBefore2();
+	}
+});
 
 function doCommentGoodReaction(commentId) {
     if (params.memberId == 0) {
@@ -125,10 +153,7 @@ function doCommentBadReaction(commentId) {
 </script>
 <!-- 리액션 실행 코드 -->
 <script>
-     $(function() {
-		checkAddRpBefore();
-		});
-		
+
 		 function doGoodReaction(articleId) {
 			 if(params.memberId==0) {
 				 alert('로그인 후 이용해주세요.');
@@ -382,7 +407,7 @@ Board board = (Board) request.getAttribute("board");
 								</th>
 								<th>
 										<button id="commentlikeButton_${comment.id}" class="btn btn-outline" type="button"
-												onclick="doCommentGoodReaction(${comment.id })">
+												onclick="doCommentGoodReaction(${comment.id});">
 												<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
 														stroke="currentColor">
 			    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -392,7 +417,7 @@ Board board = (Board) request.getAttribute("board");
 
 										</button>
 										<button id="commentDislikeButton_${comment.id}" class="btn btn-outline" type="button"
-												onclick="doCommentBadReaction(${comment.id })">
+												onclick="doCommentBadReaction(${comment.id});">
 												<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
 														stroke="currentColor">
 			    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

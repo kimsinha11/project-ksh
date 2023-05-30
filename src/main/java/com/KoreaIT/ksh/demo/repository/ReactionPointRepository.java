@@ -14,4 +14,7 @@ public interface ReactionPointRepository {
 
 	public void deleteReactionPoint(int actorId, String relTypeCode, int relId);
 
+
+
+
 }

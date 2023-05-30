@@ -143,4 +143,5 @@ public class ReactionPointService {
 
 		return (int) getSumRP;
 	}
+
 }

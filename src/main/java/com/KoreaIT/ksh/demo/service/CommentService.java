@@ -93,4 +93,8 @@ public class CommentService {
 		}
 		return ResultData.from("S-1", "싫어요 감소", "affectedRow", affectedRow);
 	}
+
+	public List<Comment> getCommentById(int loginedMemberId, int relId) {
+		return commentRepository.getCommentById(loginedMemberId,relId);
+	}
 }
