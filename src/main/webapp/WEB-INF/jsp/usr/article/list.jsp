@@ -75,7 +75,7 @@ Board board = (Board) request.getAttribute("board");
 										<br />
 										<div style="text-align: center; font-size: 19px">총게시물 : ${totalCount }개</div>
 
-										<th style="font-size: 19px">찜</th>
+								
 										<th style="font-size: 19px">번호</th>
 										<th style="font-size: 19px">날짜</th>
 										<th style="font-size: 19px">제목</th>
@@ -90,11 +90,7 @@ Board board = (Board) request.getAttribute("board");
 						<tbody>
 								<c:forEach var="article" items="${articles}">
 										<tr>
-												<th>
-														<label>
-																<input type="checkbox" class="checkbox" />
-														</label>
-												</th>
+												
 												<th>
 														<div class="badge badge-lg">${article.id}</div>
 												</th>
