@@ -39,14 +39,14 @@
 			<div class="table-box-type-1 mt-3">
 				<table class="table table-fixed w-full">
 					<colgroup>
-						<col width="70" />
-						<col width="70" />
+						<col width="60" />
+						<col width="100" />
+						<col width="200" />
+						<col width="200" />
 						<col width="100" />
 						<col width="100" />
-						<col width="100" />
-						<col width="100" />
+						<col width="120" />
 						<col width="150" />
-						<col width="100" />
 					</colgroup>
 					<thead>
 						<tr>
@@ -59,8 +59,8 @@
 							<th>아이디</th>
 							<th>이름</th>
 							<th>닉네임</th>
-							<th>탈퇴여부 0: 전 / 1: 후</th>
-							<th>옆에놈을 풀어서 설명</th>
+							<th>탈퇴여부</th>
+							<th>활동여부</th>
 						</tr>
 					</thead>
 
@@ -70,14 +70,14 @@
 								<th>
 									<input type="checkbox" class="checkbox checkbox-member-id" value="${member.id }" />
 								</th>
-								<td>${member.id}</td>
-								<td>${member.forPrintType1RegDate}</td>
-								<td>${member.forPrintType1UpdateDate}</td>
-								<td>${member.loginId}</td>
-								<td>${member.name}</td>
-								<td>${member.nickname}</td>
-								<td>${member.delStatus}</td>
-								<td>${member.delStatus == true ? '정지' : '활동' }</td>
+								<th>${member.id}</th>
+								<th>${member.forPrintType1RegDate}</th>
+								<th>${member.forPrintType1UpdateDate}</th>
+								<th>${member.loginId}</th>
+								<th>${member.name}</th>
+								<th>${member.nickname}</th>
+								<th>${member.delStatus}</th>
+								<th>${member.delStatus == true ? '정지' : '활동' }</th>
 							</tr>
 						</c:forEach>
 					</tbody>

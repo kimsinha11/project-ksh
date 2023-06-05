@@ -23,7 +23,11 @@ List<Article> commentsCount = (List<Article>) request.getAttribute("commentsCoun
 Board board = (Board) request.getAttribute("board");
 %>
 <%@ include file="../common/head.jspf"%>
-<h1>${board.name}</h1>
+
+<br /><br />
+<h1>💌 My Like 💌</h1>
+<hr />
+
 <section class="mt-10 text-xs">
 		<div class="mx-auto overflow-x-auto w-full">
 				<table class="table-box-type-1 table w-full" style="border-collaspe: collaspe; width: 700px;">
